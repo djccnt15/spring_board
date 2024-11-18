@@ -1,3 +1,21 @@
 spring:
   application:
     name: spring_board
+  jpa:
+    show-sql: true  # simple stdout sql in console
+    properties:
+      hibernate:
+        format_sql: true
+        highlight_sql: true
+        use_sql_comment: true
+    hibernate:
+#      ddl-auto: create-drop
+      ddl-auto: update
+#      ddl-auto: validate
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    # dev
+    url: jdbc:postgresql://localhost:5432/spring_board
+    driver-class-name: org.postgresql.Driver
+    username: username
+    password: password
