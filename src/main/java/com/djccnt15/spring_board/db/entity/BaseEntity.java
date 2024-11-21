@@ -1,4 +1,4 @@
-package com.djccnt15.spring_board.db;
+package com.djccnt15.spring_board.db.entity;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

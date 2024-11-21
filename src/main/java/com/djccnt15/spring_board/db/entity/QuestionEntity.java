@@ -1,7 +1,5 @@
-package com.djccnt15.spring_board.db.question;
+package com.djccnt15.spring_board.db.entity;
 
-import com.djccnt15.spring_board.db.BaseEntity;
-import com.djccnt15.spring_board.db.answer.AnswerEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
