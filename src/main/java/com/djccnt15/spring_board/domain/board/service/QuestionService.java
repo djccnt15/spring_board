@@ -5,6 +5,7 @@ import com.djccnt15.spring_board.db.repository.QuestionRepository;
 import com.djccnt15.spring_board.domain.board.converter.QuestionConverter;
 import com.djccnt15.spring_board.domain.board.model.QuestionForm;
 import com.djccnt15.spring_board.domain.board.model.QuestionResponse;
+import com.djccnt15.spring_board.exception.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,13 @@ public class QuestionService {
         return entityList.stream()
             .map(converter::toResponse)
             .toList();
+    }
+    
+    public QuestionEntity getDetail(Long id) {
+        return repository
+            .findById(id)
+            .orElseThrow(
+                () -> new DataNotFoundException(String.format("not exist task id: %d", id))
+            );
     }
 }
