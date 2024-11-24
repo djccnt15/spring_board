@@ -11,14 +11,16 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
     
-    // TODO update temporal security config
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(
-            (authorizeHttpRequests) -> authorizeHttpRequests
-                .requestMatchers(new AntPathRequestMatcher("/**"))
-                .permitAll()
-        );
+        http
+            // TODO disable temporal security config
+            .authorizeHttpRequests(
+                (authorizeHttpRequests) -> authorizeHttpRequests
+                    .requestMatchers(new AntPathRequestMatcher("/**"))
+                    .permitAll()
+            )
+        ;
         return http.build();
     }
 }
