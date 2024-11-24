@@ -3,6 +3,7 @@ package com.djccnt15.spring_board.domain.board.business;
 import com.djccnt15.spring_board.annotations.Business;
 import com.djccnt15.spring_board.domain.board.converter.AnswerConverter;
 import com.djccnt15.spring_board.domain.board.converter.QuestionConverter;
+import com.djccnt15.spring_board.domain.board.model.QuestionForm;
 import com.djccnt15.spring_board.domain.board.model.QuestionResponse;
 import com.djccnt15.spring_board.domain.board.service.QuestionService;
 import lombok.RequiredArgsConstructor;
@@ -31,5 +32,9 @@ public class QuestionBusiness {
         var question = questionConverter.toResponse(questionEntity);
         question.setAnswerList(answerList);
         return question;
+    }
+    
+    public void create(QuestionForm form) {
+        service.create(form);
     }
 }
