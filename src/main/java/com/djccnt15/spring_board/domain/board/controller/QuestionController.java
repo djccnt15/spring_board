@@ -20,14 +20,18 @@ public class QuestionController {
     private final QuestionBusiness business;
     
     /**
-     * view controller for question list
+     * view controller for question pagination
      * @param model injection of spring model
-     * @return question list view
+     * @param page page
+     * @return paginated question list view
      */
     @GetMapping
-    public String list(Model model) {
-        var questionList = business.getList();
-        model.addAttribute("questionList", questionList);
+    public String list(
+        Model model,
+        @RequestParam(value = "page", defaultValue = "0") int page
+    ) {
+        var paging = business.getList(page);
+        model.addAttribute("paging", paging);
         return "question_list";
     }
     

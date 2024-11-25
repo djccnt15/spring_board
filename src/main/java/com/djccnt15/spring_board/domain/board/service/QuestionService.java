@@ -8,8 +8,12 @@ import com.djccnt15.spring_board.domain.board.model.QuestionResponse;
 import com.djccnt15.spring_board.exception.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -28,11 +32,12 @@ public class QuestionService {
         repository.save(entity);
     }
     
-    public List<QuestionResponse> getList() {
-        var entityList = repository.findAll();
-        return entityList.stream()
-            .map(converter::toResponse)
-            .toList();
+    public Page<QuestionResponse> getList(int page) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("id"));
+        var pageable = PageRequest.of(page, 10, Sort.by(sorts));
+        var pageableEntityList = repository.findAll(pageable);
+        return pageableEntityList.map(converter::toResponse);
     }
     
     public QuestionEntity getDetail(Long id) {
