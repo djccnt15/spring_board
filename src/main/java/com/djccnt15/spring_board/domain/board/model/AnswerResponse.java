@@ -1,5 +1,6 @@
 package com.djccnt15.spring_board.domain.board.model;
 
+import com.djccnt15.spring_board.domain.user.model.UserResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,4 +21,6 @@ public class AnswerResponse {
     private LocalDateTime createDateTime;
     
     private LocalDateTime updateDateTime;
+    
+    private UserResponse author;
 }

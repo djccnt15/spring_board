@@ -29,4 +29,8 @@ public class QuestionEntity extends DateTimeEntity {
     @OneToMany(mappedBy = "questionEntity", cascade = CascadeType.REMOVE)
     @ToString.Exclude  // prevent circular toString bug
     private List<AnswerEntity> answerEntityList;
+    
+    @JoinColumn(name = "author_id")
+    @ManyToOne
+    private UserEntity author;
 }

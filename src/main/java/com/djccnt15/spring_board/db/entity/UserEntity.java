@@ -2,11 +2,14 @@ package com.djccnt15.spring_board.db.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -27,4 +30,12 @@ public class UserEntity extends BaseEntity {
     @Column(unique = true)
     @NotNull
     private String email;
+    
+    @OneToMany(mappedBy = "author")
+    @ToString.Exclude
+    private List<QuestionEntity> question;
+    
+    @OneToMany(mappedBy = "author")
+    @ToString.Exclude
+    private List<AnswerEntity> answer;
 }

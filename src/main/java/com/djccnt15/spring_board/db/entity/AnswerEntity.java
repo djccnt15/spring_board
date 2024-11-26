@@ -28,4 +28,8 @@ public class AnswerEntity extends DateTimeEntity {
     @ManyToOne
     @NotNull
     private QuestionEntity questionEntity;
+    
+    @JoinColumn(name = "author_id")
+    @ManyToOne
+    private UserEntity author;
 }
