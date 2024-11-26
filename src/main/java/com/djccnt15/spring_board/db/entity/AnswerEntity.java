@@ -8,11 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
-
-import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -22,16 +18,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @SuperBuilder
 @DynamicInsert
-public class AnswerEntity extends BaseEntity {
+public class AnswerEntity extends DateTimeEntity {
     
     @Column(columnDefinition = "TEXT")
     @NotEmpty
     private String content;
-    
-    @Column(insertable = false, updatable = false)
-    @ColumnDefault(value = "now()")
-    @CreationTimestamp
-    private LocalDateTime createDateTime;
     
     @JoinColumn(nullable = false, name = "question_id")
     @ManyToOne

@@ -15,6 +15,7 @@ public class QuestionConverter {
             .subject(entity.getSubject())
             .content(entity.getContent())
             .createDateTime(entity.getCreateDateTime())
+            .updateDateTime(entity.getUpdateDateTime())
             .build();
     }
 }

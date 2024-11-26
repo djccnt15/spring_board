@@ -12,6 +12,7 @@ public class AnswerConverter {
             .id(entity.getId())
             .content(entity.getContent())
             .createDateTime(entity.getCreateDateTime())
+            .updateDateTime(entity.getUpdateDateTime())
             .build();
     }
 }

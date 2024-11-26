@@ -18,4 +18,6 @@ public class AnswerResponse {
     private String content;
     
     private LocalDateTime createDateTime;
+    
+    private LocalDateTime updateDateTime;
 }

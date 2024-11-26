@@ -22,5 +22,7 @@ public class QuestionResponse {
     
     private LocalDateTime createDateTime;
     
+    private LocalDateTime updateDateTime;
+    
     private List<AnswerResponse> answerList;
 }
