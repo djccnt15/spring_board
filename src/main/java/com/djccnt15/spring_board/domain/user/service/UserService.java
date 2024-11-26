@@ -3,10 +3,13 @@ package com.djccnt15.spring_board.domain.user.service;
 import com.djccnt15.spring_board.db.entity.UserEntity;
 import com.djccnt15.spring_board.db.repository.UserRepository;
 import com.djccnt15.spring_board.domain.user.model.UserCreateForm;
+import com.djccnt15.spring_board.exception.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -23,5 +26,14 @@ public class UserService {
             .email(form.getEmail())
             .build();
         repository.save(userEntity);
+    }
+    
+    public UserEntity getUser(String username) {
+        Optional<UserEntity> siteUser = repository.findByUsername(username);
+        if (siteUser.isPresent()) {
+            return siteUser.get();
+        } else {
+            throw new DataNotFoundException("User Not Found");
+        }
     }
 }
