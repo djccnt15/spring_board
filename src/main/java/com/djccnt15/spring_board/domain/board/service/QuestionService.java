@@ -52,4 +52,13 @@ public class QuestionService {
                 () -> new DataNotFoundException(String.format("not exist task id: %d", id))
             );
     }
+    
+    public void update(
+        QuestionEntity entity,
+        QuestionForm form
+    ) {
+        entity.setSubject(form.getSubject());
+        entity.setContent(form.getContent());
+        repository.save(entity);
+    }
 }

@@ -8,8 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -40,5 +39,44 @@ public class QuestionPrivateController {
         }
         business.create(form, principal);
         return "redirect:/question";
+    }
+    
+    /**
+     * view controller for get question update view
+     * @param form Form to input view as a model
+     * @param id question id
+     * @param principal Current user injection from spring-security
+     * @return question update page
+     */
+    @GetMapping(path = "/form/{id}")
+    public String update(
+        QuestionForm form,
+        @PathVariable("id") Long id,
+        Principal principal
+    ) {
+        business.updateView(form, id, principal);
+        return "question_form";
+    }
+    
+    /**
+     * view controller for question update view
+     * @param questionForm Form for data model
+     * @param bindingResult validated result. this must come right after the form
+     * @param id question id
+     * @param principal Current user injection from spring-security
+     * @return redirect to updated question
+     */
+    @PostMapping(path = "/form/{id}")
+    public String update(
+        @Valid QuestionForm questionForm,
+        BindingResult bindingResult,
+        @PathVariable("id") Long id,
+        Principal principal
+    ) {
+        if (bindingResult.hasErrors()) {
+            return "question_form";
+        }
+        business.update(questionForm, id, principal);
+        return String.format("redirect:/question/%s", id);
     }
 }
