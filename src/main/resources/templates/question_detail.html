@@ -2,7 +2,7 @@
   layout:decorate="~{layout}"
   xmlns:layout="http://www.w3.org/1999/xhtml"
   xmlns:th="http://www.w3.org/1999/xhtml"
->
+  xmlns:sec="http://www.w3.org/1999/xhtml">
 <div
   layout:fragment="content"
   class="container my-3"
@@ -50,7 +50,22 @@
     class="my-3"
   >
     <div th:replace="~{form_errors :: formErrorsFragment}"></div>
-    <textarea th:field="*{content}" rows="10" class="form-control"></textarea>
+      <label class="d-none" for="text-area-disabled"></label>
+      <textarea
+        id="text-area-disabled"
+        sec:authorize="isAnonymous()" disabled
+        th:field="*{content}"
+        class="form-control"
+        rows="10"
+      ></textarea>
+      <label class="d-none" for="text-area"></label>
+      <textarea
+        id="text-area"
+        sec:authorize="isAuthenticated()"
+        th:field="*{content}"
+        class="form-control"
+        rows="10"
+      ></textarea>
     <input type="submit" value="답변등록" class="btn btn-primary my-2">
   </form>
 </div>
