@@ -19,6 +19,9 @@
     <tbody>
     <tr class="text-center" th:each="question, loop : ${paging}">
       <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
+      <td class="text-start">
+        <a th:href="@{|/question/${question.id}|}" th:text="${question.subject}"></a>
+      </td>
       <td>
         <span th:if="${question.author != null}" th:text="${question.author.username}"></span>
       </td>

@@ -1,6 +1,7 @@
 package com.djccnt15.spring_board.domain.board.service;
 
 import com.djccnt15.spring_board.db.entity.QuestionEntity;
+import com.djccnt15.spring_board.db.entity.UserEntity;
 import com.djccnt15.spring_board.db.repository.QuestionRepository;
 import com.djccnt15.spring_board.domain.board.converter.QuestionConverter;
 import com.djccnt15.spring_board.domain.board.model.QuestionForm;
@@ -24,10 +25,14 @@ public class QuestionService {
     private final QuestionRepository repository;
     private final QuestionConverter converter;
     
-    public void create(QuestionForm form) {
+    public void create(
+        QuestionForm form,
+        UserEntity user
+    ) {
         var entity = QuestionEntity.builder()
             .subject(form.getSubject())
             .content(form.getSubject())
+            .author(user)
             .build();
         repository.save(entity);
     }

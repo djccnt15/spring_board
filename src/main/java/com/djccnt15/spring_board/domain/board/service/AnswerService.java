@@ -1,6 +1,7 @@
 package com.djccnt15.spring_board.domain.board.service;
 
 import com.djccnt15.spring_board.db.entity.AnswerEntity;
+import com.djccnt15.spring_board.db.entity.UserEntity;
 import com.djccnt15.spring_board.db.repository.AnswerRepository;
 import com.djccnt15.spring_board.db.entity.QuestionEntity;
 import com.djccnt15.spring_board.domain.board.model.AnswerForm;
@@ -17,11 +18,13 @@ public class AnswerService {
     
     public void create(
         QuestionEntity question,
-        AnswerForm form
+        AnswerForm form,
+        UserEntity user
     ) {
         var answer = AnswerEntity.builder()
             .content(form.getContent())
             .questionEntity(question)
+            .author(user)
             .build();
         repository.save(answer);
     }
