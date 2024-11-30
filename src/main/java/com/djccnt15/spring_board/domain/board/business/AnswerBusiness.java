@@ -52,4 +52,14 @@ public class AnswerBusiness {
         var updatedEntity = answerService.update(entity, form);
         return converter.toResponse(updatedEntity);
     }
+    
+    public Long delete(
+        Long id,
+        Principal principal
+    ) {
+        var entity = answerService.getAnswer(id);
+        answerService.validateAuthor(entity, principal);
+        answerService.delete(entity);
+        return entity.getQuestionEntity().getId();
+    }
 }

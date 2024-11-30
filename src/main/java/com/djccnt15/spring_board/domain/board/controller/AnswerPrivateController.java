@@ -92,4 +92,13 @@ public class AnswerPrivateController {
         form.setContent(answer.getContent());
         return "redirect:/question/%s".formatted(answer.getQuestion().getId());
     }
+    
+    @GetMapping(path = "/delete/{id}")
+    public String delete(
+        @PathVariable("id") Long id,
+        Principal principal
+    ) {
+        var questionId = answerBusiness.delete(id, principal);
+        return "redirect:/question/%s".formatted(questionId);
+    }
 }

@@ -57,4 +57,8 @@ public class AnswerService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없습니다.");
         }
     }
+    
+    public void delete(AnswerEntity entity) {
+        repository.delete(entity);
+    }
 }
