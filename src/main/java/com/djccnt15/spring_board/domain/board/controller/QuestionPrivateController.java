@@ -79,4 +79,13 @@ public class QuestionPrivateController {
         business.update(questionForm, id, principal);
         return String.format("redirect:/question/%s", id);
     }
+    
+    @GetMapping(path = "/delete/{id}")
+    public String delete(
+        @PathVariable("id") Long id,
+        Principal principal
+    ) {
+        business.delete(id, principal);
+        return "redirect:/";
+    }
 }

@@ -61,4 +61,8 @@ public class QuestionService {
         entity.setContent(form.getContent());
         repository.save(entity);
     }
+    
+    public void delete(QuestionEntity question) {
+        repository.delete(question);
+    }
 }

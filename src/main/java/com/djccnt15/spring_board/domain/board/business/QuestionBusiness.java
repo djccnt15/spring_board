@@ -77,4 +77,15 @@ public class QuestionBusiness {
         validateAuthor(entity, principal);
         questionService.update(entity, form);
     }
+    
+    public void delete(
+        Long id,
+        Principal principal
+    ) {
+        var question = questionService.getDetail(id);
+        if (!question.getAuthor().getUsername().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제 권한이 없습니다.");
+        }
+        questionService.delete(question);
+    }
 }
