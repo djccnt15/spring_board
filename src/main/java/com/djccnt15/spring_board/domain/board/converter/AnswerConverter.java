@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 public class AnswerConverter {
     
     private final UserConverter userConverter;
+    private final QuestionConverter questionConverter;
     
     public AnswerResponse toResponse(AnswerEntity entity) {
         return AnswerResponse.builder()
@@ -19,6 +20,7 @@ public class AnswerConverter {
             .createDateTime(entity.getCreateDateTime())
             .updateDateTime(entity.getUpdateDateTime())
             .author(userConverter.toResponse(entity.getAuthor()))
+            .question(questionConverter.toResponse(entity.getQuestionEntity()))
             .build();
     }
 }

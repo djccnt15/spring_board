@@ -23,4 +23,6 @@ public class AnswerResponse {
     private LocalDateTime updateDateTime;
     
     private UserResponse author;
+    
+    private QuestionResponse question;
 }

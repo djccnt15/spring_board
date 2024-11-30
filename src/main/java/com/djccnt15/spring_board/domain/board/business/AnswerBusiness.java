@@ -1,7 +1,9 @@
 package com.djccnt15.spring_board.domain.board.business;
 
 import com.djccnt15.spring_board.annotations.Business;
+import com.djccnt15.spring_board.domain.board.converter.AnswerConverter;
 import com.djccnt15.spring_board.domain.board.model.AnswerForm;
+import com.djccnt15.spring_board.domain.board.model.AnswerResponse;
 import com.djccnt15.spring_board.domain.board.service.AnswerService;
 import com.djccnt15.spring_board.domain.board.service.QuestionService;
 import com.djccnt15.spring_board.domain.user.service.UserService;
@@ -18,6 +20,7 @@ public class AnswerBusiness {
     private final QuestionService questionService;
     private final AnswerService answerService;
     private final UserService userService;
+    private final AnswerConverter converter;
     
     public void create(
         Long id,
@@ -27,5 +30,26 @@ public class AnswerBusiness {
         var question = questionService.getDetail(id);
         var user = userService.getUser(principal.getName());
         answerService.create(question, form, user);
+    }
+    
+    public void updateView(
+        AnswerForm form,
+        Long id,
+        Principal principal
+    ) {
+        var entity = answerService.getAnswer(id);
+        answerService.validateAuthor(entity, principal);
+        form.setContent(entity.getContent());
+    }
+    
+    public AnswerResponse update(
+        Long id,
+        AnswerForm form,
+        Principal principal
+    ) {
+        var entity = answerService.getAnswer(id);
+        answerService.validateAuthor(entity, principal);
+        var updatedEntity = answerService.update(entity, form);
+        return converter.toResponse(updatedEntity);
     }
 }
