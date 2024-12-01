@@ -12,8 +12,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,5 +67,14 @@ public class QuestionService {
     
     public void delete(QuestionEntity question) {
         repository.delete(question);
+    }
+    
+    public void validateAuthor(
+        QuestionEntity entity,
+        Principal principal
+    ) {
+        if (!entity.getAuthor().getUsername().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없습니다.");
+        }
     }
 }
