@@ -19,6 +19,10 @@
           </div>
           <div th:text="${#temporals.format(question.createDateTime, 'yyyy-MM-dd HH:mm')}"></div>
         </div>
+        <div th:if="${question.updateDateTime != null}" class="badge bg-light text-dark p-2 text-start mx-3">
+          <div class="mb-2">modified at</div>
+          <div th:text="${#temporals.format(question.updateDateTime, 'yyyy-MM-dd HH:mm')}"></div>
+        </div>
       </div>
       <div class="my-3">
         <a
@@ -54,6 +58,10 @@
             <span th:if="${answer.author != null}" th:text="${answer.author.username}"></span>
           </div>
           <div th:text="${#temporals.format(answer.createDateTime, 'yyyy-MM-dd HH:mm')}"></div>
+        </div>
+        <div th:if="${answer.updateDateTime != null}" class="badge bg-light text-dark p-2 text-start mx-3">
+          <div class="mb-2">modified at</div>
+          <div th:text="${#temporals.format(answer.updateDateTime, 'yyyy-MM-dd HH:mm')}"></div>
         </div>
       </div>
       <div class="my-3">
