@@ -8,6 +8,8 @@ spring:
         format_sql: true
         highlight_sql: true
         use_sql_comment: true
+        jdbc:
+          time_zone: Asia/Seoul
     hibernate:
 #      ddl-auto: create-drop
       ddl-auto: update

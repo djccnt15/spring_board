@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -21,13 +20,11 @@ import java.time.LocalDateTime;
 @SuperBuilder
 public class DateTimeEntity extends BaseEntity {
     
-    @Column(insertable = false, updatable = false)
-    @ColumnDefault(value = "now()")
+    @Column(updatable = false)
     @CreationTimestamp
     private LocalDateTime createDateTime;
     
-    @Column(insertable = false, updatable = false)
-    @ColumnDefault(value = "now()")
+    @Column(insertable = false)
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
 }
