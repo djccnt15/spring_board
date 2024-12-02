@@ -77,4 +77,12 @@ public class QuestionService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없습니다.");
         }
     }
+    
+    public void vote(
+        QuestionEntity question,
+        UserEntity user
+    ) {
+        question.getVoter().add(user);
+        repository.save(question);
+    }
 }

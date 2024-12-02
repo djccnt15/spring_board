@@ -6,6 +6,7 @@ import com.djccnt15.spring_board.domain.board.converter.QuestionConverter;
 import com.djccnt15.spring_board.domain.board.model.QuestionForm;
 import com.djccnt15.spring_board.domain.board.model.QuestionResponse;
 import com.djccnt15.spring_board.domain.board.service.QuestionService;
+import com.djccnt15.spring_board.domain.user.converter.UserConverter;
 import com.djccnt15.spring_board.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Business
@@ -24,6 +26,7 @@ public class QuestionBusiness {
     private final QuestionConverter questionConverter;
     private final AnswerConverter answerConverter;
     private final UserService userService;
+    private final UserConverter userConverter;
     
     public Page<QuestionResponse> getList(int page) {
         return questionService.getList(page);
@@ -34,8 +37,12 @@ public class QuestionBusiness {
         var answerList = questionEntity.getAnswerEntityList().stream()
             .map(answerConverter::toResponse)
             .toList();
+        var voterList = questionEntity.getVoter().stream()
+            .map(userConverter::toResponse)
+            .collect(Collectors.toSet());
         var question = questionConverter.toResponse(questionEntity);
         question.setAnswerList(answerList);
+        question.setVoterList(voterList);
         return question;
     }
     
@@ -77,5 +84,14 @@ public class QuestionBusiness {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제 권한이 없습니다.");
         }
         questionService.delete(question);
+    }
+    
+    public void vote(
+        Long id,
+        Principal principal
+    ) {
+        var question = questionService.getDetail(id);
+        var user = userService.getUser(principal.getName());
+        questionService.vote(question, user);
     }
 }

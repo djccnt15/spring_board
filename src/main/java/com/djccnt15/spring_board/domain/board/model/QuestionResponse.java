@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -28,4 +29,6 @@ public class QuestionResponse {
     private List<AnswerResponse> answerList;
     
     private UserResponse author;
+    
+    private Set<UserResponse> voterList;
 }

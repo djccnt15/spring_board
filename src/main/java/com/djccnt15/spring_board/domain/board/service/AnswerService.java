@@ -61,4 +61,12 @@ public class AnswerService {
     public void delete(AnswerEntity entity) {
         repository.delete(entity);
     }
+    
+    public void vote(
+        AnswerEntity answer,
+        UserEntity user
+    ) {
+        answer.getVoter().add(user);
+        repository.save(answer);
+    }
 }

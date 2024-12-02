@@ -62,4 +62,14 @@ public class AnswerBusiness {
         answerService.delete(entity);
         return entity.getQuestionEntity().getId();
     }
+    
+    public Long vote(
+        Long id,
+        Principal principal
+    ) {
+        var answer = answerService.getAnswer(id);
+        var user = userService.getUser(principal.getName());
+        answerService.vote(answer, user);
+        return answer.getQuestionEntity().getId();
+    }
 }

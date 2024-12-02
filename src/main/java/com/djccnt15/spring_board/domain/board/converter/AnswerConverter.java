@@ -6,6 +6,8 @@ import com.djccnt15.spring_board.domain.board.model.AnswerResponse;
 import com.djccnt15.spring_board.domain.user.converter.UserConverter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.stream.Collectors;
+
 @Converter
 @RequiredArgsConstructor
 public class AnswerConverter {
@@ -14,6 +16,9 @@ public class AnswerConverter {
     private final QuestionConverter questionConverter;
     
     public AnswerResponse toResponse(AnswerEntity entity) {
+        var voterList = entity.getVoter().stream()
+            .map(userConverter::toResponse)
+            .collect(Collectors.toSet());
         return AnswerResponse.builder()
             .id(entity.getId())
             .content(entity.getContent())
@@ -21,6 +26,7 @@ public class AnswerConverter {
             .updateDateTime(entity.getUpdateDateTime())
             .author(userConverter.toResponse(entity.getAuthor()))
             .question(questionConverter.toResponse(entity.getQuestionEntity()))
+            .voterList(voterList)
             .build();
     }
 }

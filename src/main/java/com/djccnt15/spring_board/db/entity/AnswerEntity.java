@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicInsert;
 
+import java.util.Set;
+
 @Data
 @Entity
 @Table(name = "answer")
@@ -32,4 +34,7 @@ public class AnswerEntity extends DateTimeEntity {
     @JoinColumn(name = "author_id")
     @ManyToOne
     private UserEntity author;
+    
+    @ManyToMany
+    private Set<UserEntity> voter;
 }

@@ -88,4 +88,19 @@ public class QuestionPrivateController {
         business.delete(id, principal);
         return "redirect:/";
     }
+    
+    /**
+     * view controller for question vote
+     * @param id question id
+     * @param principal Current user injection from spring-security
+     * @return redirect to current page
+     */
+    @GetMapping(path = "/vote/{id}")
+    public String vote(
+        @PathVariable(value = "id") Long id,
+        Principal principal
+    ) {
+        business.vote(id, principal);
+        return "redirect:/question/%s".formatted(id);
+    }
 }

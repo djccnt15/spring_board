@@ -101,4 +101,19 @@ public class AnswerPrivateController {
         var questionId = answerBusiness.delete(id, principal);
         return "redirect:/question/%s".formatted(questionId);
     }
+    
+    /**
+     * view controller for question vote
+     * @param id answer id
+     * @param principal Current user injection from spring-security
+     * @return redirect to current page
+     */
+    @GetMapping(path = "/vote/{id}")
+    public String vote(
+        @PathVariable(value = "id") Long id,
+        Principal principal
+    ) {
+        var questionId = answerBusiness.vote(id, principal);
+        return "redirect:/question/%s".formatted(questionId);
+    }
 }
