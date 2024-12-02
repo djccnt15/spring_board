@@ -21,7 +21,7 @@ public class AnswerService {
     
     private final AnswerRepository repository;
     
-    public void create(
+    public AnswerEntity create(
         QuestionEntity question,
         AnswerForm form,
         UserEntity user
@@ -31,7 +31,7 @@ public class AnswerService {
             .questionEntity(question)
             .author(user)
             .build();
-        repository.save(answer);
+        return repository.save(answer);
     }
     
     public AnswerEntity getAnswer(Long id) {

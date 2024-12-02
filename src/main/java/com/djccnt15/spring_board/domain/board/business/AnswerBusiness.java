@@ -22,14 +22,15 @@ public class AnswerBusiness {
     private final UserService userService;
     private final AnswerConverter converter;
     
-    public void create(
+    public AnswerResponse create(
         Long id,
         AnswerForm form,
         Principal principal
     ) {
         var question = questionService.getDetail(id);
         var user = userService.getUser(principal.getName());
-        answerService.create(question, form, user);
+        var answer = answerService.create(question, form, user);
+        return converter.toResponse(answer);
     }
     
     public void updateView(
@@ -63,13 +64,13 @@ public class AnswerBusiness {
         return entity.getQuestionEntity().getId();
     }
     
-    public Long vote(
+    public AnswerResponse vote(
         Long id,
         Principal principal
     ) {
         var answer = answerService.getAnswer(id);
         var user = userService.getUser(principal.getName());
         answerService.vote(answer, user);
-        return answer.getQuestionEntity().getId();
+        return converter.toResponse(answer);
     }
 }

@@ -49,8 +49,8 @@ public class AnswerPrivateController {
             model.addAttribute("question", question);
             return "question_detail";
         }
-        answerBusiness.create(id, form, principal);
-        return String.format("redirect:/question/%s", id);
+        var answer = answerBusiness.create(id, form, principal);
+        return "redirect:/question/%s#answer_%s".formatted(id, answer.getId());
     }
     
     /**
@@ -90,7 +90,7 @@ public class AnswerPrivateController {
         }
         var answer = answerBusiness.update(id, form, principal);
         form.setContent(answer.getContent());
-        return "redirect:/question/%s".formatted(answer.getQuestion().getId());
+        return "redirect:/question/%s#answer_%s".formatted(answer.getQuestion().getId(), answer.getId());
     }
     
     @GetMapping(path = "/delete/{id}")
@@ -113,7 +113,7 @@ public class AnswerPrivateController {
         @PathVariable(value = "id") Long id,
         Principal principal
     ) {
-        var questionId = answerBusiness.vote(id, principal);
-        return "redirect:/question/%s".formatted(questionId);
+        var answer = answerBusiness.vote(id, principal);
+        return "redirect:/question/%s#answer_%s".formatted(answer.getQuestion().getId(), answer.getId());
     }
 }
