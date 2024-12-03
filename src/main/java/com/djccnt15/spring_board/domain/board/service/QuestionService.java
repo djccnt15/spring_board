@@ -34,7 +34,7 @@ public class QuestionService {
     ) {
         var entity = QuestionEntity.builder()
             .subject(form.getSubject())
-            .content(form.getSubject())
+            .content(form.getContent())
             .author(user)
             .build();
         repository.save(entity);
