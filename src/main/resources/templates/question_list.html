@@ -2,6 +2,7 @@
   layout:decorate="~{layout}"
   xmlns:layout="http://www.w3.org/1999/xhtml"
   xmlns:th="http://www.w3.org/1999/xhtml"
+  xmlns:sec="http://www.w3.org/1999/xhtml"
 >
 <div
   layout:fragment="content"
@@ -63,6 +64,18 @@
     </ul>
   </div>
   <!-- 페이징처리 끝 -->
-  <a th:href="@{/question/form}" class="btn btn-primary">질문 등록하기</a>
+  <a
+    th:href="@{/question/form}"
+    class="btn btn-primary"
+    sec:authorize="isAuthenticated()"
+  >
+    질문 등록하기
+  </a>
+  <a
+    class="btn btn-secondary my-2"
+    sec:authorize="isAnonymous()" disabled
+  >
+    질문 등록하기
+  </a>
 </div>
 </html>
