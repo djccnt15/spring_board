@@ -93,6 +93,12 @@ public class AnswerPrivateController {
         return "redirect:/question/%s#answer_%s".formatted(answer.getQuestion().getId(), answer.getId());
     }
     
+    /**
+     * view controller for answer delete function
+     * @param id answer id
+     * @param principal Current user injection from spring-security
+     * @return redirect to question detail page
+     */
     @GetMapping(path = "/delete/{id}")
     public String delete(
         @PathVariable("id") Long id,

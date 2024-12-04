@@ -80,6 +80,12 @@ public class QuestionPrivateController {
         return String.format("redirect:/question/%s", id);
     }
     
+    /**
+     * view controller for question delete function
+     * @param id question id
+     * @param principal Current user injection from spring-security
+     * @return redirect to root page
+     */
     @GetMapping(path = "/delete/{id}")
     public String delete(
         @PathVariable("id") Long id,
