@@ -26,10 +26,12 @@ public class QuestionPublicController {
     @GetMapping
     public String list(
         Model model,
-        @RequestParam(value = "page", defaultValue = "0") int page
+        @RequestParam(value = "page", defaultValue = "0") int page,
+        @RequestParam(value = "kw", defaultValue = "") String keyword
     ) {
-        var paging = business.getList(page);
+        var paging = business.getList(page, keyword);
         model.addAttribute("paging", paging);
+        model.addAttribute("kw", keyword);
         return "question_list";
     }
     

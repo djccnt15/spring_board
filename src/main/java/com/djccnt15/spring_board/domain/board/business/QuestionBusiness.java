@@ -28,8 +28,8 @@ public class QuestionBusiness {
     private final UserService userService;
     private final UserConverter userConverter;
     
-    public Page<QuestionResponse> getList(int page) {
-        return questionService.getList(page);
+    public Page<QuestionResponse> getList(int page, String keyword) {
+        return questionService.getList(page, keyword);
     }
     
     public QuestionResponse getDetail(Long id) {
