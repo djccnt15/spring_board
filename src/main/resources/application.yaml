@@ -21,3 +21,13 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: username
     password: password
+logging:
+  logback:
+    rollingpolicy:
+      max-history: 30
+      max-file-size: 100MB
+      file-name-pattern: ${LOG_FILE}.%d{yyyy-MM-dd}-%i.log
+  file:
+    name: D:\log\spring\logFile.log
+  pattern:
+    dateformat: yyyy-MM-dd HH:mm:ss.SSS,Asia/Seoul
