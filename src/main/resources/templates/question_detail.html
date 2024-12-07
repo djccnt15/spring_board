@@ -29,10 +29,19 @@
           href="javascript:void(0);"
           class="recommend btn btn-sm btn-outline-secondary"
           th:data-uri="@{|/question/vote/${question.id}|}"
+          sec:authorize="isAuthenticated()"
         >
           추천
           <span class="badge rounded-pill bg-success" th:text="${#lists.size(question.voterList)}"></span>
         </a>
+        <button
+          class="recommend btn btn-secondary btn-sm btn-outline-secondary"
+          th:data-uri="@{|/question/vote/${question.id}|}"
+          sec:authorize="isAnonymous()" disabled
+        >
+          추천
+          <span class="badge rounded-pill bg-success" th:text="${#lists.size(question.voterList)}"></span>
+        </button>
         <a
           th:href="@{|/question/form/${question.id}|}"
           class="btn btn-sm btn-outline-secondary"
@@ -78,10 +87,19 @@
           href="javascript:void(0);"
           class="recommend btn btn-sm btn-outline-secondary"
           th:data-uri="@{|/answer/vote/${answer.id}|}"
+          sec:authorize="isAuthenticated()"
         >
           추천
           <span class="badge rounded-pill bg-success" th:text="${#lists.size(answer.voterList)}"></span>
         </a>
+        <button
+          class="recommend btn btn-secondary btn-sm btn-outline-secondary"
+          th:data-uri="@{|/answer/vote/${answer.id}|}"
+          sec:authorize="isAnonymous()" disabled
+        >
+          추천
+          <span class="badge rounded-pill bg-success" th:text="${#lists.size(answer.voterList)}"></span>
+        </button>
         <a
           th:href="@{|/answer/update/${answer.id}|}"
           class="btn btn-sm btn-outline-secondary"
@@ -125,7 +143,18 @@
         class="form-control"
         rows="10"
       ></textarea>
-    <input type="submit" value="답변등록" class="btn btn-primary my-2">
+    <input
+      type="submit"
+      value="답변등록"
+      class="btn btn-secondary my-2"
+      sec:authorize="isAnonymous()" disabled
+    >
+    <input
+      type="submit"
+      value="답변등록"
+      class="btn btn-primary my-2"
+      sec:authorize="isAuthenticated()"
+    >
   </form>
 </div>
 <script layout:fragment="script" type='text/javascript'>
