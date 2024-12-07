@@ -50,8 +50,7 @@ public class QuestionService {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("id"));
         var pageable = PageRequest.of(page, 10, Sort.by(sorts));
-        var spec = searchSpec(keyword);
-        var pageableEntityList = repository.findAll(spec, pageable);
+        var pageableEntityList = repository.findAllByKeyword(keyword, pageable);
         return pageableEntityList.map(converter::toResponse);
     }
     
@@ -93,6 +92,7 @@ public class QuestionService {
         repository.save(question);
     }
     
+    @Deprecated
     public Specification<QuestionEntity> searchSpec(String keyword) {
         return new Specification<>() {
             private static final long serialVersionUID = 1L;
