@@ -10,12 +10,21 @@ import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
-// TODO disable this filter is the app is for public service
+// TODO disable this filter if the app is for public service
 @Slf4j
 @Component
 @Order(value = Integer.MIN_VALUE)
 public class ProcessTimeFilter implements Filter {
+    
+    private final List<String> excludeUriList = Arrays.asList(
+        "/favicon.ico",
+        "/style.css",
+        "/bootstrap.min.css",
+        "/bootstrap.min.js"
+    );
     
     @Override
     public void doFilter(
@@ -33,16 +42,19 @@ public class ProcessTimeFilter implements Filter {
         try {
             chain.doFilter(requestWrapper, responseWrapper);
         } finally {
-            var processTime = (System.currentTimeMillis() - startTime) + "ms";
+            if (!excludeUriList.contains(requestWrapper.getRequestURI())) {
+                var processTime = (System.currentTimeMillis() - startTime) + "ms";
+                
+                log.info(
+                    "X-Process-Time: {}, uri: {}, method: {}",
+                    processTime,
+                    requestWrapper.getRequestURI(),
+                    requestWrapper.getMethod()
+                );
+                
+                responseWrapper.addHeader("X-Process-Time", processTime);  // add process time to response header
+            }
             
-            log.info(
-                "X-Process-Time: {}, uri: {}, method: {}",
-                processTime,
-                requestWrapper.getRequestURI(),
-                requestWrapper.getMethod()
-            );
-            
-            responseWrapper.addHeader("X-Process-Time", processTime);  // add process time to response header
             responseWrapper.copyBodyToResponse();  // restore consumed response
         }
     }
