@@ -77,7 +77,7 @@ public class QuestionPrivateController {
             return "question_form";
         }
         business.update(questionForm, id, principal);
-        return String.format("redirect:/question/%s", id);
+        return "redirect:/question/%s".formatted(id);
     }
     
     /**

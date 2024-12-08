@@ -58,7 +58,7 @@ public class QuestionService {
         return repository
             .findById(id)
             .orElseThrow(
-                () -> new DataNotFoundException(String.format("not exist task id: %d", id))
+                () -> new DataNotFoundException("not exist task id: %d".formatted(id))
             );
     }
     
