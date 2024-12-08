@@ -15,6 +15,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
     
+    /**
+     * Configuration for Spring Security
+     * @param http http security injection from spring security
+     * @return http result
+     * @throws Exception exception for user authority
+     */
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -46,6 +52,7 @@ public class SecurityConfig {
     
     /**
      * Bean for Spring Security authentication
+     * this bean works with UserDetailsService impl, PasswordEncoder
      */
     @Bean
     AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
