@@ -39,7 +39,7 @@ public class AnswerPrivateController {
     @PostMapping(path = "/{id}")
     public String create(
         Model model,
-        @PathVariable("id") Long id,
+        @PathVariable(value = "id") Long id,
         @Valid AnswerForm form,
         BindingResult bindingResult,
         Principal principal
@@ -63,7 +63,7 @@ public class AnswerPrivateController {
     @GetMapping(path = "/update/{id}")
     public String update(
         AnswerForm form,
-        @PathVariable("id") Long id,
+        @PathVariable(value = "id") Long id,
         Principal principal
     ) {
         answerBusiness.updateView(form, id, principal);
@@ -82,7 +82,7 @@ public class AnswerPrivateController {
     public String update(
         @Valid AnswerForm form,
         BindingResult bindingResult,
-        @PathVariable("id") Long id,
+        @PathVariable(value = "id") Long id,
         Principal principal
     ) {
         if (bindingResult.hasErrors()) {
@@ -101,7 +101,7 @@ public class AnswerPrivateController {
      */
     @GetMapping(path = "/delete/{id}")
     public String delete(
-        @PathVariable("id") Long id,
+        @PathVariable(value = "id") Long id,
         Principal principal
     ) {
         var questionId = answerBusiness.delete(id, principal);

@@ -51,7 +51,7 @@ public class QuestionPrivateController {
     @GetMapping(path = "/form/{id}")
     public String update(
         QuestionForm form,
-        @PathVariable("id") Long id,
+        @PathVariable(value = "id") Long id,
         Principal principal
     ) {
         business.updateView(form, id, principal);
@@ -70,7 +70,7 @@ public class QuestionPrivateController {
     public String update(
         @Valid QuestionForm questionForm,
         BindingResult bindingResult,
-        @PathVariable("id") Long id,
+        @PathVariable(value = "id") Long id,
         Principal principal
     ) {
         if (bindingResult.hasErrors()) {
@@ -88,7 +88,7 @@ public class QuestionPrivateController {
      */
     @GetMapping(path = "/delete/{id}")
     public String delete(
-        @PathVariable("id") Long id,
+        @PathVariable(value = "id") Long id,
         Principal principal
     ) {
         business.delete(id, principal);
