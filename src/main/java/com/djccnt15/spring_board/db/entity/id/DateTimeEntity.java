@@ -1,4 +1,4 @@
-package com.djccnt15.spring_board.db.entity;
+package com.djccnt15.spring_board.db.entity.id;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;

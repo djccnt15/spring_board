@@ -1,5 +1,6 @@
 package com.djccnt15.spring_board.db.entity;
 
+import com.djccnt15.spring_board.db.entity.id.DateTimeEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

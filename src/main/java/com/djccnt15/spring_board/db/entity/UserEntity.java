@@ -1,5 +1,6 @@
 package com.djccnt15.spring_board.db.entity;
 
+import com.djccnt15.spring_board.db.entity.id.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
