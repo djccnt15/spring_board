@@ -1,16 +1,14 @@
 package com.djccnt15.spring_board.db.entity;
 
 import com.djccnt15.spring_board.db.entity.id.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -39,4 +37,32 @@ public class UserEntity extends BaseEntity {
     @OneToMany(mappedBy = "author")
     @ToString.Exclude
     private List<AnswerEntity> answer;
+    
+    @OneToMany(mappedBy = "author")
+    @ToString.Exclude
+    private List<PostEntity> post;
+    
+    @OneToMany(mappedBy = "author")
+    @ToString.Exclude
+    private List<CommentEntity> comment;
+    
+    @JoinColumn(name = "user_id")
+    @ManyToOne
+    private RoleEntity role;
+    
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @ToString.Exclude
+    private Set<PostVoterEntity> postVoter;
+    
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @ToString.Exclude
+    private Set<CommentVoterEntity> commentVoter;
+    
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @ToString.Exclude
+    private Set<UserStateEntity> userState;
+    
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @ToString.Exclude
+    private Set<LoggedInEntity> loggedIn;
 }
