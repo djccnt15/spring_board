@@ -26,6 +26,7 @@ logging:
     rollingpolicy:
       max-history: 30
       max-file-size: 100MB
+      total-size-cap: 300MB
       file-name-pattern: ${LOG_FILE}.%d{yyyy-MM-dd}-%i.log
   file:
     name: D:\log\spring\logFile.log
