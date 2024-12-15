@@ -46,7 +46,7 @@ public class UserEntity extends BaseEntity {
     @ToString.Exclude
     private List<CommentEntity> comment;
     
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "role_id")
     @ManyToOne
     private RoleEntity role;
     
