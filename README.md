@@ -16,24 +16,18 @@
 
 ```mermaid
 erDiagram
-    ROLE {
-        bigint id   PK
-        string name UK
-    }
-
     STATE {
         bigint id   PK
         string name UK
     }
 
-    ROLE |o..o{ USER_INFO : ""
     USER_INFO {
         bigint      id                  PK
         string      name                UK  "null"
         string      password                "null"
         string      email               UK  "null"
         datetime    created_datetime
-        bigint      role_id             FK  "null"
+        enum      role                      "null"
     }
 
     STATE ||..o{ USER_STATE : ""

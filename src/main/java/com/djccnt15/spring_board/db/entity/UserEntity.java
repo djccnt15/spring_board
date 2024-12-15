@@ -1,12 +1,15 @@
 package com.djccnt15.spring_board.db.entity;
 
+import com.djccnt15.spring_board.db.entity.enums.UserRoleEnum;
 import com.djccnt15.spring_board.db.entity.id.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -30,6 +33,14 @@ public class UserEntity extends BaseEntity {
     @NotNull
     private String email;
     
+    @Column(updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createDateTime;
+    
+    @Column(name = "user_role")
+    // @Enumerated(EnumType.STRING)  // easy to use but lowers DB performance, use enum converter
+    private UserRoleEnum role;
+    
     @OneToMany(mappedBy = "author")
     @ToString.Exclude
     private List<QuestionEntity> question;
@@ -45,10 +56,6 @@ public class UserEntity extends BaseEntity {
     @OneToMany(mappedBy = "author")
     @ToString.Exclude
     private List<CommentEntity> comment;
-    
-    @JoinColumn(name = "role_id")
-    @ManyToOne
-    private RoleEntity role;
     
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     @ToString.Exclude
