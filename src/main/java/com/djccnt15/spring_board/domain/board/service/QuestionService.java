@@ -55,9 +55,7 @@ public class QuestionService {
     }
     
     public QuestionEntity getDetail(Long id) {
-        return repository
-            .findById(id)
-            .orElseThrow(
+        return repository.findById(id).orElseThrow(
                 () -> new DataNotFoundException("not exist task id: %d".formatted(id))
             );
     }

@@ -35,8 +35,7 @@ public class AnswerService {
     }
     
     public AnswerEntity getAnswer(Long id) {
-        return repository.findById(id)
-            .orElseThrow(
+        return repository.findById(id).orElseThrow(
                 () -> new DataNotFoundException("answer not found")
             );
     }

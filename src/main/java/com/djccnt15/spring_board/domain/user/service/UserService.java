@@ -9,8 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -29,11 +27,8 @@ public class UserService {
     }
     
     public UserEntity getUser(String username) {
-        Optional<UserEntity> siteUser = repository.findByUsername(username);
-        if (siteUser.isPresent()) {
-            return siteUser.get();
-        } else {
-            throw new DataNotFoundException("User Not Found");
-        }
+        return repository.findByUsername(username).orElseThrow(
+                () -> new DataNotFoundException("User Not Found")
+            );
     }
 }
