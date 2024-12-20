@@ -1,0 +1,27 @@
+<div
+  th:fragment="adminLeftNavFragment"
+  xmlns:th="http://www.w3.org/1999/xhtml"
+  xmlns:sec="http://www.w3.org/1999/xhtml"
+  class="d-flex flex-column flex-shrink-0 p-3 bg-light"
+>
+  <ul class="nav nav-pills flex-column mb-auto">
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        th:href="@{/admin/category}"
+        sec:authorize="hasRole('ROLE_ADMIN')"
+      >
+        카테고리 관리
+      </a>
+    </li>
+    <li>
+      <a
+        class="nav-link"
+        th:href="@{/admin/user}"
+        sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')"
+      >
+        유저 관리
+      </a>
+    </li>
+  </ul>
+</div>
