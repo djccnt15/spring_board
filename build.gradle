@@ -46,6 +46,9 @@ dependencies {
 
 	// https://mvnrepository.com/artifact/org.commonmark/commonmark
     implementation 'org.commonmark:commonmark:0.24.0'
+
+	// TODO rm h2 db dependency for dev testing
+	runtimeOnly 'com.h2database:h2'
 }
 
 tasks.named('test') {
