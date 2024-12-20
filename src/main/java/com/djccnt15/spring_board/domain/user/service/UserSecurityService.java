@@ -32,10 +32,10 @@ public class UserSecurityService implements UserDetailsService {
         );
         
         List<GrantedAuthority> authorities = new ArrayList<>();
-        if ("admin".equals(username)) {
-            authorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.getValue()));
-        } else {
-            authorities.add(new SimpleGrantedAuthority(UserRole.USER.getValue()));
+        switch (userEntity.getRole()) {
+            case ADMIN -> authorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.getValue()));
+            case STAFF -> authorities.add(new SimpleGrantedAuthority(UserRole.MANAGER.getValue()));
+            default -> authorities.add(new SimpleGrantedAuthority(UserRole.USER.getValue()));
         }
         
         return User.builder()
