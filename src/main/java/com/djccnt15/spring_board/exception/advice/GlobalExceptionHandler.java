@@ -2,6 +2,7 @@ package com.djccnt15.spring_board.exception.advice;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -24,6 +25,24 @@ public class GlobalExceptionHandler {
         log.error("", ex);
         
         model.addAttribute("statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        model.addAttribute("errorType", ex.getClass().getSimpleName());
+        model.addAttribute("errorMessage", ex.getMessage());
+        return "error-page";
+    }
+    
+    /**
+     * Auth Exception Handler
+     * @param ex runtime exception
+     * @param model inject from spring
+     * @return auth exception error page
+     */
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    public String handleAuthException(
+        Exception ex,
+        Model model
+    ) {
+        log.error("", ex);
+        model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.value());
         model.addAttribute("errorType", ex.getClass().getSimpleName());
         model.addAttribute("errorMessage", ex.getMessage());
         return "error-page";
