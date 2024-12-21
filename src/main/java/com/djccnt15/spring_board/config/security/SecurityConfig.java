@@ -1,4 +1,4 @@
-package com.djccnt15.spring_board.config.web;
+package com.djccnt15.spring_board.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

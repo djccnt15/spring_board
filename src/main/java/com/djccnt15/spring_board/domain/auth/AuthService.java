@@ -1,4 +1,4 @@
-package com.djccnt15.spring_board.domain.user.service;
+package com.djccnt15.spring_board.domain.auth;
 
 import com.djccnt15.spring_board.db.entity.enums.UserRoleEnum;
 import com.djccnt15.spring_board.db.repository.UserRepository;
@@ -22,7 +22,7 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserSecurityService implements UserDetailsService {
+public class AuthService implements UserDetailsService {
     
     private final UserRepository repository;
     
