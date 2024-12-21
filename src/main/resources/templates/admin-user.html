@@ -1,0 +1,30 @@
+<html
+  lang="ko"
+  layout:decorate="~{layout}"
+  xmlns:layout="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.w3.org/1999/xhtml"
+>
+<div layout:fragment="content" class="container my-3">
+  <h4>유저 관리</h4>
+  <table class="table">
+    <thead class="table-dark">
+    <tr class="text-center">
+      <th>ID</th>
+      <th class="text-start" style="width:15%">유저명</th>
+      <th class="text-start" style="width:30%">Email</th>
+      <th>가입일</th>
+      <th>권한</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="text-center" th:each="user, loop : ${userList}">
+      <td th:text="${user.id}"></td>
+      <td class="text-start" th:text="${user.username}"></td>
+      <td class="text-start" th:text="${user.email}"></td>
+      <td th:text="${#temporals.format(user.createDateTime, 'yyyy-MM-dd HH:mm')}"></td>
+      <td th:text="${user.role}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</html>
