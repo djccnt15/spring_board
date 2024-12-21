@@ -14,6 +14,7 @@
       <th class="text-start" style="width:30%">Email</th>
       <th>가입일</th>
       <th>권한</th>
+      <th>매니저</th>
     </tr>
     </thead>
     <tbody>
@@ -23,6 +24,47 @@
       <td class="text-start" th:text="${user.email}"></td>
       <td th:text="${#temporals.format(user.createDateTime, 'yyyy-MM-dd HH:mm')}"></td>
       <td th:text="${user.role}"></td>
+      <td th:switch="${#strings.toString(user.role)}">
+        <button
+          class="btn btn-sm btn-outline-secondary"
+          th:case="'ADMIN'"
+          disabled
+        >
+          관리자
+        </button>
+        <form
+          th:action="@{|/admin/user/role|}"
+          method="post"
+          onsubmit="return confirm('권한을 회수하시겠습니까?');"
+        >
+          <input type="hidden" name="_method" value="PATCH" />
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+          <input type="hidden" name="action" value="REVOKE" />
+          <input type="hidden" name="id" th:value="${user.id}" />
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            th:case="'STAFF'"
+          >
+            회수
+          </button>
+        </form>
+        <form
+          th:action="@{|/admin/user/role|}"
+          method="post"
+          onsubmit="return confirm('권한을 부여하시겠습니까?');"
+        >
+          <input type="hidden" name="_method" value="PATCH" />
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+          <input type="hidden" name="action" value="GRANT" />
+          <input type="hidden" name="id" th:value="${user.id}" />
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            th:case="*"
+          >
+            부여
+          </button>
+        </form>
+      </td>
     </tr>
     </tbody>
   </table>

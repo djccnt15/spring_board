@@ -2,6 +2,7 @@ package com.djccnt15.spring_board.domain.admin.controller;
 
 import com.djccnt15.spring_board.db.entity.enums.UserRoleEnum;
 import com.djccnt15.spring_board.domain.admin.business.AdminBusiness;
+import com.djccnt15.spring_board.domain.admin.model.ManagerRoleRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -50,5 +51,16 @@ public class AdminPrivateController {
         var userList = business.getUserList();
         model.addAttribute("userList", userList);
         return "admin-user";
+    }
+    
+    /**
+     * grant/revoke manager role of user
+     * @param request ManagerRoleRequest
+     * @return redirect to admin/user page for refresh
+     */
+    @PatchMapping(path = "/user/role")
+    public String manageAuthority(ManagerRoleRequest request) {
+        business.manageAuthority(request);
+        return "redirect:/admin/user";
     }
 }
