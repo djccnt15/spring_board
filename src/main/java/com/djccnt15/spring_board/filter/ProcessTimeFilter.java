@@ -19,12 +19,20 @@ import java.util.List;
 @Order(value = Integer.MIN_VALUE)
 public class ProcessTimeFilter implements Filter {
     
-    private final List<String> excludeUriList = Arrays.asList(
+    private final List<String> excludeUriPattern = Arrays.asList(
         "/favicon.ico",
         "/style.css",
-        "/bootstrap.min.css",
-        "/bootstrap.min.js"
+        "/bootstrap.min"
     );
+    
+    private boolean checkExclude(String uri) {
+        for (String pattern : excludeUriPattern) {
+            if (uri.contains(pattern)) {
+                return true;
+            }
+        }
+        return false;
+    }
     
     @Override
     public void doFilter(
@@ -42,7 +50,8 @@ public class ProcessTimeFilter implements Filter {
         try {
             chain.doFilter(requestWrapper, responseWrapper);
         } finally {
-            if (!excludeUriList.contains(requestWrapper.getRequestURI())) {
+            var isExcludeUri = checkExclude(requestWrapper.getRequestURI());
+            if (!isExcludeUri) {
                 var processTime = (System.currentTimeMillis() - startTime) + "ms";
                 
                 log.info(
