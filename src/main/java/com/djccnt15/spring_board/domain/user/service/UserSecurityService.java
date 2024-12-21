@@ -1,5 +1,6 @@
 package com.djccnt15.spring_board.domain.user.service;
 
+import com.djccnt15.spring_board.db.entity.enums.UserRoleEnum;
 import com.djccnt15.spring_board.db.repository.UserRepository;
 import com.djccnt15.spring_board.enums.UserRole;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,8 @@ public class UserSecurityService implements UserDetailsService {
         );
         
         List<GrantedAuthority> authorities = new ArrayList<>();
-        switch (userEntity.getRole()) {
+        
+        switch ((userEntity.getRole() == null) ? UserRoleEnum.USER : userEntity.getRole()) {
             case ADMIN -> authorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.getValue()));
             case STAFF -> authorities.add(new SimpleGrantedAuthority(UserRole.MANAGER.getValue()));
             default -> authorities.add(new SimpleGrantedAuthority(UserRole.USER.getValue()));
