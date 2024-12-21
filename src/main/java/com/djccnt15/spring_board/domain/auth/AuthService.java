@@ -2,12 +2,12 @@ package com.djccnt15.spring_board.domain.auth;
 
 import com.djccnt15.spring_board.db.entity.enums.UserRoleEnum;
 import com.djccnt15.spring_board.db.repository.UserRepository;
+import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.enums.UserRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -40,7 +40,8 @@ public class AuthService implements UserDetailsService {
             default -> authorities.add(new SimpleGrantedAuthority(UserRole.USER.getValue()));
         }
         
-        return User.builder()
+        return UserSession.builder()
+            .userId(userEntity.getId())
             .username(userEntity.getUsername())
             .password(userEntity.getPassword())
             .authorities(authorities)
