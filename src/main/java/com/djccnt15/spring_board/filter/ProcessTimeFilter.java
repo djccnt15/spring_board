@@ -53,12 +53,14 @@ public class ProcessTimeFilter implements Filter {
             var isExcludeUri = checkExclude(requestWrapper.getRequestURI());
             if (!isExcludeUri) {
                 var processTime = (System.currentTimeMillis() - startTime) + "ms";
+                var hiddenMethod = requestWrapper.getParameter("_method");
+                var actualMethod = (hiddenMethod != null) ? hiddenMethod : requestWrapper.getMethod();
                 
                 log.info(
                     "X-Process-Time: {}, uri: {}, method: {}",
                     processTime,
                     requestWrapper.getRequestURI(),
-                    requestWrapper.getMethod()
+                    actualMethod
                 );
                 
                 responseWrapper.addHeader("X-Process-Time", processTime);  // add process time to response header

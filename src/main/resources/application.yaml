@@ -1,6 +1,10 @@
 spring:
   application:
     name: spring_board
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
   jpa:
     show-sql: true  # simple stdout sql in console
     properties:
