@@ -11,5 +11,5 @@ public enum UserRoleEnum {
     STAFF("staff")
     ;
     
-    private final String code;
+    private final String role;
 }

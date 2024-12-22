@@ -13,7 +13,7 @@ public class UserEnumConverter implements AttributeConverter<UserRoleEnum, Strin
         if (role == null) {
             return null;
         }
-        return role.getCode();
+        return role.getRole();
     }
     
     @Override
@@ -23,7 +23,7 @@ public class UserEnumConverter implements AttributeConverter<UserRoleEnum, Strin
         }
         
         return Stream.of(UserRoleEnum.values())
-            .filter(it -> it.getCode().equals(role))
+            .filter(it -> it.getRole().equals(role))
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);
     }
