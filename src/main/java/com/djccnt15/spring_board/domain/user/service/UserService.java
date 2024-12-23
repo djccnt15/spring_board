@@ -31,10 +31,17 @@ public class UserService {
         repository.save(userEntity);
     }
     
+    @Deprecated
     public UserEntity getUser(String username) {
         return repository.findByUsername(username).orElseThrow(
                 () -> new DataNotFoundException("User Not Found")
             );
+    }
+    
+    public UserEntity getUser(Long userId) {
+        return repository.findById(userId).orElseThrow(
+            () -> new DataNotFoundException("User Not Found")
+        );
     }
     
     public List<UserResponse> getUserList() {
@@ -42,5 +49,12 @@ public class UserService {
         return userList.stream()
             .map(converter::toResponse)
             .toList();
+    }
+    
+    public void resign(UserEntity user) {
+        user.setUsername(null);
+        user.setPassword(null);
+        user.setEmail(null);
+        repository.save(user);
     }
 }

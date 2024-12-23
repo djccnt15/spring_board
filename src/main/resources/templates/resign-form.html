@@ -1,0 +1,33 @@
+<html
+  layout:decorate="~{layout}"
+  xmlns:th="http://www.w3.org/1999/xhtml"
+  xmlns:layout="http://www.w3.org/1999/xhtml"
+  lang="ko"
+>
+<div layout:fragment="content" class="container my-3">
+  <div class="alert alert-danger">
+    <ul class="list-unstyled">
+      <li>탈퇴해도 작성한 글과 댓글은 삭제되지 않습니다.</li>
+      <li>비밀번호 입력 후 회원탈퇴 버튼을 눌러주세요.</li>
+    </ul>
+  </div>
+  <form
+    th:action="@{/user/resign}"
+    method="post"
+    onsubmit="return confirm('탈퇴하시겠습니까?');"
+  >
+    <input type="hidden" name="_method" value="delete" />
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    <div th:if="${param.error}">
+      <div class="alert alert-danger">
+        비밀번호를 확인해 주세요.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">비밀번호</label>
+      <input type="password" name="password" id="password" class="form-control" autofocus>
+    </div>
+    <button type="submit" class="btn btn-primary">회원탈퇴</button>
+  </form>
+</div>
+</html>

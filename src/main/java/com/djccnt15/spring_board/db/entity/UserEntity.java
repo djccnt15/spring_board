@@ -3,8 +3,6 @@ package com.djccnt15.spring_board.db.entity;
 import com.djccnt15.spring_board.db.entity.enums.UserRoleEnum;
 import com.djccnt15.spring_board.db.entity.id.BaseEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
@@ -23,14 +21,11 @@ import java.util.Set;
 public class UserEntity extends BaseEntity {
     
     @Column(unique = true, length = 25)
-    @NotBlank
     private String username;
     
-    @NotBlank
     private String password;
     
     @Column(unique = true)
-    @NotNull
     private String email;
     
     @Column(updatable = false)
