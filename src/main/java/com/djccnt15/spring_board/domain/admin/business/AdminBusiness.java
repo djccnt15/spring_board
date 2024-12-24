@@ -4,12 +4,12 @@ import com.djccnt15.spring_board.annotations.Business;
 import com.djccnt15.spring_board.db.entity.enums.UserRoleEnum;
 import com.djccnt15.spring_board.domain.admin.model.ManagerRoleRequest;
 import com.djccnt15.spring_board.domain.admin.service.AdminService;
+import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.user.model.UserResponse;
 import com.djccnt15.spring_board.domain.user.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.security.Principal;
 import java.util.List;
 
 @Slf4j
@@ -20,8 +20,8 @@ public class AdminBusiness {
     private final UserService userService;
     private final AdminService adminService;
     
-    public UserRoleEnum getUserRole(Principal principal) {
-        return userService.getUser(principal.getName()).getRole();
+    public UserRoleEnum getUserRole(UserSession user) {
+        return user.getRole();
     }
     
     public List<UserResponse> getUserList() {

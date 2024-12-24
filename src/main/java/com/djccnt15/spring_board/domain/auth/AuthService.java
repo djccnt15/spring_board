@@ -44,6 +44,7 @@ public class AuthService implements UserDetailsService {
             .userId(userEntity.getId())
             .username(userEntity.getUsername())
             .password(userEntity.getPassword())
+            .role(userEntity.getRole())
             .authorities(authorities)
             .build();
     }

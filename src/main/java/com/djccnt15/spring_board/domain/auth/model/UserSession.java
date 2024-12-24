@@ -1,5 +1,6 @@
 package com.djccnt15.spring_board.domain.auth.model;
 
+import com.djccnt15.spring_board.db.entity.enums.UserRoleEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +21,8 @@ public class UserSession implements UserDetails {
     private String username;
     
     private String password;
+    
+    private UserRoleEnum role;
     
     private Collection<? extends GrantedAuthority> authorities;
 }
