@@ -35,9 +35,9 @@ public class AuthService implements UserDetailsService {
         List<GrantedAuthority> authorities = new ArrayList<>();
         
         switch ((userEntity.getRole() == null) ? UserRoleEnum.USER : userEntity.getRole()) {
-            case ADMIN -> authorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.getValue()));
-            case STAFF -> authorities.add(new SimpleGrantedAuthority(UserRole.MANAGER.getValue()));
-            default -> authorities.add(new SimpleGrantedAuthority(UserRole.USER.getValue()));
+            case ADMIN -> authorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.getRole()));
+            case STAFF -> authorities.add(new SimpleGrantedAuthority(UserRole.MANAGER.getRole()));
+            default -> authorities.add(new SimpleGrantedAuthority(UserRole.USER.getRole()));
         }
         
         return UserSession.builder()
