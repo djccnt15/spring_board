@@ -62,9 +62,12 @@ public class AdminPrivateController {
      * @return redirect to admin/user page for refresh
      */
     @PatchMapping(path = "/user/role")
-    public String manageAuthority(ManagerRoleRequest request) {
+    public String manageAuthority(
+        ManagerRoleRequest request,
+        @RequestParam(value = "page", defaultValue = "0") int page
+    ) {
         business.manageAuthority(request);
-        return "redirect:/admin/user";
+        return "redirect:/admin/user?page=%s".formatted(page);
     }
     
     /**
