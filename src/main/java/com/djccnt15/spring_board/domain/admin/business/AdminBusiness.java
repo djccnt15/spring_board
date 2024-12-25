@@ -9,8 +9,7 @@ import com.djccnt15.spring_board.domain.user.model.UserResponse;
 import com.djccnt15.spring_board.domain.user.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 @Slf4j
 @Business
@@ -24,8 +23,8 @@ public class AdminBusiness {
         return user.getRole();
     }
     
-    public List<UserResponse> getUserList() {
-        return userService.getUserList();
+    public Page<UserResponse> getUserList(int page) {
+        return userService.getList(page);
     }
     
     public void manageAuthority(ManagerRoleRequest request) {

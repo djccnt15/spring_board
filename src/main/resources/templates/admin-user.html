@@ -68,5 +68,37 @@
     </tr>
     </tbody>
   </table>
+  <div th:if="${!userList.isEmpty()}">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" th:classappend="${userList.isFirst} ? 'disabled'">
+        <a class="page-link" th:href="@{|?page=0|}">
+          <span>처음</span>
+        </a>
+      </li>
+      <li class="page-item" th:classappend="${userList.isFirst} ? 'disabled'">
+        <a class="page-link" th:href="@{|?page=${userList.number - 1}|}">
+          <span>이전</span>
+        </a>
+      </li>
+      <li
+        th:each="page: ${#numbers.sequence(0, userList.totalPages-1)}"
+        th:if="${page >= userList.number-5 and page <= userList.number+5}"
+        th:classappend="${page == userList.number} ? 'active'"
+        class="page-item"
+      >
+        <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+      </li>
+      <li class="page-item" th:classappend="${userList.isLast} ? 'disabled'">
+        <a class="page-link" th:href="@{|?page=${userList.number + 1}|}">
+          <span>다음</span>
+        </a>
+      </li>
+      <li class="page-item" th:classappend="${userList.isLast} ? 'disabled'">
+        <a class="page-link" th:href="@{|?page=${userList.getTotalPages - 1}|}">
+          <span>끝</span>
+        </a>
+      </li>
+    </ul>
+  </div>
 </div>
 </html>
