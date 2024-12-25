@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @Controller
 @RequestMapping(path = "/admin")
-@PreAuthorize(value = "isAuthenticated()")
 @RequiredArgsConstructor
 public class AdminPrivateController {
     

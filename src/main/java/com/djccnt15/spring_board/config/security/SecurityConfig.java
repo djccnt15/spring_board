@@ -2,6 +2,7 @@ package com.djccnt15.spring_board.config.security;
 
 import com.djccnt15.spring_board.domain.auth.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,11 +17,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+    
+    private final List<String> SWAGGER = List.of(
+        "/swagger-ui.html,",
+        "/swagger-ui/**",
+        "/v3/api-docs/**"
+    );
     
     private final AuthService authService;
     
@@ -32,12 +41,22 @@ public class SecurityConfig {
      */
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            // TODO disable temporal security config
-            .authorizeHttpRequests(
-                (authorizeHttpRequests) -> authorizeHttpRequests
-                    .requestMatchers(new AntPathRequestMatcher("/**"))
-                    .permitAll()
+        http.authorizeHttpRequests(
+            (authorize) -> authorize
+                // allow to swagger ui. TODO disable permit to swagger ui below for production
+                .requestMatchers(SWAGGER.toArray(new String[0])).permitAll()
+                
+                // permit all to static resource
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                
+                // admin and manager can manage user
+                .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAnyRole("ADMIN", "MANAGER")
+                
+                // permit all to rest of every public domain
+                .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
+                
+                // any request to rest of domain needs to be authenticated
+                .anyRequest().authenticated()
             )
             .formLogin((formLogin) -> formLogin
                 .loginPage("/user/login")
