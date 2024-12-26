@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class AdminService {
+public class AdminUserService {
     
     private final UserRepository userRepository;
     
