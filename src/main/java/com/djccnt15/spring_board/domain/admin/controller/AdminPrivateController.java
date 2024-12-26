@@ -77,8 +77,14 @@ public class AdminPrivateController {
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(path = "/category")
-    public String manageCategory(Model model) {
+    public String manageCategory(
+        Model model,
+        @RequestParam(value = "main", required = false) Long main
+    ) {
         model.addAttribute("showAdminLeftNav", true);
+        var categoryList = business.getCategories(main);
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("selectedMain", main != null ? main : categoryList.getMainList().get(0).getId());
         return "admin-category";
     }
 }
