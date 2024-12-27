@@ -4,7 +4,6 @@ import com.djccnt15.spring_board.domain.admin.business.AdminCategoryBusiness;
 import com.djccnt15.spring_board.domain.admin.business.AdminUserBusiness;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +25,6 @@ public class AdminCategoryController {
      * @return category admin page view
      */
     @GetMapping
-    @PreAuthorize(value = "hasRole('ROLE_ADMIN')")
     public String manageCategory(
         Model model,
         @RequestParam(value = "main", required = false) Long main
