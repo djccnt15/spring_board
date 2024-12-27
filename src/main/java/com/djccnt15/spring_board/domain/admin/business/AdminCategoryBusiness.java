@@ -3,6 +3,7 @@ package com.djccnt15.spring_board.domain.admin.business;
 import com.djccnt15.spring_board.annotations.Business;
 import com.djccnt15.spring_board.domain.admin.model.AdminCategoryResponse;
 import com.djccnt15.spring_board.domain.category.converter.CategoryConverter;
+import com.djccnt15.spring_board.domain.category.model.CategoryCreateRequest;
 import com.djccnt15.spring_board.domain.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,5 +32,9 @@ public class AdminCategoryBusiness {
             .mainList(mainList.stream().map(converter::toResponse).toList())
             .subList(subList.stream().map(converter::toResponse).toList())
             .build();
+    }
+    
+    public void createMain(CategoryCreateRequest form) {
+        service.create(form);
     }
 }

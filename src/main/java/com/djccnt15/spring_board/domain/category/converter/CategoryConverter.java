@@ -2,6 +2,7 @@ package com.djccnt15.spring_board.domain.category.converter;
 
 import com.djccnt15.spring_board.annotations.Converter;
 import com.djccnt15.spring_board.db.entity.CategoryEntity;
+import com.djccnt15.spring_board.domain.category.model.CategoryCreateRequest;
 import com.djccnt15.spring_board.domain.category.model.CategoryResponse;
 
 import java.util.Optional;
@@ -18,6 +19,13 @@ public class CategoryConverter {
                 .ofNullable(entity.getParent())
                 .map(CategoryEntity::getId)
                 .orElse(null))
+            .build();
+    }
+    
+    public CategoryEntity toEntity(CategoryCreateRequest request) {
+        return CategoryEntity.builder()
+            .tier(request.getTier())
+            .name(request.getName())
             .build();
     }
 }
