@@ -34,7 +34,12 @@ public class AdminCategoryController {
         model.addAttribute("showAdminLeftNav", true);
         var categoryList = business.getCategories(main);
         model.addAttribute("categoryList", categoryList);
-        model.addAttribute("selectedMain", main != null ? main : categoryList.getMainList().get(0).getId());
+        
+        var selectedMain = (categoryList.getMainList() == null)
+            ? null
+            : (main != null ? main : categoryList.getMainList().get(0).getId());
+        model.addAttribute("selectedMain", selectedMain);
+        
         return "admin-category";
     }
 }

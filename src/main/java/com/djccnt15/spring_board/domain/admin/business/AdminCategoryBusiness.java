@@ -17,6 +17,11 @@ public class AdminCategoryBusiness {
     
     public AdminCategoryResponse getCategories(Long mainId) {
         var mainList = service.getCategoryByTier(1);
+        
+        if (mainList.isEmpty()) {
+            return AdminCategoryResponse.builder().build();
+        }
+        
         var main = mainList.stream()
             .filter(it -> it.getId().equals(mainId)).findFirst()
             .orElse(mainList.get(0));
