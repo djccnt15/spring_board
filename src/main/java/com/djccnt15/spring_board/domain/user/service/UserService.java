@@ -10,12 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -49,10 +45,8 @@ public class UserService {
     }
     
     public Page<UserResponse> getList(int page) {
-        List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("id"));
-        var pageable = PageRequest.of(page, 10, Sort.by(sorts));
-        var userList = repository.findByUsernameIsNotNullOrderByIdAsc(pageable);
+        var pageable = PageRequest.of(page, 10);
+        var userList = repository.findByUsernameIsNotNullOrderById(pageable);
         return userList.map(converter::toResponse);
     }
     
