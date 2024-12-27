@@ -1,7 +1,7 @@
 package com.djccnt15.spring_board.domain.user.model;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -9,16 +9,16 @@ import lombok.Data;
 public class UserCreateForm {
     
     @Size(min = 3, max = 25)
-    @NotEmpty(message = "user id is essential")
+    @NotBlank(message = "user id is essential and must contain at least one non-whitespace character")
     private String username;
     
-    @NotEmpty(message = "password is essential")
+    @NotBlank(message = "password is essential and must contain at least one non-whitespace character")
     private String password1;
     
-    @NotEmpty(message = "password validation is essential")
+    @NotBlank(message = "password validation is essential and must contain at least one non-whitespace character")
     private String password2;
     
-    @NotEmpty(message = "email is essential")
+    @NotBlank(message = "email is essential and must contain at least one non-whitespace character")
     @Email
     private String email;
 }
