@@ -13,12 +13,9 @@
           <h5 class="mb-0">게시판 목록</h5>
         </div>
         <div class="col-auto mr-auto">
-          <a
-            class="btn btn-primary"
-            th:href="@{/admin/category/main}"
-          >
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mainCategoryCreateModal">
             게시판 추가
-          </a>
+          </button>
         </div>
       </div>
       <div class="list-group" th:each="main : ${categoryList.mainList}">
@@ -42,5 +39,36 @@
       </div>
     </div>
   </div>
+  <!-- 게시판 추가 modal -->
+  <div class="modal fade" id="mainCategoryCreateModal" tabindex="-1" aria-labelledby="mainCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="mainCategoryModalLabel">게시판 추가</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form
+          th:action="@{/admin/category/main}"
+          th:object="${mainCategoryForm}"
+          method="post"
+          onsubmit="return confirm('게시판을 생성하시겠습니까?');"
+        >
+          <div class="modal-body">
+            <input type="hidden" name="tier" id="tier" class="form-control" th:value="1"/>
+            <div class="mb-3">
+              <label th:for="name" class="form-label">게시판 이름</label>
+              <input type="text" id="name" class="form-control" th:field="*{name}" autofocus>
+            </div>
+            <input type="hidden" id="mainId" name="mainId" class="form-control" value=""/>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+            <button type="submit" class="btn btn-primary">게시판 생성</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
+<script layout:fragment="script" type='text/javascript' th:src="@{/admin-category.js}"></script>
 </html>

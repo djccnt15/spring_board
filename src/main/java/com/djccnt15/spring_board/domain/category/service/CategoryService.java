@@ -35,7 +35,7 @@ public class CategoryService {
         );
     }
     
-    public void create(CategoryCreateRequest request) {
+    public void createCategory(CategoryCreateRequest request) {
         repository.save(converter.toEntity(request));
     }
 }

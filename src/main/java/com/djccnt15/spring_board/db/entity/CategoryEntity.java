@@ -2,8 +2,11 @@ package com.djccnt15.spring_board.db.entity;
 
 import com.djccnt15.spring_board.db.entity.id.BaseEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.List;
 
@@ -17,10 +20,18 @@ import java.util.List;
 public class CategoryEntity extends BaseEntity {
     
     @Column
+    @NotNull
     private Integer tier;
     
-    @Column(unique = true)
+    @Column(unique = true, length = 50)
+    @NotBlank
     private String name;
+    
+    @Column(name = "is_active")
+    @ColumnDefault(value = "true")  // annotation for ddl-auto
+    @Builder.Default  // annotation for lombok default
+    @NotNull
+    private boolean isActive = true;
     
     @ManyToOne
     @JoinColumn(name = "parent_id")
