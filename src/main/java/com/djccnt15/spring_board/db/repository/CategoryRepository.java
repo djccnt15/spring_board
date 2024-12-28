@@ -10,7 +10,7 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> 
     
     Optional<CategoryEntity> findByName(String name);
     
-    List<CategoryEntity> findByTierOrderByName(int tier);
+    List<CategoryEntity> findByTierAndIsActiveOrderByName(int tier, boolean isActive);
     
     List<CategoryEntity> findByParentOrderByName(CategoryEntity category);
 }

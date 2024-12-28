@@ -41,16 +41,6 @@ public class CategoryEntity extends BaseEntity {
     @ToString.Exclude  // prevent circular toString bug
     private List<CategoryEntity> children;
     
-    public void addChild(CategoryEntity child) {
-        child.setParent(this);
-        children.add(child);
-    }
-    
-    public void removeChild(CategoryEntity child) {
-        child.setParent(null);
-        children.remove(child);
-    }
-    
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     private List<PostEntity> postEntityList;

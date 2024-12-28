@@ -23,8 +23,21 @@
           class="list-group-item list-group-item-action"
           th:classappend="${main.id == selectedMain} ? 'active'"
           th:href="@{|?main=${main.id}|}"
-          th:text="${main.name}"
-        ></a>
+        >
+          <span th:text="${main.name}"></span>
+          <div>
+            <form
+              class="d-inline"
+              th:action="@{|/admin/category/main|}"
+              method="post"
+              onsubmit="return confirm('게시판을 삭제하시겠습니까?');"
+            >
+              <input type="hidden" name="_method" value="delete" />
+              <input type="hidden" name="id" th:value="${main.id}" />
+              <button class="btn btn-sm btn-outline-secondary">삭제</button>
+            </form>
+          </div>
+        </a>
       </div>
     </div>
     <!-- tier 2 Categories -->

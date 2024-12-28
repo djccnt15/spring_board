@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,5 +40,11 @@ public class AdminCategoryController {
         model.addAttribute("selectedMain", selectedMain);
         model.addAttribute("mainCategoryForm", new CategoryCreateRequest());
         return "admin-category";
+    }
+    
+    @DeleteMapping(path = "/main")
+    public String deleteMainCategory(@RequestParam(value = "id") Long id) {
+        business.deleteCategory(id);
+        return "redirect:/admin/category";
     }
 }

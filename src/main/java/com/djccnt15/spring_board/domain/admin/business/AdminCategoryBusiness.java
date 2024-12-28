@@ -38,4 +38,9 @@ public class AdminCategoryBusiness {
         service.validateName(form);
         service.createCategory(form);
     }
+    
+    public void deleteCategory(Long id) {
+        var entity = service.getCategory(id);
+        service.deleteCategory(entity);
+    }
 }
