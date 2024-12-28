@@ -35,6 +35,7 @@ public class AdminCategoryBusiness {
     }
     
     public void createMain(CategoryCreateRequest form) {
+        service.validateName(form);
         service.create(form);
     }
 }
