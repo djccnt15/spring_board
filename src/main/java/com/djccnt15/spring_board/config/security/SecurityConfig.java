@@ -49,11 +49,11 @@ public class SecurityConfig {
                 // permit all to static resource
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 
-                // admin and manager can manage user
-                .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAnyRole("ADMIN", "MANAGER")
-                
                 // only admin can manage category
                 .requestMatchers(new AntPathRequestMatcher("/admin/category/**")).hasAnyRole("ADMIN")
+                
+                // admin and manager can manage user
+                .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAnyRole("ADMIN", "MANAGER")
                 
                 // permit all to rest of every public domain
                 .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
