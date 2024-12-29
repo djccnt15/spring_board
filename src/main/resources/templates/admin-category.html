@@ -26,6 +26,7 @@
             <tr class="text-center">
               <th>ID</th>
               <th class="text-start" style="width:60%">이름</th>
+              <th>수정</th>
               <th>삭제</th>
             </tr>
           </thead>
@@ -37,6 +38,14 @@
             >
               <td th:text="${main.id}"></td>
               <td class="text-start" th:text="${main.name}"></td>
+              <td>
+                <a
+                  th:href="@{|/admin/category/main/form/${main.id}|}"
+                  class="btn btn-sm btn-outline-secondary"
+                  sec:authorize="hasRole('ROLE_ADMIN')"
+                  th:text="수정"
+                ></a>
+              </td>
               <td>
                 <form
                   class="d-inline"

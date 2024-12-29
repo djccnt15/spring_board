@@ -49,4 +49,22 @@ public class AdminCategoryController {
         business.deleteCategory(id);
         return "redirect:/admin/category";
     }
+    
+    /**
+     * view controller for update category
+     * @param model inject from spring
+     * @param id id of category to update
+     * @return update form page
+     */
+    @GetMapping(path = "/main/form/{id}")
+    public String updateCategoryForm(
+        Model model,
+        @PathVariable(value = "id") Long id
+    ) {
+        model.addAttribute("showAdminLeftNav", true);
+        var updateForm = business.getCategoryUpdateForm(id);
+        model.addAttribute("placeholders", updateForm);
+        model.addAttribute("form", new CategoryCreateRequest());
+        return "category-main-update-form";
+    }
 }

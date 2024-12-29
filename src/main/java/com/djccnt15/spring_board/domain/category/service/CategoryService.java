@@ -42,9 +42,14 @@ public class CategoryService {
     }
     
     public CategoryEntity getCategory(Long id) {
-        return repository.findById(id).orElseThrow(
+        return repository.findByIdAndIsActive(id, true).orElseThrow(
             () -> new DataNotFoundException("can't find requested category")
         );
+    }
+    
+    public void updateCategory(CategoryEntity entity, CategoryCreateRequest request) {
+        entity.setName(request.getName());
+        repository.save(entity);
     }
     
     public void deleteCategory(CategoryEntity entity) {

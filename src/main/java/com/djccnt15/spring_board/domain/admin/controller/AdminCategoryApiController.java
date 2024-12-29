@@ -49,4 +49,33 @@ public class AdminCategoryApiController {
         business.createMain(form);
         return ResponseEntity.ok(ResponseMessageEnum.CREATE);
     }
+    
+    /**
+     * api controller for update main category
+     * @param id id of category to update
+     * @param form user request form for update category
+     * @param bindingResult validated result of the form. this must come right after the form
+     * @return ResponseEntity
+     */
+    @PatchMapping(path = "/main/form/{id}")
+    public ResponseEntity<?> updateCategory(
+        @PathVariable(value = "id") Long id,
+        @Valid @ModelAttribute(name = "form") CategoryCreateRequest form,
+        BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) {
+            var errors = bindingResult.getAllErrors()
+                .stream()
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .toList();
+            var errResponse = ErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST)
+                .message(String.join("\n", errors))
+                .build();
+            return ResponseEntity.badRequest().body(errResponse);
+        }
+        business.updateCategory(id, form);
+        return ResponseEntity.ok(ResponseMessageEnum.UPDATE);
+    }
 }

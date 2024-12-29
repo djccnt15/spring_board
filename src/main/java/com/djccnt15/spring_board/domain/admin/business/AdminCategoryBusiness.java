@@ -1,12 +1,15 @@
 package com.djccnt15.spring_board.domain.admin.business;
 
 import com.djccnt15.spring_board.annotations.Business;
+import com.djccnt15.spring_board.db.entity.CategoryEntity;
 import com.djccnt15.spring_board.domain.admin.model.AdminCategoryResponse;
 import com.djccnt15.spring_board.domain.category.converter.CategoryConverter;
 import com.djccnt15.spring_board.domain.category.model.CategoryCreateRequest;
 import com.djccnt15.spring_board.domain.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Optional;
 
 @Slf4j
 @Business
@@ -37,6 +40,25 @@ public class AdminCategoryBusiness {
     public void createMain(CategoryCreateRequest form) {
         service.validateName(form);
         service.createCategory(form);
+    }
+    
+    public CategoryCreateRequest getCategoryUpdateForm(Long id) {
+        var entity = service.getCategory(id);
+        return CategoryCreateRequest.builder()
+            .tier(entity.getTier())
+            .name(entity.getName())
+            .mainId(
+                Optional.ofNullable(entity.getParent())
+                    .map(CategoryEntity::getId)
+                    .orElse(null)
+            )
+            .build();
+    }
+    
+    public void updateCategory(Long id, CategoryCreateRequest form) {
+        service.validateName(form);
+        var entity = service.getCategory(id);
+        service.updateCategory(entity, form);
     }
     
     public void deleteCategory(Long id) {

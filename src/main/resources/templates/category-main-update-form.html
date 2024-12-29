@@ -1,0 +1,27 @@
+<html
+  lang="ko"
+  layout:decorate="~{layout}"
+  xmlns:layout="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.w3.org/1999/xhtml">
+<div layout:fragment="content" class="container">
+  <h5 class="my-3 border-bottom pb-2">게시판 수정</h5>
+  <!--csrf token will be injected automatically if use `th:action` attribute-->
+  <form
+    id="mainCategoryUpdateForm"
+    th:object="${form}"
+    method="post"
+    th:onsubmit="return confirm('[[${placeholders.name}]] 게시판을 수정하시겠습니까?');"
+  >
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    <input type="hidden" name="_method" value="patch" />
+    <input type="hidden" id="tier" name="tier" class="form-control" th:value="${placeholders.tier}"/>
+    <div class="mb-3">
+      <label th:for="name" class="form-label">게시판 이름</label>
+      <input type="text" id="name" name="name" class="form-control" th:placeholder="${placeholders.name}" autofocus>
+    </div>
+    <input type="hidden" id="mainId" name="mainId" class="form-control" th:field="*{mainId}"/>
+    <button type="submit" class="btn btn-primary">게시판 수정</button>
+  </form>
+</div>
+<script layout:fragment="script" type="module" th:src="@{/admin-category-update.js}"></script>
+</html>
