@@ -76,6 +76,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form
+          id="mainCategoryCreateForm"
           th:action="@{/admin/category/main}"
           th:object="${mainCategoryForm}"
           method="post"
@@ -98,5 +99,5 @@
     </div>
   </div>
 </div>
-<script layout:fragment="script" type='text/javascript' th:src="@{/admin-category.js}"></script>
+<script layout:fragment="script" type="module" th:src="@{/admin-category.js}"></script>
 </html>
