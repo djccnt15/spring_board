@@ -40,13 +40,12 @@
               <td>
                 <form
                   class="d-inline"
-                  th:action="@{|/admin/category|}"
+                  th:action="@{|/admin/category/${main.id}|}"
                   method="post"
                   th:onsubmit="return confirm('[[${main.name}]] 게시판을 삭제하시겠습니까?');"
                   sec:authorize="hasRole('ROLE_ADMIN')"
                 >
                   <input type="hidden" name="_method" value="delete" />
-                  <input type="hidden" name="id" th:value="${main.id}" />
                   <button class="btn btn-sm btn-outline-secondary">삭제</button>
                 </form>
               </td>
