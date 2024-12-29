@@ -22,21 +22,21 @@ public class AdminCategoryController {
     /**
      * category admin page controller
      * @param model inject from spring
-     * @param main selected main category to show sub category
+     * @param mainId selected main category to show sub category
      * @return category admin page view
      */
     @GetMapping
     public String manageCategory(
         Model model,
-        @RequestParam(value = "main", required = false) Long main
+        @RequestParam(value = "main", required = false) Long mainId
     ) {
         model.addAttribute("showAdminLeftNav", true);
-        var categoryList = business.getCategories(main);
+        var categoryList = business.getCategories(mainId);
         model.addAttribute("categoryList", categoryList);
         
         var selectedMain = (categoryList.getMainList() == null)
             ? null
-            : (main != null ? main : categoryList.getMainList().get(0).getId());
+            : (mainId != null ? mainId : categoryList.getMainList().get(0).getId());
         model.addAttribute("selectedMain", selectedMain);
         model.addAttribute("mainCategoryForm", new CategoryCreateRequest());
         return "admin-category";
