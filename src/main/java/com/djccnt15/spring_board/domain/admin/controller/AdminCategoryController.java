@@ -36,6 +36,7 @@ public class AdminCategoryController {
             : (mainId != null ? mainId : categoryList.getMainList().get(0).getId());
         model.addAttribute("selectedMain", selectedMain);
         model.addAttribute("mainCategoryForm", new CategoryCreateRequest());
+        model.addAttribute("subCategoryForm", new CategoryCreateRequest());
         return "admin-category";
     }
     

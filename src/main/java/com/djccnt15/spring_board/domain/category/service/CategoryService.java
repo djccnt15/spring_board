@@ -37,8 +37,8 @@ public class CategoryService {
         );
     }
     
-    public void createCategory(CategoryCreateRequest request) {
-        repository.save(converter.toEntity(request));
+    public void createCategory(CategoryEntity entity) {
+        repository.save(entity);
     }
     
     public CategoryEntity getCategory(Long id) {

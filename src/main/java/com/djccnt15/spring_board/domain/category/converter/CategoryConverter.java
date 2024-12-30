@@ -28,4 +28,12 @@ public class CategoryConverter {
             .name(request.getName())
             .build();
     }
+    
+    public CategoryEntity toEntity(CategoryCreateRequest request, CategoryEntity parent) {
+        return CategoryEntity.builder()
+            .tier(request.getTier())
+            .name(request.getName())
+            .parent(parent)
+            .build();
+    }
 }

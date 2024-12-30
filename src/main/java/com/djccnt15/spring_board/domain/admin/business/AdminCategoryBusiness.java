@@ -37,9 +37,17 @@ public class AdminCategoryBusiness {
             .build();
     }
     
-    public void createMain(CategoryCreateRequest form) {
-        service.validateName(form);
-        service.createCategory(form);
+    public void createMainCategory(CategoryCreateRequest request) {
+        service.validateName(request);
+        var entity = converter.toEntity(request);
+        service.createCategory(entity);
+    }
+    
+    public void createSubCategory(CategoryCreateRequest request) {
+        service.validateName(request);
+        var mainCategory = service.getCategory(request.getMainId());
+        var entity = converter.toEntity(request, mainCategory);
+        service.createCategory(entity);
     }
     
     public CategoryCreateRequest getCategoryUpdateForm(Long id) {

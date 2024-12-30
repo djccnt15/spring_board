@@ -78,4 +78,25 @@ public class AdminCategoryApiController {
         business.updateCategory(id, form);
         return ResponseEntity.ok(ResponseMessageEnum.UPDATE);
     }
+    
+    @PostMapping(path = "/sub")
+    public ResponseEntity<?> createSubCategory(
+        @Valid @ModelAttribute(name = "subCategoryForm") CategoryCreateRequest form,
+        BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) {
+            var errors = bindingResult.getAllErrors()
+                .stream()
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .toList();
+            var errResponse = ErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST)
+                .message(String.join("\n", errors))
+                .build();
+            return ResponseEntity.badRequest().body(errResponse);
+        }
+        business.createSubCategory(form);
+        return ResponseEntity.ok(ResponseMessageEnum.CREATE);
+    }
 }
