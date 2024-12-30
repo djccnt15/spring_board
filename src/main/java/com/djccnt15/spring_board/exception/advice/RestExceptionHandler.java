@@ -1,5 +1,6 @@
 package com.djccnt15.spring_board.exception.advice;
 
+import com.djccnt15.spring_board.exception.ApiDataNotFoundException;
 import com.djccnt15.spring_board.exception.DuplicatedKeyException;
 import com.djccnt15.spring_board.exception.advice.model.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -15,12 +16,15 @@ import java.time.LocalDateTime;
 public class RestExceptionHandler {
     
     /**
-     * DB Constraint Exception handler
-     * @param ex DuplicatedKeyException
+     * handle Bad Request Exception
+     * @param ex Bad Request Exception
      * @return ResponseEntity
      */
-    @ExceptionHandler({DuplicatedKeyException.class})
-    public ResponseEntity<ErrorResponse> handleDupeKeyException(DuplicatedKeyException ex) {
+    @ExceptionHandler(value = {
+        DuplicatedKeyException.class,
+        ApiDataNotFoundException.class
+    })
+    public ResponseEntity<ErrorResponse> handleBadRequestException(Exception ex) {
         var errResponse = ErrorResponse.builder()
             .timestamp(LocalDateTime.now())
             .message(ex.getMessage())
