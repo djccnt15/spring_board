@@ -22,16 +22,23 @@ public class CategoryConverter {
             .build();
     }
     
-    public CategoryEntity toEntity(CategoryCreateRequest request) {
+    public CategoryEntity toEntity(
+        CategoryCreateRequest request,
+        int tier
+    ) {
         return CategoryEntity.builder()
-            .tier(request.getTier())
+            .tier(tier)
             .name(request.getName())
             .build();
     }
     
-    public CategoryEntity toEntity(CategoryCreateRequest request, CategoryEntity parent) {
+    public CategoryEntity toEntity(
+        CategoryCreateRequest request,
+        int tier,
+        CategoryEntity parent
+    ) {
         return CategoryEntity.builder()
-            .tier(request.getTier())
+            .tier(tier)
             .name(request.getName())
             .parent(parent)
             .build();

@@ -39,21 +39,20 @@ public class AdminCategoryBusiness {
     
     public void createMainCategory(CategoryCreateRequest request) {
         service.validateName(request);
-        var entity = converter.toEntity(request);
+        var entity = converter.toEntity(request, 1);
         service.createCategory(entity);
     }
     
     public void createSubCategory(CategoryCreateRequest request) {
         service.validateName(request);
         var mainCategory = service.getCategory(request.getMainId());
-        var entity = converter.toEntity(request, mainCategory);
+        var entity = converter.toEntity(request, 2, mainCategory);
         service.createCategory(entity);
     }
     
     public CategoryCreateRequest getCategoryUpdateForm(Long id) {
         var entity = service.getCategory(id);
         return CategoryCreateRequest.builder()
-            .tier(entity.getTier())
             .name(entity.getName())
             .mainId(
                 Optional.ofNullable(entity.getParent())
