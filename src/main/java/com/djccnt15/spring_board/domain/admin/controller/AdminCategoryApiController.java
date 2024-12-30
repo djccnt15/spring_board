@@ -24,10 +24,10 @@ public class AdminCategoryApiController {
     private final AdminCategoryBusiness business;
     
     /**
-     * controller for creating main category
-     * @param form user request form for create main category
+     * api controller for creating main category
+     * @param form user request form for create category
      * @param bindingResult validated result of the form. this must come right after the form
-     * @return redirect to admin category page
+     * @return ResponseEntity
      */
     @PostMapping(path = "/main")
     public ResponseEntity<?> createMainCategory(
@@ -46,7 +46,7 @@ public class AdminCategoryApiController {
                 .build();
             return ResponseEntity.badRequest().body(errResponse);
         }
-        business.createMain(form);
+        business.createMainCategory(form);
         return ResponseEntity.ok(ResponseMessageEnum.CREATE);
     }
     
@@ -79,6 +79,12 @@ public class AdminCategoryApiController {
         return ResponseEntity.ok(ResponseMessageEnum.UPDATE);
     }
     
+    /**
+     * api controller for create sub category
+     * @param form user request form for create category
+     * @param bindingResult validated result of the form. this must come right after the form
+     * @return ResponseEntity
+     */
     @PostMapping(path = "/sub")
     public ResponseEntity<?> createSubCategory(
         @Valid @ModelAttribute(name = "subCategoryForm") CategoryCreateRequest form,
