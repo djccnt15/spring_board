@@ -10,7 +10,6 @@
     id="mainCategoryUpdateForm"
     th:object="${form}"
     method="post"
-    th:onsubmit="return confirm('[[${placeholders.name}]] 게시판을 수정하시겠습니까?');"
   >
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <input type="hidden" name="_method" value="patch" />

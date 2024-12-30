@@ -107,7 +107,6 @@
           th:action="@{/admin/category/main}"
           th:object="${mainCategoryForm}"
           method="post"
-          onsubmit="return confirm('게시판을 생성하시겠습니까?');"
         >
           <div class="modal-body">
             <div class="mb-3">
@@ -137,7 +136,6 @@
           th:action="@{/admin/category/sub}"
           th:object="${subCategoryForm}"
           method="post"
-          onsubmit="return confirm('카테고리를 생성하시겠습니까?');"
         >
           <div class="modal-body">
             <div class="mb-3">
