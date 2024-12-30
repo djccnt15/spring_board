@@ -66,12 +66,22 @@
     <!-- tier 2 Categories -->
     <div class="col-md-6">
       <h5>카테고리 목록</h5>
-      <div>
-        <ul class="list-group" th:each="sub : ${categoryList.subList}">
-          <li class="list-group-item">
-            <span th:text="${sub.name}"></span>
-          </li>
-        </ul>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead class="table-secondary">
+            <tr class="text-center">
+              <th class="text-start" style="width:70%">이름</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class="text-center"
+              th:each="sub : ${categoryList.subList}"
+            >
+              <td class="text-start" th:text="${sub.name}"></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
