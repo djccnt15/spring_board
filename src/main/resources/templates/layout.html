@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml" class="vh-100">
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -11,15 +11,15 @@
   <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}" />
   <title>Hello, World!</title>
 </head>
-<body>
+<body class="vh-100 d-flex flex-column">
 <!-- 네비게이션바 -->
 <nav th:replace="~{navbar :: navbarFragment}"></nav>
 <!-- 기본 템플릿 안에 삽입될 내용 Start -->
-<div class="container-fluid">
-  <div class="row">
+<div class="container-fluid flex-fill">
+  <div class="row h-100">
     <!-- Admin Left Navbar -->
     <div class="col-md-2" th:if="${showAdminLeftNav}">
-      <div th:replace="~{admin-left-navbar :: adminLeftNavFragment}"></div>
+      <div th:replace="~{navbar-left-admin :: adminLeftNavFragment}"></div>
     </div>
     <!-- Main Content -->
     <main th:classappend="${showAdminLeftNav} ? 'col-md-10' : 'col-md-12'">
