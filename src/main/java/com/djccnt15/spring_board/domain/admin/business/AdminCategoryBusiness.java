@@ -23,7 +23,7 @@ public class AdminCategoryBusiness {
         var mainList = service.getCategoryByTier(1);
         
         if (mainList.isEmpty()) {
-            return AdminCategoryResponse.builder().build();
+            return new AdminCategoryResponse();
         }
         
         var main = mainList.stream()
