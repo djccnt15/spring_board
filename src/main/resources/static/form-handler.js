@@ -12,19 +12,19 @@ function handleError(errors) {
 
 function handlingCreateSuccess(formData) {
   const name = formData.get("name");
-  alert(`${name}이 성공적으로 생성되었습니다.`);
+  alert(`${name}이/가 성공적으로 생성되었습니다.`);
   window.location.reload();
 }
 
 function handlingUpdateSuccess(formData) {
   const name = formData.get("name");
-  alert(`${name}이 성공적으로 수정되었습니다.`);
+  alert(`${name}이/가 성공적으로 수정되었습니다.`);
   window.location.reload();
 }
 
 function handlingDeleteSuccess(formData) {
   const name = formData.get("name");
-  alert(`${name}이 성공적으로 삭제되었습니다.`);
+  alert(`${name}이/가 성공적으로 삭제되었습니다.`);
   window.location.reload();
 }
 
@@ -73,7 +73,7 @@ function handlingConfirmUpdate(formData) {
 
 function handlingConfirmDelete(formData) {
   const name = formData.get("name");
-  const confirmation = confirm(`${name}를 삭제하시겠습니까?`);
+  const confirmation = confirm(`${name}을/를 삭제하시겠습니까?`);
   if (!confirmation) {
     return false;
   }
