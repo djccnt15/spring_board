@@ -1,8 +1,8 @@
-package com.djccnt15.spring_board.domain.board.converter;
+package com.djccnt15.spring_board.domain.qna.converter;
 
 import com.djccnt15.spring_board.annotations.Converter;
 import com.djccnt15.spring_board.db.entity.AnswerEntity;
-import com.djccnt15.spring_board.domain.board.model.AnswerResponse;
+import com.djccnt15.spring_board.domain.qna.model.AnswerResponse;
 import com.djccnt15.spring_board.domain.user.converter.UserConverter;
 import lombok.RequiredArgsConstructor;
 

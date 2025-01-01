@@ -1,4 +1,4 @@
-package com.djccnt15.spring_board.domain.board.model;
+package com.djccnt15.spring_board.domain.qna.model;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;

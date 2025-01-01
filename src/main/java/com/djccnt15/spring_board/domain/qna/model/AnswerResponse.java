@@ -1,4 +1,4 @@
-package com.djccnt15.spring_board.domain.board.model;
+package com.djccnt15.spring_board.domain.qna.model;
 
 import com.djccnt15.spring_board.domain.user.model.UserResponse;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,7 @@
-package com.djccnt15.spring_board.domain.board.controller;
+package com.djccnt15.spring_board.domain.qna.controller;
 
-import com.djccnt15.spring_board.domain.board.business.QuestionBusiness;
-import com.djccnt15.spring_board.domain.board.model.QuestionForm;
+import com.djccnt15.spring_board.domain.qna.business.QuestionBusiness;
+import com.djccnt15.spring_board.domain.qna.model.QuestionForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class QuestionPrivateController {
      * @param principal Current user injection from spring-security
      * @return redirect to question list page
      */
-    @PostMapping(path = "form")
+    @PostMapping(path = "/form")
     public String create(
         @Valid QuestionForm form,
         BindingResult bindingResult,

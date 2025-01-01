@@ -1,12 +1,12 @@
-package com.djccnt15.spring_board.domain.board.service;
+package com.djccnt15.spring_board.domain.qna.service;
 
 import com.djccnt15.spring_board.db.entity.AnswerEntity;
 import com.djccnt15.spring_board.db.entity.QuestionEntity;
 import com.djccnt15.spring_board.db.entity.UserEntity;
 import com.djccnt15.spring_board.db.repository.QuestionRepository;
-import com.djccnt15.spring_board.domain.board.converter.QuestionConverter;
-import com.djccnt15.spring_board.domain.board.model.QuestionForm;
-import com.djccnt15.spring_board.domain.board.model.QuestionResponse;
+import com.djccnt15.spring_board.domain.qna.converter.QuestionConverter;
+import com.djccnt15.spring_board.domain.qna.model.QuestionForm;
+import com.djccnt15.spring_board.domain.qna.model.QuestionResponse;
 import com.djccnt15.spring_board.exception.DataNotFoundException;
 import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;

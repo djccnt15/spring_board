@@ -1,8 +1,8 @@
-package com.djccnt15.spring_board.domain.board.controller;
+package com.djccnt15.spring_board.domain.qna.controller;
 
-import com.djccnt15.spring_board.domain.board.business.AnswerBusiness;
-import com.djccnt15.spring_board.domain.board.business.QuestionBusiness;
-import com.djccnt15.spring_board.domain.board.model.AnswerForm;
+import com.djccnt15.spring_board.domain.qna.business.AnswerBusiness;
+import com.djccnt15.spring_board.domain.qna.business.QuestionBusiness;
+import com.djccnt15.spring_board.domain.qna.model.AnswerForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

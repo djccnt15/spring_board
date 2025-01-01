@@ -1,8 +1,8 @@
-package com.djccnt15.spring_board.domain.board.controller;
+package com.djccnt15.spring_board.domain.qna.controller;
 
-import com.djccnt15.spring_board.domain.board.business.QuestionBusiness;
-import com.djccnt15.spring_board.domain.board.model.AnswerForm;
-import com.djccnt15.spring_board.domain.board.model.QuestionForm;
+import com.djccnt15.spring_board.domain.qna.business.QuestionBusiness;
+import com.djccnt15.spring_board.domain.qna.model.AnswerForm;
+import com.djccnt15.spring_board.domain.qna.model.QuestionForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -39,7 +39,7 @@ public class QuestionPublicController {
      * view controller for question detail
      * @param model injection of spring model
      * @param id question id
-     * @param form this is only for avoiding error of using `th:object="${answerForm}"`
+     * @param form inject form object to view for avoiding error of using 'th:object'
      * @return question detail view
      */
     @GetMapping(path = "/{id}")
@@ -55,10 +55,10 @@ public class QuestionPublicController {
     
     /**
      * view controller for question registration page
-     * @param questionForm this is only for avoiding error of using `th:object="${questionForm}"`
+     * @param questionForm inject form object to view for avoiding error of using 'th:object'
      * @return question registration view
      */
-    @GetMapping(path = "form")
+    @GetMapping(path = "/form")
     public String create(QuestionForm questionForm) {
         return "question_form";
     }

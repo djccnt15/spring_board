@@ -1,8 +1,8 @@
 package com.djccnt15.spring_board;
 
 import com.djccnt15.spring_board.db.entity.UserEntity;
-import com.djccnt15.spring_board.domain.board.model.QuestionForm;
-import com.djccnt15.spring_board.domain.board.service.QuestionService;
+import com.djccnt15.spring_board.domain.qna.model.QuestionForm;
+import com.djccnt15.spring_board.domain.qna.service.QuestionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

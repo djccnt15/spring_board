@@ -1,11 +1,11 @@
-package com.djccnt15.spring_board.domain.board.business;
+package com.djccnt15.spring_board.domain.qna.business;
 
 import com.djccnt15.spring_board.annotations.Business;
-import com.djccnt15.spring_board.domain.board.converter.AnswerConverter;
-import com.djccnt15.spring_board.domain.board.converter.QuestionConverter;
-import com.djccnt15.spring_board.domain.board.model.QuestionForm;
-import com.djccnt15.spring_board.domain.board.model.QuestionResponse;
-import com.djccnt15.spring_board.domain.board.service.QuestionService;
+import com.djccnt15.spring_board.domain.qna.converter.AnswerConverter;
+import com.djccnt15.spring_board.domain.qna.converter.QuestionConverter;
+import com.djccnt15.spring_board.domain.qna.model.QuestionForm;
+import com.djccnt15.spring_board.domain.qna.model.QuestionResponse;
+import com.djccnt15.spring_board.domain.qna.service.QuestionService;
 import com.djccnt15.spring_board.domain.user.converter.UserConverter;
 import com.djccnt15.spring_board.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;

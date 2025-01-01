@@ -1,10 +1,10 @@
-package com.djccnt15.spring_board.domain.board.service;
+package com.djccnt15.spring_board.domain.qna.service;
 
 import com.djccnt15.spring_board.db.entity.AnswerEntity;
 import com.djccnt15.spring_board.db.entity.UserEntity;
 import com.djccnt15.spring_board.db.repository.AnswerRepository;
 import com.djccnt15.spring_board.db.entity.QuestionEntity;
-import com.djccnt15.spring_board.domain.board.model.AnswerForm;
+import com.djccnt15.spring_board.domain.qna.model.AnswerForm;
 import com.djccnt15.spring_board.exception.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
