@@ -81,6 +81,7 @@
             <tr class="text-center">
               <th class="text-start" style="width:70%">이름</th>
               <th>수정</th>
+              <th>삭제</th>
             </tr>
           </thead>
           <tbody>
@@ -96,6 +97,17 @@
                   sec:authorize="hasRole('ROLE_ADMIN')"
                   th:text="수정"
                 ></a>
+              </td>
+              <td>
+                <form
+                  th:action="@{|/admin/category/${sub.id}|}"
+                  method="post"
+                  th:onsubmit="return confirm('[[${sub.name}]] 카테고리를 삭제하시겠습니까?');"
+                  sec:authorize="hasRole('ROLE_ADMIN')"
+                >
+                  <input type="hidden" name="_method" value="delete" />
+                  <button class="btn btn-sm btn-outline-secondary">삭제</button>
+                </form>
               </td>
             </tr>
           </tbody>

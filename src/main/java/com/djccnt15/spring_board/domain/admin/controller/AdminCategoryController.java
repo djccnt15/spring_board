@@ -46,7 +46,7 @@ public class AdminCategoryController {
      * @return redirect to admin category page
      */
     @DeleteMapping(path = "/{id}")
-    public String deleteMainCategory(@PathVariable(value = "id") Long id) {
+    public String deleteCategory(@PathVariable(value = "id") Long id) {
         business.deleteCategory(id);
         return "redirect:/admin/category";
     }
