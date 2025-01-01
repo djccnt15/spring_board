@@ -80,6 +80,7 @@
           <thead class="table-secondary">
             <tr class="text-center">
               <th class="text-start" style="width:70%">이름</th>
+              <th>수정</th>
             </tr>
           </thead>
           <tbody>
@@ -88,6 +89,14 @@
               th:each="sub : ${categoryList.subList}"
             >
               <td class="text-start" th:text="${sub.name}"></td>
+              <td>
+                <a
+                  th:href="@{|/admin/category/sub/form/${sub.id}|}"
+                  class="btn btn-sm btn-outline-secondary"
+                  sec:authorize="hasRole('ROLE_ADMIN')"
+                  th:text="수정"
+                ></a>
+              </td>
             </tr>
           </tbody>
         </table>

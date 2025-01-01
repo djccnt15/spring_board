@@ -26,7 +26,7 @@ public class CategoryService {
     }
     
     public List<CategoryEntity> getCategoryByMain(CategoryEntity parent) {
-        return repository.findByParentOrderByName(parent);
+        return repository.findByParentAndIsActiveOrderByName(parent, true);
     }
     
     public void validateName(CategoryCreateRequest request) {
@@ -47,8 +47,7 @@ public class CategoryService {
         );
     }
     
-    public void updateCategory(CategoryEntity entity, CategoryCreateRequest request) {
-        entity.setName(request.getName());
+    public void updateCategory(CategoryEntity entity) {
         repository.save(entity);
     }
     

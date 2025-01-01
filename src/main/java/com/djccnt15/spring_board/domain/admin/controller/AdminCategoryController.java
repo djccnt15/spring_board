@@ -58,14 +58,26 @@ public class AdminCategoryController {
      * @return update form page
      */
     @GetMapping(path = "/main/form/{id}")
-    public String updateCategoryForm(
+    public String updateMainCategoryForm(
         Model model,
         @PathVariable(value = "id") Long id
     ) {
         model.addAttribute("showAdminLeftNav", true);
-        var updateForm = business.getCategoryUpdateForm(id);
+        var updateForm = business.getMainCategoryUpdatePlaceholder(id);
         model.addAttribute("placeholders", updateForm);
         model.addAttribute("form", new CategoryCreateRequest());
         return "category-main-update-form";
+    }
+    
+    @GetMapping(path = "/sub/form/{id}")
+    public String updateSubCategoryForm(
+        Model model,
+        @PathVariable(value = "id") Long id
+    ) {
+        model.addAttribute("showAdminLeftNav", true);
+        var placeholders = business.getSubCategoryUpdatePlaceholder(id);
+        model.addAttribute("placeholders", placeholders);
+        model.addAttribute("form", new CategoryCreateRequest());
+        return "category-sub-update-form";
     }
 }
