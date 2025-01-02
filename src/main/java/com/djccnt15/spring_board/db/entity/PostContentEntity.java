@@ -2,14 +2,14 @@ package com.djccnt15.spring_board.db.entity;
 
 import com.djccnt15.spring_board.db.entity.id.BaseEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.Positive;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
 
 import java.time.LocalDateTime;
 
@@ -20,22 +20,25 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
+@DynamicInsert  // annotation for using db default value for null field when insert
 public class PostContentEntity extends BaseEntity {
     
     @Column
+    @ColumnDefault(value = "1")  // annotation for ddl-auto
+    @Builder.Default  // annotation for lombok builder default
     @NotNull
-    private Integer version;
+    @Positive
+    private int version = 1;
     
     @Column(updatable = false)
     @CreationTimestamp
     private LocalDateTime createDateTime;
     
     @Column(length = 200)
-    @NotEmpty
+    @NotBlank
     private String title;
     
     @Column(columnDefinition = "TEXT")
-    @NotEmpty
     private String content;
     
     @JoinColumn(name = "post_id")
