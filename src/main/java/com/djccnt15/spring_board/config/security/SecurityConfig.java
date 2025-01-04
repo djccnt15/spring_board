@@ -5,9 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -78,18 +77,14 @@ public class SecurityConfig {
     
     /**
      * Bean for Spring Security authentication
-     * this bean works with UserDetailsService impl, PasswordEncoder
+     * <br>
+     * this bean works with implements of UserDetailsService, PasswordEncoder
      */
     @Bean
-    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
-    
-    @Bean
-    AuthenticationProvider authenticationProvider() {
+    AuthenticationManager authenticationManager() throws Exception {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(authService);
         authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
+        return new ProviderManager(authProvider);
     }
 }
