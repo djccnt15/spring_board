@@ -2,7 +2,6 @@ package com.djccnt15.spring_board.config.security;
 
 import com.djccnt15.spring_board.domain.auth.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -45,9 +44,6 @@ public class SecurityConfig {
             (authorize) -> authorize
                 // allow to swagger ui. TODO disable permit to swagger ui below for production
                 .requestMatchers(SWAGGER.toArray(new String[0])).permitAll()
-                
-                // permit all to static resource
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 
                 // only admin can manage category
                 .requestMatchers(new AntPathRequestMatcher("/admin/category/**")).hasAnyRole("ADMIN")
