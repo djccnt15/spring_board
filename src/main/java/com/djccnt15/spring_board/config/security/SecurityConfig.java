@@ -14,7 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.List;
 
@@ -46,13 +45,13 @@ public class SecurityConfig {
                 .requestMatchers(SWAGGER.toArray(new String[0])).permitAll()
                 
                 // only admin can manage category
-                .requestMatchers(new AntPathRequestMatcher("/admin/category/**")).hasAnyRole("ADMIN")
+                .requestMatchers("/admin/category/**").hasAnyRole("ADMIN")
                 
                 // admin and manager can manage user
-                .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAnyRole("ADMIN", "MANAGER")
+                .requestMatchers("/admin/**").hasAnyRole("ADMIN", "MANAGER")
                 
                 // permit all to rest of every public domain
-                .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
+                .requestMatchers("/**").permitAll()
                 
                 // any request to rest of domain needs to be authenticated
                 .anyRequest().authenticated()
@@ -62,7 +61,7 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/")
             )
             .logout((logout) -> logout
-                .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+                .logoutUrl("/user/logout")
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true))
         ;
