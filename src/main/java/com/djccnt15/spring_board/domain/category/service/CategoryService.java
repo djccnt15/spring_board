@@ -5,6 +5,7 @@ import com.djccnt15.spring_board.db.repository.CategoryRepository;
 import com.djccnt15.spring_board.domain.category.converter.CategoryConverter;
 import com.djccnt15.spring_board.domain.category.model.CategoryCreateRequest;
 import com.djccnt15.spring_board.exception.ApiDataNotFoundException;
+import com.djccnt15.spring_board.exception.DataNotFoundException;
 import com.djccnt15.spring_board.exception.DuplicatedKeyException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,5 +57,11 @@ public class CategoryService {
         entity.setName(name);
         entity.setActive(false);
         repository.save(entity);
+    }
+    
+    public CategoryEntity getCategory(String categoryName) {
+        return repository.findByNameAndIsActive(categoryName, true).orElseThrow(
+            () -> new DataNotFoundException("can't find requested category")
+        );
     }
 }

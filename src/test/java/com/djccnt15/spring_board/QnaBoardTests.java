@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
-class SpringBoardApplicationTests {
+class QnaBoardTests {
 	
 	@Autowired  // annotation for dependency injection from spring container
 	private QuestionRepository questionRepository;
