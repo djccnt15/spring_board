@@ -30,7 +30,7 @@ public class UserEntity extends BaseEntity {
     
     @Column(updatable = false)
     @CreationTimestamp
-    private LocalDateTime createDateTime;
+    private LocalDateTime createdDatetime;
     
     @Column(name = "role")
     // @Enumerated(EnumType.STRING)  // easy to use but lowers DB performance, use enum converter

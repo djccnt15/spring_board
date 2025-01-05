@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -22,7 +23,13 @@ public class CommentEntity extends BaseEntity {
     
     @Column(updatable = false)
     @CreationTimestamp
-    private LocalDateTime createDateTime;
+    private LocalDateTime createdDatetime;
+    
+    @Column(name = "is_active")
+    @ColumnDefault(value = "true")  // annotation for ddl-auto
+    @Builder.Default  // annotation for lombok default
+    @NotNull
+    private boolean isActive = true;
     
     @JoinColumn(name = "author_id")
     @ManyToOne

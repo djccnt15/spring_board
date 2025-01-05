@@ -32,7 +32,7 @@ public class PostContentEntity extends BaseEntity {
     
     @Column(updatable = false)
     @CreationTimestamp
-    private LocalDateTime createDateTime;
+    private LocalDateTime createdDatetime;
     
     @Column(length = 200)
     @NotBlank

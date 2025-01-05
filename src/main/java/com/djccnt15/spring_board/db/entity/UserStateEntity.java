@@ -34,7 +34,7 @@ public class UserStateEntity {
     
     @Column(updatable = false)
     @CreationTimestamp
-    private LocalDateTime createDateTime;
+    private LocalDateTime createdDatetime;
     
     @Column
     @NotBlank

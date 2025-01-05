@@ -31,7 +31,7 @@ public class CommentContentEntity extends BaseEntity {
     
     @Column(updatable = false)
     @CreationTimestamp
-    private LocalDateTime createDateTime;
+    private LocalDateTime createdDatetime;
     
     @Column(columnDefinition = "TEXT")
     private String content;

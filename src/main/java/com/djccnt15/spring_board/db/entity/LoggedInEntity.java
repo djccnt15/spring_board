@@ -22,7 +22,7 @@ public class LoggedInEntity extends BaseEntity {
     
     @Column(updatable = false)
     @CreationTimestamp
-    private LocalDateTime createDateTime;
+    private LocalDateTime createdDatetime;
     
     @JoinColumn(name = "user_id")
     @ManyToOne
