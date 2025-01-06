@@ -47,7 +47,7 @@ public class PostService {
         int page,
         String keyword
     ) {
-        var postList = postRepository.findPostListByCategory(category.getId(), size, page, keyword);
+        var postList = postRepository.findPostListByCategory(category.getId(), size, size * page, keyword);
         return postList.stream()
             .map(postConverter::toResponse)
             .toList();
