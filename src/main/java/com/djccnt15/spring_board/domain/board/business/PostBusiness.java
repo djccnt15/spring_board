@@ -38,12 +38,13 @@ public class PostBusiness {
         int page,
         String keyword
     ) {
-        var kw = "%%%s%%".formatted(keyword);
         var category = categoryService.getCategory(categoryName);
+        var kw = "%%%s%%".formatted(keyword);
         var postList = postService.getPostList(category, size, page, kw);
         var postListCount = postService.getPostListCount(category, kw);
+        var totalPageCount = (int) Math.ceil((double) postListCount / size);
         return PostListResponse.builder()
-            .postListCount(postListCount)
+            .totalPages(totalPageCount)
             .postList(postList)
             .build();
     }

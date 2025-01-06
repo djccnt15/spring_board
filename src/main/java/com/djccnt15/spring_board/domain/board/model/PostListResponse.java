@@ -9,7 +9,7 @@ import java.util.List;
 @Builder
 public class PostListResponse {
     
-    private Integer postListCount;
+    private Integer totalPages;
     
     private List<PostSummaryResponse> postList;
 }
