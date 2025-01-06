@@ -8,9 +8,12 @@ import com.djccnt15.spring_board.db.repository.PostRepository;
 import com.djccnt15.spring_board.domain.board.converter.PostContentConverter;
 import com.djccnt15.spring_board.domain.board.converter.PostConverter;
 import com.djccnt15.spring_board.domain.board.model.PostCreateRequest;
+import com.djccnt15.spring_board.domain.board.model.PostSummaryResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -36,5 +39,24 @@ public class PostService {
     ) {
         var entity = postContentConverter.toEntity(request, post);
         postContentRepository.save(entity);
+    }
+    
+    public List<PostSummaryResponse> getPostList(
+        CategoryEntity category,
+        int size,
+        int page,
+        String keyword
+    ) {
+        var postList = postRepository.findPostListByCategory(category.getId(), size, page, keyword);
+        return postList.stream()
+            .map(postConverter::toResponse)
+            .toList();
+    }
+    
+    public int getPostListCount(
+        CategoryEntity category,
+        String keyword
+    ) {
+        return postRepository.countPostListByCategory(category.getId(), keyword);
     }
 }

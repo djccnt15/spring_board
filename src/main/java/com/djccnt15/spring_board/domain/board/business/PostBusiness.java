@@ -4,6 +4,7 @@ import com.djccnt15.spring_board.annotations.Business;
 import com.djccnt15.spring_board.db.entity.PostEntity;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.board.model.PostCreateRequest;
+import com.djccnt15.spring_board.domain.board.model.PostListResponse;
 import com.djccnt15.spring_board.domain.board.service.PostService;
 import com.djccnt15.spring_board.domain.category.service.CategoryService;
 import com.djccnt15.spring_board.domain.user.service.UserService;
@@ -29,5 +30,21 @@ public class PostBusiness {
         var post = postService.createPost(user, category);
         postService.createContent(post, request);
         return post;
+    }
+    
+    public PostListResponse getPostList(
+        String categoryName,
+        int size,
+        int page,
+        String keyword
+    ) {
+        var kw = "%%%s%%".formatted(keyword);
+        var category = categoryService.getCategory(categoryName);
+        var postList = postService.getPostList(category, size, page, kw);
+        var postListCount = postService.getPostListCount(category, kw);
+        return PostListResponse.builder()
+            .postListCount(postListCount)
+            .postList(postList)
+            .build();
     }
 }
