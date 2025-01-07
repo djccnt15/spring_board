@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.List;
 
@@ -62,7 +63,10 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/")
             )
             .logout((logout) -> logout
-                .logoutUrl("/user/logout")
+                // Spring Security uses ExactRequestMatcher for matching the logout URL, which works only for `POST` requests
+                // use AntPathRequestMatcher to let client logout via `GET` method
+                // not using AntPathRequestMatcher raises `No static resource user/logout.` exception
+                .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true))
         ;
