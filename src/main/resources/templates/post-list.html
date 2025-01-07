@@ -25,6 +25,17 @@
         질문 등록하기
       </a>
     </div>
+    <div class="col-2">
+      <div class="input-group">
+        <label class="input-group-text" for="list_size">개수</label>
+        <select class="form-select" id="list_size">
+          <option value="10" th:selected="${size == 10}">10</option>
+          <option value="20" th:selected="${size == 20}">20</option>
+          <option value="50" th:selected="${size == 50}">50</option>
+          <option value="100" th:selected="${size == 100}">100</option>
+        </select>
+      </div>
+    </div>
     <div class="col-6">
       <div class="input-group">
         <label for="search_kw" class="d-none"></label>
@@ -101,6 +112,7 @@
   <!-- 페이징처리 끝 -->
   <form th:action="@{|/board/${categoryName}|}" method="get" id="searchForm">
     <input type="hidden" id="kw" name="kw" th:value="${kw}">
+    <input type="hidden" id="size" name="size" th:value="${size}">
     <input type="hidden" id="page" name="page" th:value="${page}">
   </form>
 </div>
@@ -108,6 +120,7 @@
   const btn_search = document.getElementById("btn_search");
   btn_search.addEventListener('click', function() {
     document.getElementById('kw').value = document.getElementById('search_kw').value;
+    document.getElementById('size').value = document.getElementById('list_size').value;
     document.getElementById('page').value = 0;  // 검색버튼을 클릭할 경우 0페이지부터 조회한다.
     document.getElementById('searchForm').submit();
   });
