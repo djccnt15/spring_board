@@ -1,0 +1,115 @@
+<html
+  lang="ko"
+  layout:decorate="~{layout}"
+  xmlns:layout="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.w3.org/1999/xhtml"
+  xmlns:sec="http://www.w3.org/1999/xhtml"
+>
+<div
+  layout:fragment="content"
+  class="container my-3"
+>
+  <div class="row my-3">
+    <div class="col-6">
+      <a
+        th:href="@{/${categoryName}/form}"
+        class="btn btn-primary"
+        sec:authorize="isAuthenticated()"
+      >
+        질문 등록하기
+      </a>
+      <a
+        class="btn btn-secondary my-2"
+        sec:authorize="isAnonymous()" disabled
+      >
+        질문 등록하기
+      </a>
+    </div>
+    <div class="col-6">
+      <div class="input-group">
+        <label for="search_kw" class="d-none"></label>
+        <input type="text" id="search_kw" class="form-control" th:value="${kw}">
+        <button class="btn btn-outline-secondary" type="button" id="btn_search">찾기</button>
+      </div>
+    </div>
+  </div>
+  <table class="table">
+    <thead class="table-dark">
+    <tr class="text-center">
+      <th>번호</th>
+      <th style="width:50%">제목</th>
+      <th>글쓴이</th>
+      <th>작성일시</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="text-center" th:each="post, loop : ${response.postList}">
+      <td th:text="${post.id}"></td>
+      <td class="text-start">
+        <a th:href="@{|/board/${categoryName}/${post.id}|}" th:text="${post.title}"></a>
+      </td>
+      <td>
+        <span th:if="${post.username != null}" th:text="${post.username}"></span>
+      </td>
+      <td th:text="${#temporals.format(post.createdDatetime, 'yyyy-MM-dd HH:mm')}"></td>
+    </tr>
+    </tbody>
+  </table>
+  <!-- 페이징처리 시작 -->
+  <div th:if="${!response.postList.isEmpty()}">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" th:classappend="${page == 0} ? 'disabled'">
+        <a class="page-link" th:href="@{|?page=0|}">
+          <span>처음</span>
+        </a>
+      </li>
+      <li class="page-item" th:classappend="${page == 0} ? 'disabled'">
+        <a
+          class="page-link"
+          th:href="@{/board/{categoryName}(categoryName=${categoryName}, page=${page - 1}, size=${size}, kw=${kw})}"
+        >
+          <span>이전</span>
+        </a>
+      </li>
+      <li
+        th:each="pageList: ${#numbers.sequence(0, response.totalPages - 1)}"
+        th:if="${pageList >= page - 5 and pageList <= page + 5}"
+        th:classappend="${pageList == page} ? 'active'"
+        class="page-item"
+      >
+        <a
+          class="page-link"
+          th:text="${pageList}"
+          th:href="@{/board/{categoryName}(categoryName=${categoryName}, page=${pageList}, size=${size}, kw=${kw})}"
+        ></a>
+      </li>
+      <li class="page-item" th:classappend="${page + 1 == response.totalPages} ? 'disabled'">
+        <a
+          class="page-link"
+          th:href="@{/board/{categoryName}(categoryName=${categoryName}, page=${page + 1}, size=${size}, kw=${kw})}"
+        >
+          <span>다음</span>
+        </a>
+      </li>
+      <li class="page-item" th:classappend="${page + 1 == response.totalPages} ? 'disabled'">
+        <a class="page-link" th:href="@{|?page=${response.totalPages - 1}|}">
+          <span>끝</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <!-- 페이징처리 끝 -->
+  <form th:action="@{|/board/${categoryName}|}" method="get" id="searchForm">
+    <input type="hidden" id="kw" name="kw" th:value="${kw}">
+    <input type="hidden" id="page" name="page" th:value="${page}">
+  </form>
+</div>
+<script layout:fragment="script" type='text/javascript'>
+  const btn_search = document.getElementById("btn_search");
+  btn_search.addEventListener('click', function() {
+    document.getElementById('kw').value = document.getElementById('search_kw').value;
+    document.getElementById('page').value = 0;  // 검색버튼을 클릭할 경우 0페이지부터 조회한다.
+    document.getElementById('searchForm').submit();
+  });
+</script>
+</html>
