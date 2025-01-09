@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class PostSummaryResponse {
+public class DetailedPostSummaryResponse {
     
     private Long id;
     

@@ -1,11 +1,11 @@
 package com.djccnt15.spring_board.domain.board.converter;
 
 import com.djccnt15.spring_board.annotations.Converter;
-import com.djccnt15.spring_board.db.dto.PostSummary;
+import com.djccnt15.spring_board.db.dto.DetailedPostSummary;
 import com.djccnt15.spring_board.db.entity.CategoryEntity;
 import com.djccnt15.spring_board.db.entity.PostEntity;
 import com.djccnt15.spring_board.db.entity.UserEntity;
-import com.djccnt15.spring_board.domain.board.model.PostSummaryResponse;
+import com.djccnt15.spring_board.domain.board.model.DetailedPostSummaryResponse;
 
 @Converter
 public class PostConverter {
@@ -20,8 +20,8 @@ public class PostConverter {
             .build();
     }
     
-    public PostSummaryResponse toResponse(PostSummary post) {
-        return PostSummaryResponse.builder()
+    public DetailedPostSummaryResponse toResponse(DetailedPostSummary post) {
+        return DetailedPostSummaryResponse.builder()
             .id(post.getId())
             .createdDatetime(post.getCreatedDatetime())
             .updatedDatetime(post.getUpdatedDatetime())

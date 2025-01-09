@@ -1,6 +1,6 @@
 package com.djccnt15.spring_board.db.repository;
 
-import com.djccnt15.spring_board.db.dto.PostSummary;
+import com.djccnt15.spring_board.db.dto.DetailedPostSummary;
 import com.djccnt15.spring_board.db.entity.PostEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -68,7 +68,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
             """,
         nativeQuery = true
     )
-    List<PostSummary> findPostListByCategory(
+    List<DetailedPostSummary> findPostListByCategory(
         @Param("category_id") long categoryId,
         @Param("size") int size,
         @Param("page") int page,
