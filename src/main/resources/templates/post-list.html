@@ -70,7 +70,10 @@
   <div th:if="${!response.postList.isEmpty()}">
     <ul class="pagination justify-content-center">
       <li class="page-item" th:classappend="${page == 0} ? 'disabled'">
-        <a class="page-link" th:href="@{|?page=0|}">
+        <a
+          class="page-link"
+          th:href="@{|?page=0&size=${size}&kw=${kw}|}"
+        >
           <span>처음</span>
         </a>
       </li>
@@ -103,7 +106,10 @@
         </a>
       </li>
       <li class="page-item" th:classappend="${page + 1 == response.totalPages} ? 'disabled'">
-        <a class="page-link" th:href="@{|?page=${response.totalPages - 1}|}">
+        <a
+          class="page-link"
+          th:href="@{|?page=${response.totalPages - 1}&size=${size}&kw=${kw}|}"
+        >
           <span>끝</span>
         </a>
       </li>
