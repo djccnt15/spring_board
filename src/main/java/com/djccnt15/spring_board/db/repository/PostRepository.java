@@ -1,6 +1,7 @@
 package com.djccnt15.spring_board.db.repository;
 
 import com.djccnt15.spring_board.db.dto.DetailedPostSummary;
+import com.djccnt15.spring_board.db.dto.MinimalPostSummary;
 import com.djccnt15.spring_board.db.entity.PostEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -110,5 +111,41 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
     int countPostListByCategory(
         @Param("category_id") long categoryId,
         @Param("keyword") String keyword
+    );
+    
+    @Query(
+        value = """
+            SELECT
+                p.id,
+                p.created_datetime,
+                pc.title,
+                pc.content
+            FROM post AS p
+            JOIN category AS c ON p.category_id = c.id
+            JOIN (
+                SELECT
+                    t1.id,
+                    t1.created_datetime,
+                    t1.title,
+                    t1.content,
+                    t1.post_id
+                FROM post_content AS t1
+                WHERE t1.version = (
+                    SELECT MAX(version)
+                    FROM post_content AS t2
+                    WHERE t1.post_id = t2.post_id
+                )
+            ) AS pc ON p.id = pc.post_id
+            WHERE
+                p.is_active = true
+                AND c.parent_id = :category_id
+            ORDER BY p.id DESC
+            FETCH FIRST :size ROWS ONLY
+            """,
+        nativeQuery = true
+    )
+    List<MinimalPostSummary> findMinimalPostListByCategory(
+        @Param("category_id") long categoryId,
+        @Param("size") int size
     );
 }
