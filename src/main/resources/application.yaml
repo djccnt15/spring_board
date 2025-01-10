@@ -18,7 +18,6 @@ spring:
 #      ddl-auto: create-drop
       ddl-auto: update
 #      ddl-auto: validate
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
   datasource:
     # test
 #    url: jdbc:h2:mem:test
