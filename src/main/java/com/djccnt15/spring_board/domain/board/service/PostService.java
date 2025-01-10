@@ -7,6 +7,7 @@ import com.djccnt15.spring_board.db.repository.PostContentRepository;
 import com.djccnt15.spring_board.db.repository.PostRepository;
 import com.djccnt15.spring_board.domain.board.converter.PostContentConverter;
 import com.djccnt15.spring_board.domain.board.converter.PostConverter;
+import com.djccnt15.spring_board.domain.board.model.MinimalPostSummaryResponse;
 import com.djccnt15.spring_board.domain.board.model.PostCreateRequest;
 import com.djccnt15.spring_board.domain.board.model.DetailedPostSummaryResponse;
 import lombok.RequiredArgsConstructor;
@@ -58,5 +59,15 @@ public class PostService {
         String keyword
     ) {
         return postRepository.countPostListByCategory(category.getId(), keyword);
+    }
+    
+    public List<MinimalPostSummaryResponse> getMinimalPostList(
+        CategoryEntity category,
+        int size
+    ) {
+        var postList = postRepository.findMinimalPostListByCategory(category.getId(), size);
+        return postList.stream()
+            .map(postConverter::toResponse)
+            .toList();
     }
 }
