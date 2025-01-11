@@ -51,8 +51,9 @@ public class PostController {
      */
     @GetMapping
     public String getBoardIndex(Model model) {
-        var boardList = business.getIndexPostList();
-        model.addAttribute("boardList", boardList);
+        var response = business.getIndexPostList();
+        model.addAttribute("showLeftNav", true);
+        model.addAttribute("response", response);
         return "board-index";
     }
 }

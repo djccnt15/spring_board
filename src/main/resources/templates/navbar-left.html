@@ -1,0 +1,18 @@
+<div
+  th:fragment="leftNavFragment"
+  xmlns:th="http://www.w3.org/1999/xhtml"
+  class="d-flex flex-column flex-shrink-0 p-3 h-100 border-end"
+>
+  <ul class="nav nav-pills flex-column mb-auto">
+    <li
+      class="nav-item"
+      th:each="category, loop : ${response.categoryList}"
+    >
+      <a
+        class="nav-link"
+        th:href="@{|/board/${category.name}|}"
+        th:text="|${category.name}|"
+      ></a>
+    </li>
+  </ul>
+</div>

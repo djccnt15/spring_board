@@ -3,17 +3,16 @@ package com.djccnt15.spring_board.domain.board.business;
 import com.djccnt15.spring_board.annotations.Business;
 import com.djccnt15.spring_board.db.entity.PostEntity;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
+import com.djccnt15.spring_board.domain.board.model.BoardIndexResponse;
 import com.djccnt15.spring_board.domain.board.model.PostCreateRequest;
 import com.djccnt15.spring_board.domain.board.model.PostListResponse;
+import com.djccnt15.spring_board.domain.board.model.PostSummaryListResponse;
 import com.djccnt15.spring_board.domain.board.service.PostService;
 import com.djccnt15.spring_board.domain.category.converter.CategoryConverter;
 import com.djccnt15.spring_board.domain.category.service.CategoryService;
-import com.djccnt15.spring_board.domain.board.model.PostSummaryListResponse;
 import com.djccnt15.spring_board.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.List;
 
 @Slf4j
 @Business
@@ -54,14 +53,21 @@ public class PostBusiness {
             .build();
     }
     
-    public List<PostSummaryListResponse> getIndexPostList() {
+    public BoardIndexResponse getIndexPostList() {
         var mainCategoryList = categoryService.getCategoryByTier(1);
-        return mainCategoryList.stream()
+        var categoryResponseList = mainCategoryList.stream()
+            .map(categoryConverter::toResponse)
+            .toList();
+        var boardList = mainCategoryList.stream()
             .map(it -> PostSummaryListResponse.builder()
                 .category(categoryConverter.toResponse(it))
                 .postList(postService.getMinimalPostList(it, 10))
                 .build()
             )
             .toList();
+        return BoardIndexResponse.builder()
+            .categoryList(categoryResponseList)
+            .boardList(boardList)
+            .build();
     }
 }

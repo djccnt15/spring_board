@@ -17,13 +17,17 @@
 <!-- 기본 템플릿 안에 삽입될 내용 Start -->
 <div class="container-fluid flex-fill">
   <div class="row h-100">
+    <!-- Left Navbar -->
+    <div class="col-md-2" th:if="${showLeftNav}">
+      <div th:replace="~{navbar-left :: leftNavFragment}"></div>
+    </div>
     <!-- Admin Left Navbar -->
     <div class="col-md-2" th:if="${showAdminLeftNav}">
       <div th:replace="~{navbar-left-admin :: adminLeftNavFragment}"></div>
     </div>
     <!-- Main Content -->
-    <main th:classappend="${showAdminLeftNav} ? 'col-md-10' : 'col-md-12'">
-      <th:block layout:fragment="content"></th:block>
+    <main th:classappend="${(showAdminLeftNav ?: false) || (showLeftNav ?: false)} ? 'col-md-10' : 'col-md-12'">
+    <th:block layout:fragment="content"></th:block>
     </main>
   </div>
 </div>
