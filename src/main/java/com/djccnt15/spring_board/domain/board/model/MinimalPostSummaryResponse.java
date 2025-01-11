@@ -14,6 +14,4 @@ public class MinimalPostSummaryResponse {
     private LocalDateTime createdDatetime;
     
     private String title;
-    
-    private String content;
 }

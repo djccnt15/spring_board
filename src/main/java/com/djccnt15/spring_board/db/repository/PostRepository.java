@@ -118,8 +118,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
             SELECT
                 p.id,
                 p.created_datetime,
-                pc.title,
-                pc.content
+                pc.title
             FROM post AS p
             JOIN category AS c ON p.category_id = c.id
             JOIN (
@@ -127,7 +126,6 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
                     t1.id,
                     t1.created_datetime,
                     t1.title,
-                    t1.content,
                     t1.post_id
                 FROM post_content AS t1
                 WHERE t1.version = (

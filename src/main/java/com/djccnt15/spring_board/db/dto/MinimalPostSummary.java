@@ -9,6 +9,4 @@ public interface MinimalPostSummary {
     LocalDateTime getCreatedDatetime();
     
     String getTitle();
-    
-    String getContent();
 }

@@ -40,7 +40,6 @@ public class PostConverter {
             .id(post.getId())
             .createdDatetime(post.getCreatedDatetime())
             .title(post.getTitle())
-            .content(post.getContent())
             .build();
     }
 }

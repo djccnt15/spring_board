@@ -1,0 +1,45 @@
+<html
+  lang="ko"
+  layout:decorate="~{layout}"
+  xmlns:layout="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org">
+<div
+  layout:fragment="content"
+  class="container my-3"
+>
+  <div class="row">
+    <div class="col-6" th:each="board, loop : ${boardList}">
+      <h5>
+        <a
+          th:href="@{|/board/${board.category.name}|}"
+          th:text="|${board.category.name} 게시판|"
+        ></a>
+      </h5>
+      <div class="table-responsive">
+        <table class="table table-hover" style="table-layout: fixed;">
+          <thead class="table-secondary">
+            <tr class="text-center">
+              <th style="width: 10%">번호</th>
+              <th style="width: 60%">제목</th>
+              <th style="width: 30%">작성일시</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="text-center" th:each="post, loop : ${board.postList}">
+              <td th:text="${post.id}"></td>
+              <td class="text-start">
+                <a
+                  class="mw-100 d-inline-block text-truncate"
+                  th:href="@{|/board/${board.category.name}/${post.id}|}"
+                  th:text="${post.title}"
+                ></a>
+              </td>
+              <td th:text="${#temporals.format(post.createdDatetime, 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</html>

@@ -43,4 +43,16 @@ public class PostController {
         model.addAttribute("kw", keyword);
         return "post-list";
     }
+    
+    /**
+     * view controller for board index page
+     * @param model inject from spring
+     * @return board index view
+     */
+    @GetMapping
+    public String getBoardIndex(Model model) {
+        var boardList = business.getIndexPostList();
+        model.addAttribute("boardList", boardList);
+        return "board-index";
+    }
 }
