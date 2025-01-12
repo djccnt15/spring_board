@@ -10,6 +10,7 @@ import com.djccnt15.spring_board.domain.board.converter.PostConverter;
 import com.djccnt15.spring_board.domain.board.model.PostMinimalResponse;
 import com.djccnt15.spring_board.domain.board.model.PostCreateRequest;
 import com.djccnt15.spring_board.domain.board.model.PostDetailResponse;
+import com.djccnt15.spring_board.exception.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -69,5 +70,13 @@ public class PostService {
         return postList.stream()
             .map(postConverter::toResponse)
             .toList();
+    }
+    
+    public PostDetailResponse getPostDetail(Long id) {
+        var projection = postRepository.getPostDetail(id)
+            .orElseThrow(
+                () -> new DataNotFoundException("can't find data")
+            );
+        return postConverter.toResponse(projection);
     }
 }

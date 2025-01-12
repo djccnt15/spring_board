@@ -56,4 +56,22 @@ public class PostController {
         model.addAttribute("response", response);
         return "board-index";
     }
+    
+    /**
+     * view controller for post detail page
+     * @param model inject from spring
+     * @param categoryName name of category
+     * @param id id of post
+     * @return post detail view
+     */
+    @GetMapping(path = "/{categoryName}/{id}")
+    public String getPostDetail(
+        Model model,
+        @PathVariable(value = "categoryName") String categoryName,
+        @PathVariable(value = "id") Long id
+    ) {
+        var response = business.getPostDetail(id);
+        model.addAttribute("response", response);
+        return "post-detail";
+    }
 }

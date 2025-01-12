@@ -30,6 +30,7 @@ public class PostConverter {
             .author(post.getUsername())
             .title(post.getTitle())
             .content(post.getContent())
+            .version(post.getVersion())
             .commentCount(post.getCommentCount())
             .voteCount(post.getVoteCount())
             .build();

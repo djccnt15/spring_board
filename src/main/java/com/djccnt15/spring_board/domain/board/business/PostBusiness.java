@@ -3,10 +3,7 @@ package com.djccnt15.spring_board.domain.board.business;
 import com.djccnt15.spring_board.annotations.Business;
 import com.djccnt15.spring_board.db.entity.PostEntity;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
-import com.djccnt15.spring_board.domain.board.model.BoardIndexResponse;
-import com.djccnt15.spring_board.domain.board.model.PostCreateRequest;
-import com.djccnt15.spring_board.domain.board.model.PostListResponse;
-import com.djccnt15.spring_board.domain.board.model.PostSummaryListResponse;
+import com.djccnt15.spring_board.domain.board.model.*;
 import com.djccnt15.spring_board.domain.board.service.PostService;
 import com.djccnt15.spring_board.domain.category.converter.CategoryConverter;
 import com.djccnt15.spring_board.domain.category.service.CategoryService;
@@ -69,5 +66,9 @@ public class PostBusiness {
             .categoryList(categoryResponseList)
             .boardList(boardList)
             .build();
+    }
+    
+    public PostDetailResponse getPostDetail(Long id) {
+        return postService.getPostDetail(id);
     }
 }

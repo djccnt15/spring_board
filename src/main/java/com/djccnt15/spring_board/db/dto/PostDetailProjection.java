@@ -16,6 +16,8 @@ public interface PostDetailProjection {
     
     String getContent();
     
+    Integer getVersion();
+    
     Long getCommentCount();
     
     Long getVoteCount();

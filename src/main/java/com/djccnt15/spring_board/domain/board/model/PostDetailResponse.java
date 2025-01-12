@@ -21,6 +21,8 @@ public class PostDetailResponse {
     
     private String content;
     
+    private Integer version;
+    
     private Long commentCount;
     
     private Long voteCount;
