@@ -34,7 +34,7 @@
                   th:text="${post.title}"
                 ></a>
               </td>
-              <td th:text="${#temporals.format(post.createdDatetime, 'yyyy-MM-dd HH:mm')}"></td>
+              <td th:text="${#temporals.format(post.createdDateTime, 'yyyy-MM-dd HH:mm')}"></td>
             </tr>
           </tbody>
         </table>

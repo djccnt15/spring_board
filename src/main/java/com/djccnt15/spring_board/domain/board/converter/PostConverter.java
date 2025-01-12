@@ -25,9 +25,9 @@ public class PostConverter {
     public PostDetailResponse toResponse(PostDetailProjection post) {
         return PostDetailResponse.builder()
             .id(post.getId())
-            .createdDatetime(post.getCreatedDatetime())
-            .updatedDatetime(post.getUpdatedDatetime())
-            .username(post.getUsername())
+            .createdDateTime(post.getCreatedDatetime())
+            .updatedDateTime(post.getUpdatedDatetime())
+            .author(post.getUsername())
             .title(post.getTitle())
             .content(post.getContent())
             .commentCount(post.getCommentCount())
@@ -38,7 +38,7 @@ public class PostConverter {
     public PostMinimalResponse toResponse(PostMinimalProjection post) {
         return PostMinimalResponse.builder()
             .id(post.getId())
-            .createdDatetime(post.getCreatedDatetime())
+            .createdDateTime(post.getCreatedDatetime())
             .title(post.getTitle())
             .build();
     }

@@ -11,7 +11,7 @@ public class PostMinimalResponse {
     
     private Long id;
     
-    private LocalDateTime createdDatetime;
+    private LocalDateTime createdDateTime;
     
     private String title;
 }

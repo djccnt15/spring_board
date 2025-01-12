@@ -69,11 +69,11 @@
       <td>
         <span
           class="mw-100 d-inline-block text-truncate"
-          th:if="${post.username != null}"
-          th:text="${post.username}"
+          th:if="${post.author != null}"
+          th:text="${post.author}"
         ></span>
       </td>
-      <td th:text="${#temporals.format(post.createdDatetime, 'yyyy-MM-dd HH:mm')}"></td>
+      <td th:text="${#temporals.format(post.createdDateTime, 'yyyy-MM-dd HH:mm')}"></td>
     </tr>
     </tbody>
   </table>

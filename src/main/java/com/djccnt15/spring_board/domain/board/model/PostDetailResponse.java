@@ -11,11 +11,11 @@ public class PostDetailResponse {
     
     private Long id;
     
-    private LocalDateTime createdDatetime;
+    private LocalDateTime createdDateTime;
     
-    private LocalDateTime updatedDatetime;
+    private LocalDateTime updatedDateTime;
     
-    private String username;
+    private String author;
     
     private String title;
     
