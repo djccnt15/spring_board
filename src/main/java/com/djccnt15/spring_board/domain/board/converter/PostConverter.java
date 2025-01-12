@@ -1,13 +1,13 @@
 package com.djccnt15.spring_board.domain.board.converter;
 
 import com.djccnt15.spring_board.annotations.Converter;
-import com.djccnt15.spring_board.db.dto.DetailedPostSummary;
-import com.djccnt15.spring_board.db.dto.MinimalPostSummary;
+import com.djccnt15.spring_board.db.dto.PostDetailProjection;
+import com.djccnt15.spring_board.db.dto.PostMinimalProjection;
 import com.djccnt15.spring_board.db.entity.CategoryEntity;
 import com.djccnt15.spring_board.db.entity.PostEntity;
 import com.djccnt15.spring_board.db.entity.UserEntity;
-import com.djccnt15.spring_board.domain.board.model.DetailedPostSummaryResponse;
-import com.djccnt15.spring_board.domain.board.model.MinimalPostSummaryResponse;
+import com.djccnt15.spring_board.domain.board.model.PostDetailResponse;
+import com.djccnt15.spring_board.domain.board.model.PostMinimalResponse;
 
 @Converter
 public class PostConverter {
@@ -22,8 +22,8 @@ public class PostConverter {
             .build();
     }
     
-    public DetailedPostSummaryResponse toResponse(DetailedPostSummary post) {
-        return DetailedPostSummaryResponse.builder()
+    public PostDetailResponse toResponse(PostDetailProjection post) {
+        return PostDetailResponse.builder()
             .id(post.getId())
             .createdDatetime(post.getCreatedDatetime())
             .updatedDatetime(post.getUpdatedDatetime())
@@ -35,8 +35,8 @@ public class PostConverter {
             .build();
     }
     
-    public MinimalPostSummaryResponse toResponse(MinimalPostSummary post) {
-        return MinimalPostSummaryResponse.builder()
+    public PostMinimalResponse toResponse(PostMinimalProjection post) {
+        return PostMinimalResponse.builder()
             .id(post.getId())
             .createdDatetime(post.getCreatedDatetime())
             .title(post.getTitle())

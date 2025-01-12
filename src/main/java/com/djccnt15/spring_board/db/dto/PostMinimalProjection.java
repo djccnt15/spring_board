@@ -2,7 +2,7 @@ package com.djccnt15.spring_board.db.dto;
 
 import java.time.LocalDateTime;
 
-public interface MinimalPostSummary {
+public interface PostMinimalProjection {
     
     Long getId();
     

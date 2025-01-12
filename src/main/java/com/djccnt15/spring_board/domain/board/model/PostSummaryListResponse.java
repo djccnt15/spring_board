@@ -12,5 +12,5 @@ public class PostSummaryListResponse {
     
     private CategoryResponse category;
     
-    private List<MinimalPostSummaryResponse> postList;
+    private List<PostMinimalResponse> postList;
 }

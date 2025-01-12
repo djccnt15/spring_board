@@ -7,9 +7,9 @@ import com.djccnt15.spring_board.db.repository.PostContentRepository;
 import com.djccnt15.spring_board.db.repository.PostRepository;
 import com.djccnt15.spring_board.domain.board.converter.PostContentConverter;
 import com.djccnt15.spring_board.domain.board.converter.PostConverter;
-import com.djccnt15.spring_board.domain.board.model.MinimalPostSummaryResponse;
+import com.djccnt15.spring_board.domain.board.model.PostMinimalResponse;
 import com.djccnt15.spring_board.domain.board.model.PostCreateRequest;
-import com.djccnt15.spring_board.domain.board.model.DetailedPostSummaryResponse;
+import com.djccnt15.spring_board.domain.board.model.PostDetailResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -42,13 +42,13 @@ public class PostService {
         postContentRepository.save(entity);
     }
     
-    public List<DetailedPostSummaryResponse> getPostList(
+    public List<PostDetailResponse> getPostList(
         CategoryEntity category,
         int size,
         int page,
         String keyword
     ) {
-        var postList = postRepository.findPostListByCategory(category.getId(), size, size * page, keyword);
+        var postList = postRepository.getPostListByCategory(category.getId(), size, size * page, keyword);
         return postList.stream()
             .map(postConverter::toResponse)
             .toList();
@@ -61,11 +61,11 @@ public class PostService {
         return postRepository.countPostListByCategory(category.getId(), keyword);
     }
     
-    public List<MinimalPostSummaryResponse> getMinimalPostList(
+    public List<PostMinimalResponse> getMinimalPostList(
         CategoryEntity category,
         int size
     ) {
-        var postList = postRepository.findMinimalPostListByCategory(category.getId(), size);
+        var postList = postRepository.getMinimalPostListByCategory(category.getId(), size);
         return postList.stream()
             .map(postConverter::toResponse)
             .toList();

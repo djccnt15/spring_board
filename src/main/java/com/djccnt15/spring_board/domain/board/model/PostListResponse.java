@@ -11,5 +11,5 @@ public class PostListResponse {
     
     private Integer totalPages;
     
-    private List<DetailedPostSummaryResponse> postList;
+    private List<PostDetailResponse> postList;
 }
