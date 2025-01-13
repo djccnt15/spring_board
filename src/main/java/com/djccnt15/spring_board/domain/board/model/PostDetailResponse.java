@@ -17,6 +17,8 @@ public class PostDetailResponse {
     
     private String author;
     
+    private String category;
+    
     private String title;
     
     private String content;

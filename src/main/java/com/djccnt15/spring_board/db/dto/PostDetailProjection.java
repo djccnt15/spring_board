@@ -12,6 +12,8 @@ public interface PostDetailProjection {
     
     String getUsername();
     
+    String getCategory();
+    
     String getTitle();
     
     String getContent();

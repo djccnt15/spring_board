@@ -60,17 +60,18 @@ public class PostController {
     /**
      * view controller for post detail page
      * @param model inject from spring
-     * @param categoryName name of category
+     * @param mainCategory name of category
      * @param id id of post
      * @return post detail view
      */
-    @GetMapping(path = "/{categoryName}/{id}")
+    @GetMapping(path = "/{mainCategory}/{id}")
     public String getPostDetail(
         Model model,
-        @PathVariable(value = "categoryName") String categoryName,
+        @PathVariable(value = "mainCategory") String mainCategory,
         @PathVariable(value = "id") Long id
     ) {
         var response = business.getPostDetail(id);
+        model.addAttribute(mainCategory);
         model.addAttribute("response", response);
         return "post-detail";
     }

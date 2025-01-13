@@ -28,6 +28,7 @@ public class PostConverter {
             .createdDateTime(post.getCreatedDatetime())
             .updatedDateTime(post.getUpdatedDatetime())
             .author(post.getUsername())
+            .category(post.getCategory())
             .title(post.getTitle())
             .content(post.getContent())
             .version(post.getVersion())

@@ -49,6 +49,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
                 p.created_datetime,
                 pc.created_datetime AS updated_datetime,
                 u.username,
+                c.name AS category,
                 pc.title,
                 pc.content,
                 pc.version,
@@ -191,6 +192,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
                 p.created_datetime,
                 pc.created_datetime AS updated_datetime,
                 u.username,
+                c.name AS category,
                 pc.title,
                 pc.content,
                 pc.version,
@@ -199,6 +201,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
             FROM post p
             JOIN LatestPostContent AS pc ON p.id = pc.post_id
             JOIN user_info AS u ON p.author_id = u.id
+            JOIN category c ON p.category_id = c.id
             LEFT JOIN CommentCounts AS comment ON p.id = comment.post_id
             LEFT JOIN VoteCounts AS vote ON p.id = vote.post_id
             WHERE
