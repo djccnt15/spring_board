@@ -15,7 +15,7 @@
     </div>
     <div class="col-1">
       <a
-        th:href="@{/${categoryName}/form}"
+        th:href="@{|/board/${categoryName}/form|}"
         class="btn btn-primary"
         sec:authorize="isAuthenticated()"
       >

@@ -29,11 +29,12 @@ public class BoardCreateTest {
         for (CategoryEntity category : categoryList) {
             for (int i = 0; i < 100; i++) {
                 var request = PostCreateRequest.builder()
+                    .category(category.getName())
                     .title("%s 카테고리. 테스트 데이터:[%03d]".formatted(category.getName(), i))
                     .content("테스트 데이터")
                     .build();
                 
-                postBusiness.createPost(session, category.getName(), request);
+                postBusiness.createPost(session, request);
             }
         }
     }

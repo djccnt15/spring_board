@@ -6,10 +6,13 @@ import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.board.model.*;
 import com.djccnt15.spring_board.domain.board.service.PostService;
 import com.djccnt15.spring_board.domain.category.converter.CategoryConverter;
+import com.djccnt15.spring_board.domain.category.model.CategoryResponse;
 import com.djccnt15.spring_board.domain.category.service.CategoryService;
 import com.djccnt15.spring_board.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 
 @Slf4j
 @Business
@@ -21,13 +24,18 @@ public class PostBusiness {
     private final CategoryConverter categoryConverter;
     private final PostService postService;
     
+    public List<CategoryResponse> getCategoryList(String categoryName) {
+        return categoryService.getCategory(categoryName).getChildren().stream()
+            .map(categoryConverter::toResponse)
+            .toList();
+    }
+    
     public PostEntity createPost(
         UserSession session,
-        String categoryName,
         PostCreateRequest request
     ) {
         var user = userService.getUser(session.getUserId());
-        var category = categoryService.getCategory(categoryName);
+        var category = categoryService.getCategory(request.getCategory());
         var post = postService.createPost(user, category);
         postService.createContent(post, request);
         return post;
