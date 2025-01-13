@@ -79,4 +79,10 @@ public class PostService {
             );
         return postConverter.toResponse(projection);
     }
+    
+    public PostEntity getPost(Long postId) {
+        return postRepository.findById(postId).orElseThrow(
+            () -> new DataNotFoundException("can't fine requested post")
+        );
+    }
 }

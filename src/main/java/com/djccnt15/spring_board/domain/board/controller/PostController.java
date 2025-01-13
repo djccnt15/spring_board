@@ -1,6 +1,7 @@
 package com.djccnt15.spring_board.domain.board.controller;
 
 import com.djccnt15.spring_board.domain.board.business.PostBusiness;
+import com.djccnt15.spring_board.domain.board.model.CommentCreateRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -73,6 +74,7 @@ public class PostController {
         var response = business.getPostDetail(id);
         model.addAttribute(mainCategory);
         model.addAttribute("response", response);
+        model.addAttribute("commentForm", new CommentCreateRequest());
         return "post-detail";
     }
 }
