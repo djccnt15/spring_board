@@ -45,8 +45,8 @@ public class PostService {
     
     public List<PostDetailResponse> getPostList(
         CategoryEntity category,
-        int size,
-        int page,
+        Integer size,
+        Integer page,
         String keyword
     ) {
         var postList = postRepository.getPostListByCategory(category.getId(), size, size * page, keyword);
@@ -55,7 +55,7 @@ public class PostService {
             .toList();
     }
     
-    public int getPostListCount(
+    public Integer getPostListCount(
         CategoryEntity category,
         String keyword
     ) {
@@ -64,7 +64,7 @@ public class PostService {
     
     public List<PostMinimalResponse> getMinimalPostList(
         CategoryEntity category,
-        int size
+        Integer size
     ) {
         var postList = postRepository.getMinimalPostListByCategory(category.getId(), size);
         return postList.stream()
@@ -73,7 +73,7 @@ public class PostService {
     }
     
     public PostDetailResponse getPostDetail(Long id) {
-        var projection = postRepository.getPostDetail(id)
+        var projection = postRepository.getPostDetailById(id)
             .orElseThrow(
                 () -> new DataNotFoundException("can't find data")
             );

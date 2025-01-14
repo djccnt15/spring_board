@@ -21,7 +21,10 @@
           </div>
           <div th:text="${#temporals.format(response.createdDateTime, 'yyyy-MM-dd HH:mm')}"></div>
         </div>
-        <div th:if="${response.updatedDateTime != null && response.version > 1 }" class="badge bg-light text-dark p-2 text-start mx-3">
+        <div
+          th:if="${response.updatedDateTime != null && response.version > 1 }"
+          class="badge bg-light text-dark p-2 text-start mx-3"
+        >
           <div class="mb-2">modified at</div>
           <div th:text="${#temporals.format(response.updatedDateTime, 'yyyy-MM-dd HH:mm')}"></div>
         </div>

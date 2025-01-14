@@ -45,7 +45,7 @@ public class QuestionPublicController {
     @GetMapping(path = "/{id}")
     public String detail(
         Model model,
-        @PathVariable Long id,
+        @PathVariable(value = "id") Long id,
         AnswerForm form
     ) {
         var question = business.getDetail(id);

@@ -24,7 +24,7 @@ public class UserPrivateController {
      * view controller for resign page
      * @return resign page view
      */
-    @GetMapping("/resign")
+    @GetMapping(path = "/resign")
     public String resign() {
         return "resign-form";
     }
@@ -34,7 +34,7 @@ public class UserPrivateController {
      * @param user inject user session data from spring security
      * @return redirect to root page
      */
-    @DeleteMapping("/resign")
+    @DeleteMapping(path = "/resign")
     public String resign(@AuthenticationPrincipal UserSession user) {
         business.resign(user);
         return "redirect:/";

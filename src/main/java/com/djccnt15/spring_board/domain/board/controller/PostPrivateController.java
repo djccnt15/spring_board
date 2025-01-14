@@ -43,7 +43,7 @@ public class PostPrivateController {
     /**
      * post create controller
      * @param user inject user session data
-     * @param mainCategory category name to create post
+     * @param mainCategory main category name to create post
      * @param request actual post content data as form
      * @param bindingResult validated result. this must come right after the form
      * @return redirect to created post

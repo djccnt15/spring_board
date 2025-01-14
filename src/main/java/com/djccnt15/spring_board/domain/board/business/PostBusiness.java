@@ -33,20 +33,20 @@ public class PostBusiness {
     }
     
     public PostEntity createPost(
-        UserSession session,
+        UserSession user,
         PostCreateRequest request
     ) {
-        var user = userService.getUser(session.getUserId());
+        var userEntity = userService.getUser(user.getUserId());
         var category = categoryService.getCategory(request.getCategory());
-        var post = postService.createPost(user, category);
+        var post = postService.createPost(userEntity, category);
         postService.createContent(post, request);
         return post;
     }
     
     public PostListResponse getPostList(
         String categoryName,
-        int size,
-        int page,
+        Integer size,
+        Integer page,
         String keyword
     ) {
         var category = categoryService.getCategory(categoryName);

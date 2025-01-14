@@ -40,7 +40,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
             VoteCounts AS (
                 SELECT
                     post_voter.post_id,
-                    COUNT(*) AS voteCount
+                    COUNT(*) AS vote_count
                 FROM post_voter
                 GROUP BY post_voter.post_id
             )
@@ -54,7 +54,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
                 pc.content,
                 pc.version,
                 COALESCE(comment.commentCount, 0) AS commentCount,
-                COALESCE(vote.voteCount, 0) AS voteCount
+                COALESCE(vote.vote_count, 0) AS vote_count
             FROM post AS p
             JOIN category c ON p.category_id = c.id
             JOIN user_info u ON p.author_id = u.id
@@ -79,9 +79,9 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
         nativeQuery = true
     )
     List<PostDetailProjection> getPostListByCategory(
-        @Param("category_id") long categoryId,
-        @Param("size") int size,
-        @Param("page") int page,
+        @Param("category_id") Long categoryId,
+        @Param("size") Integer size,
+        @Param("page") Integer page,
         @Param("keyword") String keyword
     );
     
@@ -118,8 +118,8 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
             """,
         nativeQuery = true
     )
-    int countPostListByCategory(
-        @Param("category_id") long categoryId,
+    Integer countPostListByCategory(
+        @Param("category_id") Long categoryId,
         @Param("keyword") String keyword
     );
     
@@ -153,8 +153,8 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
         nativeQuery = true
     )
     List<PostMinimalProjection> getMinimalPostListByCategory(
-        @Param("category_id") long categoryId,
-        @Param("size") int size
+        @Param("category_id") Long categoryId,
+        @Param("size") Integer size
     );
     
     @Query(
@@ -185,7 +185,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
             VoteCounts AS (
                 SELECT
                     post_voter.post_id,
-                    COUNT(*) AS voteCount
+                    COUNT(*) AS vote_count
                 FROM post_voter
                 GROUP BY post_voter.post_id
             )
@@ -199,7 +199,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
                 pc.content,
                 pc.version,
                 COALESCE(comment.commentCount, 0) AS commentCount,
-                COALESCE(vote.voteCount, 0) AS voteCount
+                COALESCE(vote.vote_count, 0) AS vote_count
             FROM post p
             JOIN LatestPostContent AS pc ON p.id = pc.post_id
             JOIN user_info AS u ON p.author_id = u.id
@@ -212,5 +212,5 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
             """,
         nativeQuery = true
     )
-    Optional<PostDetailProjection> getPostDetail(@Param("post_id") Long postId);
+    Optional<PostDetailProjection> getPostDetailById(@Param("post_id") Long postId);
 }

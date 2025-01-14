@@ -19,13 +19,13 @@ public class CommentBusiness {
     private final CommentService commentService;
     
     public void createComment(
-        UserSession session,
+        UserSession user,
         CommentCreateRequest request,
         Long postId
     ) {
-        var user = userService.getUser(session.getUserId());
+        var userEntity = userService.getUser(user.getUserId());
         var post = postService.getPost(postId);
-        var comment = commentService.createComment(user, post);
+        var comment = commentService.createComment(userEntity, post);
         commentService.createCommentContent(comment, request);
     }
 }

@@ -34,6 +34,7 @@ public class AuthService implements UserDetailsService {
         
         List<GrantedAuthority> authorities = new ArrayList<>();
         
+        // adding user authorities to use thymeleaf `sec:authorize` easily
         switch ((userEntity.getRole() == null) ? UserRoleEnum.USER : userEntity.getRole()) {
             case ADMIN -> authorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.getRole()));
             case STAFF -> authorities.add(new SimpleGrantedAuthority(UserRole.MANAGER.getRole()));

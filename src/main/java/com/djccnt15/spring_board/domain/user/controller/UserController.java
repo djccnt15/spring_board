@@ -20,7 +20,7 @@ public class UserController {
     
     private final UserBusiness business;
     
-    @GetMapping("/signup")
+    @GetMapping(path = "/signup")
     public String signup(UserCreateForm userCreateForm) {
         return "signup_form";
     }
@@ -57,7 +57,7 @@ public class UserController {
         return "redirect:/";
     }
     
-    @GetMapping("/login")
+    @GetMapping(path = "/login")
     public String login() {
         return "login_form";
     }
