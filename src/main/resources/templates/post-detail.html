@@ -65,5 +65,26 @@
       sec:authorize="isAuthenticated()"
     >
   </form>
+  <!-- 댓글 반복 시작 -->
+  <div class="card my-3" th:each="comment : ${response.commentList}">
+    <div class="card-body">
+      <div class="card-text" th:utext="${@commonUtil.markdown(comment.content)}"></div>
+      <div class="d-flex justify-content-end">
+        <div class="badge bg-light text-dark p-2 text-start">
+          <div class="mb-2">
+            <span th:if="${comment.author != null}" th:text="|작성자: ${comment.author}|"></span>
+          </div>
+          <div th:text="${#temporals.format(comment.createdDateTime, 'yyyy-MM-dd HH:mm')}"></div>
+        </div>
+        <div
+          th:if="${comment.updatedDateTime != null && comment.version > 1}"
+          class="badge bg-light text-dark p-2 text-start mx-3"
+        >
+          <div class="mb-2">modified at</div>
+          <div th:text="${#temporals.format(comment.updatedDateTime, 'yyyy-MM-dd HH:mm')}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 </html>

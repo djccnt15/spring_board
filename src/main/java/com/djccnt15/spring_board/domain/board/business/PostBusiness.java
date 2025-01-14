@@ -4,6 +4,7 @@ import com.djccnt15.spring_board.annotations.Business;
 import com.djccnt15.spring_board.db.entity.PostEntity;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.board.model.*;
+import com.djccnt15.spring_board.domain.board.service.CommentService;
 import com.djccnt15.spring_board.domain.board.service.PostService;
 import com.djccnt15.spring_board.domain.category.converter.CategoryConverter;
 import com.djccnt15.spring_board.domain.category.model.CategoryResponse;
@@ -23,6 +24,7 @@ public class PostBusiness {
     private final CategoryService categoryService;
     private final CategoryConverter categoryConverter;
     private final PostService postService;
+    private final CommentService commentService;
     
     public List<CategoryResponse> getCategoryList(String categoryName) {
         return categoryService.getCategory(categoryName).getChildren().stream()
@@ -77,6 +79,9 @@ public class PostBusiness {
     }
     
     public PostDetailResponse getPostDetail(Long id) {
-        return postService.getPostDetail(id);
+        var post = postService.getPostDetail(id);
+        var commentList = commentService.getCommentList(post);
+        post.setCommentList(commentList);
+        return post;
     }
 }

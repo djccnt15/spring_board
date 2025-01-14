@@ -8,9 +8,13 @@ import com.djccnt15.spring_board.db.repository.CommentRepository;
 import com.djccnt15.spring_board.domain.board.converter.CommentContentConverter;
 import com.djccnt15.spring_board.domain.board.converter.CommentConverter;
 import com.djccnt15.spring_board.domain.board.model.CommentCreateRequest;
+import com.djccnt15.spring_board.domain.board.model.CommentResponse;
+import com.djccnt15.spring_board.domain.board.model.PostDetailResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -36,5 +40,12 @@ public class CommentService {
     ) {
         var entity = commentContentConverter.toEntity(request, comment);
         commentContentRepository.save(entity);
+    }
+    
+    public List<CommentResponse> getCommentList(PostDetailResponse post) {
+        var commentList = commentRepository.getCommentListByPostId(post.getId());
+        return commentList.stream()
+            .map(commentConverter::toResponse)
+            .toList();
     }
 }
