@@ -75,8 +75,8 @@ public class AdminCategoryController {
         @PathVariable(value = "id") Long id
     ) {
         model.addAttribute("showAdminLeftNav", true);
-        var placeholders = business.getSubCategoryUpdatePlaceholder(id);
-        model.addAttribute("placeholders", placeholders);
+        var placeholder = business.getSubCategoryUpdatePlaceholder(id);
+        model.addAttribute("placeholder", placeholder);
         model.addAttribute("form", new CategoryCreateRequest());
         return "category-sub-update-form";
     }

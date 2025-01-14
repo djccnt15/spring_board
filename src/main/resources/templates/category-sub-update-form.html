@@ -19,12 +19,12 @@
     </div>
     <div class="mb-3">
       <label th:for="mainId" class="form-label">게시판</label>
-      <select id="mainId" name="mainId"  class="form-select">
+      <select id="mainId" name="mainId" class="form-select">
         <option
-          th:each="main : ${placeholders.mainList}"
+          th:each="main : ${placeholder.mainList}"
           th:text="${main.name}"
           th:value="${main.id}"
-          th:selected="${main.id == placeholders.selected.id}"
+          th:selected="${main.id == placeholder.selected.id}"
         ></option>
       </select>
     </div>
