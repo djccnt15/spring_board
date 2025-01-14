@@ -102,6 +102,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
             SELECT COUNT(*)
             FROM post AS p
             JOIN category AS c ON p.category_id = c.id
+            JOIN user_info u ON p.author_id = u.id
             JOIN LatestPostContent AS pc ON p.id = pc.post_id
             WHERE
                 p.is_active = TRUE
@@ -110,7 +111,8 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
                     OR c.id = :category_id
                 )
                 AND (
-                    pc.title LIKE :keyword
+                    u.username LIKE :keyword
+                    OR pc.title LIKE :keyword
                     OR pc.content LIKE :keyword
                 )
             """,
