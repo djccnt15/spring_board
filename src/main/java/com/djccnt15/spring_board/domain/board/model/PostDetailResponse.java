@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -28,4 +29,6 @@ public class PostDetailResponse {
     private Long commentCount;
     
     private Long voteCount;
+    
+    private List<CommentResponse> commentList;
 }
