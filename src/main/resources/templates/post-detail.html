@@ -29,6 +29,15 @@
           <div th:text="${#temporals.format(response.updatedDateTime, 'yyyy-MM-dd HH:mm')}"></div>
         </div>
       </div>
+      <div class="my-3">
+        <a
+          th:href="@{|/board/${mainCategory}/${response.id}/form|}"
+          class="btn btn-sm btn-outline-secondary"
+          sec:authorize="isAuthenticated()"
+          th:if="${response.authorId != null and #authentication.getPrincipal().getUserId() == response.authorId}"
+          th:text="수정"
+        ></a>
+      </div>
     </div>
   </div>
   <!-- 댓글 갯수 표시 -->

@@ -4,6 +4,7 @@ import com.djccnt15.spring_board.db.entity.CategoryEntity;
 import com.djccnt15.spring_board.db.repository.CategoryRepository;
 import com.djccnt15.spring_board.domain.category.converter.CategoryConverter;
 import com.djccnt15.spring_board.domain.category.model.CategoryCreateRequest;
+import com.djccnt15.spring_board.domain.category.model.CategoryResponse;
 import com.djccnt15.spring_board.exception.ApiDataNotFoundException;
 import com.djccnt15.spring_board.exception.DataNotFoundException;
 import com.djccnt15.spring_board.exception.DuplicatedKeyException;
@@ -63,5 +64,11 @@ public class CategoryService {
         return repository.findByNameAndIsActive(categoryName, true).orElseThrow(
             () -> new DataNotFoundException("can't find requested category")
         );
+    }
+    
+    public List<CategoryResponse> getCategoryByParent(CategoryEntity entity) {
+        return entity.getChildren().stream()
+            .map(converter::toResponse)
+            .toList();
     }
 }

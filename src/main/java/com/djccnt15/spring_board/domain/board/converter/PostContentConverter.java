@@ -18,4 +18,17 @@ public class PostContentConverter {
             .post(post)
             .build();
     }
+    
+    public PostContentEntity toEntity(
+        PostEntity post,
+        PostContentEntity postContent,
+        PostCreateRequest request
+    ) {
+        return PostContentEntity.builder()
+            .version(postContent.getVersion() + 1)
+            .title(request.getTitle())
+            .content(request.getContent())
+            .post(post)
+            .build();
+    }
 }

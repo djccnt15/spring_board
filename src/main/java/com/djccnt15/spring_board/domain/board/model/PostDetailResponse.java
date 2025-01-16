@@ -18,6 +18,8 @@ public class PostDetailResponse {
     
     private String author;
     
+    private Long authorId;
+    
     private String category;
     
     private String title;

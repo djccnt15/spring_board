@@ -27,9 +27,8 @@ public class PostBusiness {
     private final CommentService commentService;
     
     public List<CategoryResponse> getCategoryList(String categoryName) {
-        return categoryService.getCategory(categoryName).getChildren().stream()
-            .map(categoryConverter::toResponse)
-            .toList();
+        var mainCategory = categoryService.getCategory(categoryName);
+        return categoryService.getCategoryByParent(mainCategory);
     }
     
     public PostEntity createPost(
@@ -83,5 +82,36 @@ public class PostBusiness {
         var commentList = commentService.getCommentList(post);
         post.setCommentList(commentList);
         return post;
+    }
+    
+    public PostUpdatePlaceholder getPostUpdatePlaceholder(
+        UserSession user,
+        String mainCategoryName,
+        Long postId
+    ) {
+        var post = postService.getPost(postId);
+        postService.validateAuthor(user, post);
+        var mainCategory = categoryService.getCategory(mainCategoryName);
+        var categoryList = categoryService.getCategoryByParent(mainCategory);
+        var postContent = postService.getLastPostContent(post);
+        return PostUpdatePlaceholder.builder()
+            .categoryList(categoryList)
+            .category(categoryConverter.toResponse(post.getCategory()))
+            .title(postContent.getTitle())
+            .content(postContent.getContent())
+            .build();
+    }
+    
+    public void updatePost(
+        UserSession user,
+        Long postId,
+        PostCreateRequest request
+    ) {
+        var post = postService.getPost(postId);
+        postService.validateAuthor(user, post);
+        var category = categoryService.getCategory(request.getCategory());
+        var postContent = postService.getLastPostContent(post);
+        postService.updatePost(post, category);
+        postService.updatePostContent(post, postContent, request);
     }
 }

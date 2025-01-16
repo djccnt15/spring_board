@@ -65,4 +65,54 @@ public class PostPrivateController {
         var post = business.createPost(user, request);
         return "redirect:/board/%s/%s".formatted(post.getCategory().getParent().getName(), post.getId());
     }
+    
+    /**
+     * view controller for post update page
+     * @param model inject from spring
+     * @param mainCategory name of the main category
+     * @param postId post id
+     * @return post update view
+     */
+    @GetMapping(path = "/{mainCategory}/{id}/form")
+    public String getUpdateForm(
+        Model model,
+        @AuthenticationPrincipal UserSession user,
+        @PathVariable(value = "mainCategory") String mainCategory,
+        @PathVariable(value = "id") Long postId
+    ) {
+        var placeholder = business.getPostUpdatePlaceholder(user, mainCategory, postId);
+        model.addAttribute("placeholder", placeholder);
+        model.addAttribute(mainCategory);
+        model.addAttribute("form", new PostCreateRequest());
+        return "post-update-form";
+    }
+    
+    /**
+     * controller for post update
+     * @param model inject from spring
+     * @param user user session
+     * @param mainCategory name of the main category
+     * @param postId post id
+     * @param request data model for post update
+     * @param bindingResult validated result. this must come right after the form
+     * @return redirect to post detail page
+     */
+    @PutMapping(path = "/{mainCategory}/{id}/form")
+    public String updatePost(
+        Model model,
+        @AuthenticationPrincipal UserSession user,
+        @PathVariable(value = "mainCategory") String mainCategory,
+        @PathVariable(value = "id") Long postId,
+        @Valid @ModelAttribute(name = "form") PostCreateRequest request,
+        BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) {
+            var placeholder = business.getPostUpdatePlaceholder(user, mainCategory, postId);
+            model.addAttribute("placeholder", placeholder);
+            model.addAttribute(mainCategory);
+            return "post-update-form";
+        }
+        business.updatePost(user, postId, request);
+        return "redirect:/board/%s/%s".formatted(mainCategory, postId);
+    }
 }
