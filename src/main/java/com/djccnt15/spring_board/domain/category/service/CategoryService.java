@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -64,6 +65,10 @@ public class CategoryService {
         return repository.findByNameAndIsActive(categoryName, true).orElseThrow(
             () -> new DataNotFoundException("can't find requested category")
         );
+    }
+    
+    public Optional<CategoryEntity> getOptionalCategory(String categoryName) {
+        return repository.findByNameAndIsActive(categoryName, true);
     }
     
     public List<CategoryResponse> getCategoryByParent(CategoryEntity entity) {

@@ -64,10 +64,8 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
             LEFT JOIN VoteCounts AS vote ON p.id = vote.post_id
             WHERE
                 p.is_active = TRUE
-                AND (
-                    c.parent_id = :category_id
-                    OR c.id = :category_id
-                )
+                AND c.parent_id = :category_id
+                AND (:sub_category_id IS NULL OR c.id = :sub_category_id)
                 AND (
                     u.username LIKE :keyword
                     OR pc.title LIKE :keyword
@@ -80,10 +78,11 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
         nativeQuery = true
     )
     List<PostDetailProjection> getPostListByCategory(
-        @Param("category_id") Long categoryId,
+        @Param("category_id") Long mainCategoryId,
         @Param("size") Integer size,
         @Param("page") Integer page,
-        @Param("keyword") String keyword
+        @Param("keyword") String keyword,
+        @Param("sub_category_id") Long subCategoryId
     );
     
     @Query(
@@ -107,10 +106,8 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
             JOIN LatestPostContent AS pc ON p.id = pc.post_id
             WHERE
                 p.is_active = TRUE
-                AND (
-                    c.parent_id = :category_id
-                    OR c.id = :category_id
-                )
+                AND c.parent_id = :category_id
+                AND (:sub_category_id IS NULL OR c.id = :sub_category_id)
                 AND (
                     u.username LIKE :keyword
                     OR pc.title LIKE :keyword
@@ -121,7 +118,8 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
     )
     Integer countPostListByCategory(
         @Param("category_id") Long categoryId,
-        @Param("keyword") String keyword
+        @Param("keyword") String keyword,
+        @Param("sub_category_id") Long subCategoryId
     );
     
     @Query(

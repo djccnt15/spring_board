@@ -47,12 +47,15 @@ public class PostService {
     }
     
     public List<PostDetailResponse> getPostList(
-        CategoryEntity category,
+        CategoryEntity mainCategory,
         Integer size,
         Integer page,
-        String keyword
+        String keyword,
+        Long subCategoryId
     ) {
-        var postList = postRepository.getPostListByCategory(category.getId(), size, size * page, keyword);
+        var postList = postRepository.getPostListByCategory(
+            mainCategory.getId(), size, size * page, keyword, subCategoryId
+        );
         return postList.stream()
             .map(postConverter::toResponse)
             .toList();
@@ -60,9 +63,10 @@ public class PostService {
     
     public Integer getPostListCount(
         CategoryEntity category,
-        String keyword
+        String keyword,
+        Long subCategoryId
     ) {
-        return postRepository.countPostListByCategory(category.getId(), keyword);
+        return postRepository.countPostListByCategory(category.getId(), keyword, subCategoryId);
     }
     
     public List<PostMinimalResponse> getMinimalPostList(
@@ -83,8 +87,8 @@ public class PostService {
         return postConverter.toResponse(projection);
     }
     
-    public PostEntity getPost(Long postId) {
-        return postRepository.findById(postId).orElseThrow(
+    public PostEntity getPost(Long id) {
+        return postRepository.findById(id).orElseThrow(
             () -> new DataNotFoundException("can't fine requested post")
         );
     }

@@ -22,26 +22,29 @@ public class PostController {
     /**
      * view controller of post list
      * @param model inject from spring
-     * @param categoryName name of board - main category
+     * @param mainCategory name of board - main category
      * @param size size of post list
      * @param page number of page
      * @param keyword search keyword
+     * @param subCategory name of category - sub category
      * @return post list view
      */
-    @GetMapping(path = "/{categoryName}")
+    @GetMapping(path = "/{mainCategory}")
     public String getPostList(
         Model model,
-        @PathVariable(value = "categoryName") String categoryName,
+        @PathVariable(value = "mainCategory") String mainCategory,
         @RequestParam(value = "size", defaultValue = "10") int size,
         @RequestParam(value = "page", defaultValue = "0") int page,
-        @RequestParam(value = "kw", defaultValue = "") String keyword
+        @RequestParam(value = "kw", defaultValue = "") String keyword,
+        @RequestParam(value = "category", defaultValue = "") String subCategory
     ) {
-        var response = business.getPostList(categoryName, size, page, keyword);
+        var response = business.getPostList(mainCategory, size, page, keyword, subCategory);
         model.addAttribute("response", response);
-        model.addAttribute("categoryName", categoryName);
+        model.addAttribute("mainCategory", mainCategory);
         model.addAttribute("size", size);
         model.addAttribute("page", page);
         model.addAttribute("kw", keyword);
+        model.addAttribute("category", subCategory);
         return "post-list";
     }
     

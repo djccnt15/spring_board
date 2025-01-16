@@ -11,11 +11,11 @@
 >
   <div class="row my-3">
     <div class="col-3">
-      <h3>[[${categoryName}]] 게시판</h3>
+      <h3>[[${mainCategory}]] 게시판</h3>
     </div>
     <div class="col-1">
       <a
-        th:href="@{|/board/${categoryName}/form|}"
+        th:href="@{|/board/${mainCategory}/form|}"
         class="btn btn-primary"
         sec:authorize="isAuthenticated()"
       >
@@ -50,8 +50,9 @@
   <table class="table table-hover" style="table-layout: fixed;">
     <thead class="table-secondary">
     <tr class="text-center">
-      <th style="width:10%">번호</th>
-      <th style="width:60%">제목</th>
+      <th style="width:5%">번호</th>
+      <th style="width:10%">카테고리</th>
+      <th style="width:55%">제목</th>
       <th style="width:10%">글쓴이</th>
       <th style="width:20%">작성일시</th>
     </tr>
@@ -59,10 +60,16 @@
     <tbody>
     <tr class="text-center" th:each="post, loop : ${response.postList}">
       <td th:text="${post.id}"></td>
+      <td>
+        <a
+          th:href="@{|/board/${mainCategory}?category=${post.category}|}"
+          th:text="${post.category}"
+        ></a>
+      </td>
       <td class="text-start">
         <a
           class="mw-100 d-inline-block text-truncate"
-          th:href="@{|/board/${categoryName}/${post.id}|}"
+          th:href="@{|/board/${mainCategory}/${post.id}|}"
           th:text="${post.title}"
         ></a>
       </td>
@@ -83,7 +90,7 @@
       <li class="page-item" th:classappend="${page == 0} ? 'disabled'">
         <a
           class="page-link"
-          th:href="@{|?page=0&size=${size}&kw=${kw}|}"
+          th:href="@{|?page=0&size=${size}&kw=${kw}&category=${category}|}"
         >
           <span>처음</span>
         </a>
@@ -91,7 +98,7 @@
       <li class="page-item" th:classappend="${page == 0} ? 'disabled'">
         <a
           class="page-link"
-          th:href="@{/board/{categoryName}(categoryName=${categoryName}, page=${page - 1}, size=${size}, kw=${kw})}"
+          th:href="@{|?page=${page - 1}&size=${size}&kw=${kw}&category=${category}|}"
         >
           <span>이전</span>
         </a>
@@ -105,13 +112,13 @@
         <a
           class="page-link"
           th:text="${pageList}"
-          th:href="@{/board/{categoryName}(categoryName=${categoryName}, page=${pageList}, size=${size}, kw=${kw})}"
+          th:href="@{|/board/${mainCategory}?page=${pageList}&size=${size}&kw=${kw}&category=${category}|}"
         ></a>
       </li>
       <li class="page-item" th:classappend="${page + 1 == response.totalPages} ? 'disabled'">
         <a
           class="page-link"
-          th:href="@{/board/{categoryName}(categoryName=${categoryName}, page=${page + 1}, size=${size}, kw=${kw})}"
+          th:href="@{|?page=${page + 1}&size=${size}&kw=${kw}&category=${category}|}"
         >
           <span>다음</span>
         </a>
@@ -119,7 +126,7 @@
       <li class="page-item" th:classappend="${page + 1 == response.totalPages} ? 'disabled'">
         <a
           class="page-link"
-          th:href="@{|?page=${response.totalPages - 1}&size=${size}&kw=${kw}|}"
+          th:href="@{|?page=${response.totalPages - 1}&size=${size}&kw=${kw}&category=${category}|}"
         >
           <span>끝</span>
         </a>
@@ -127,7 +134,7 @@
     </ul>
   </div>
   <!-- 페이징처리 끝 -->
-  <form th:action="@{|/board/${categoryName}|}" method="get" id="searchForm">
+  <form th:action="@{|/board/${mainCategory}|}" method="get" id="searchForm">
     <input type="hidden" id="kw" name="kw" th:value="${kw}">
     <input type="hidden" id="size" name="size" th:value="${size}">
     <input type="hidden" id="page" name="page" th:value="${page}">

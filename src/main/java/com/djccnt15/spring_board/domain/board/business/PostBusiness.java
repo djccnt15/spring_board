@@ -43,15 +43,19 @@ public class PostBusiness {
     }
     
     public PostListResponse getPostList(
-        String categoryName,
+        String mainCategoryName,
         Integer size,
         Integer page,
-        String keyword
+        String keyword,
+        String categoryName
     ) {
-        var category = categoryService.getCategory(categoryName);
+        var mainCategory = categoryService.getCategory(mainCategoryName);
         var kw = "%%%s%%".formatted(keyword);
-        var postList = postService.getPostList(category, size, page, kw);
-        var postListCount = postService.getPostListCount(category, kw);
+        var subCategoryId = categoryService.getOptionalCategory(categoryName)
+            .map(CategoryEntity::getId)
+            .orElse(null);
+        var postList = postService.getPostList(mainCategory, size, page, kw, subCategoryId);
+        var postListCount = postService.getPostListCount(mainCategory, kw, subCategoryId);
         var totalPageCount = (int) Math.ceil((double) postListCount / size);
         return PostListResponse.builder()
             .totalPages(totalPageCount)
@@ -87,9 +91,9 @@ public class PostBusiness {
     public PostUpdatePlaceholder getPostUpdatePlaceholder(
         UserSession user,
         String mainCategoryName,
-        Long postId
+        Long id
     ) {
-        var post = postService.getPost(postId);
+        var post = postService.getPost(id);
         postService.validateAuthor(user, post);
         var mainCategory = categoryService.getCategory(mainCategoryName);
         var categoryList = categoryService.getCategoryByParent(mainCategory);

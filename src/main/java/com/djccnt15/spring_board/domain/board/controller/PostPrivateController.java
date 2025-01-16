@@ -70,7 +70,7 @@ public class PostPrivateController {
      * view controller for post update page
      * @param model inject from spring
      * @param mainCategory name of the main category
-     * @param postId post id
+     * @param id post id
      * @return post update view
      */
     @GetMapping(path = "/{mainCategory}/{id}/form")
@@ -78,9 +78,9 @@ public class PostPrivateController {
         Model model,
         @AuthenticationPrincipal UserSession user,
         @PathVariable(value = "mainCategory") String mainCategory,
-        @PathVariable(value = "id") Long postId
+        @PathVariable(value = "id") Long id
     ) {
-        var placeholder = business.getPostUpdatePlaceholder(user, mainCategory, postId);
+        var placeholder = business.getPostUpdatePlaceholder(user, mainCategory, id);
         model.addAttribute("placeholder", placeholder);
         model.addAttribute(mainCategory);
         model.addAttribute("form", new PostCreateRequest());
@@ -92,7 +92,7 @@ public class PostPrivateController {
      * @param model inject from spring
      * @param user user session
      * @param mainCategory name of the main category
-     * @param postId post id
+     * @param id post id
      * @param request data model for post update
      * @param bindingResult validated result. this must come right after the form
      * @return redirect to post detail page
@@ -102,17 +102,17 @@ public class PostPrivateController {
         Model model,
         @AuthenticationPrincipal UserSession user,
         @PathVariable(value = "mainCategory") String mainCategory,
-        @PathVariable(value = "id") Long postId,
+        @PathVariable(value = "id") Long id,
         @Valid @ModelAttribute(name = "form") PostCreateRequest request,
         BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {
-            var placeholder = business.getPostUpdatePlaceholder(user, mainCategory, postId);
+            var placeholder = business.getPostUpdatePlaceholder(user, mainCategory, id);
             model.addAttribute("placeholder", placeholder);
             model.addAttribute(mainCategory);
             return "post-update-form";
         }
-        business.updatePost(user, postId, request);
-        return "redirect:/board/%s/%s".formatted(mainCategory, postId);
+        business.updatePost(user, id, request);
+        return "redirect:/board/%s/%s".formatted(mainCategory, id);
     }
 }
