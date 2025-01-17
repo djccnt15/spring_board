@@ -11,10 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Controller
@@ -41,6 +38,59 @@ public class CommentPrivateController {
             return "post-detail";
         }
         commentBusiness.createComment(user, request, postId);
+        return "redirect:/board/%s/%s".formatted(mainCategory, postId);
+    }
+    
+    /**
+     * view controller for comment update
+     * @param model inject from spring
+     * @param user user session
+     * @param mainCategory name of the main category
+     * @param postId post id
+     * @param commentId comment id
+     * @return comment update view
+     */
+    @GetMapping(path = "/{mainCategory}/{postId}/comment/{commentId}/form")
+    public String getUpdateForm(
+        Model model,
+        @AuthenticationPrincipal UserSession user,
+        @PathVariable(value = "mainCategory") String mainCategory,
+        @PathVariable(value = "postId") Long postId,
+        @PathVariable(value = "commentId") Long commentId
+    ) {
+        model.addAttribute("form", new CommentCreateRequest());
+        var placeholder = commentBusiness.getCommentUpdatePlaceholder(user, commentId);
+        model.addAttribute("placeholder", placeholder);
+        return "comment-update-form";
+    }
+    
+    /**
+     * controller for comment update
+     * @param model inject from spring
+     * @param user user session
+     * @param mainCategory name of the main category
+     * @param postId post id
+     * @param commentId comment id
+     * @param request data model for comment update
+     * @param bindingResult validated result. this must come right after the form
+     * @return redirect to post detail page
+     */
+    @PutMapping(path = "/{mainCategory}/{postId}/comment/{commentId}/form")
+    public String updateComment(
+        Model model,
+        @AuthenticationPrincipal UserSession user,
+        @PathVariable(value = "mainCategory") String mainCategory,
+        @PathVariable(value = "postId") Long postId,
+        @PathVariable(value = "commentId") Long commentId,
+        @Valid @ModelAttribute(name = "form") CommentCreateRequest request,
+        BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) {
+            var placeholder = commentBusiness.getCommentUpdatePlaceholder(user, commentId);
+            model.addAttribute("placeholder", placeholder);
+            return "comment-update-form";
+        }
+        commentBusiness.updateComment(user, commentId, request);
         return "redirect:/board/%s/%s".formatted(mainCategory, postId);
     }
 }

@@ -3,6 +3,7 @@ package com.djccnt15.spring_board.domain.board.business;
 import com.djccnt15.spring_board.annotations.Business;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.board.model.CommentCreateRequest;
+import com.djccnt15.spring_board.domain.board.model.CommentResponse;
 import com.djccnt15.spring_board.domain.board.service.CommentService;
 import com.djccnt15.spring_board.domain.board.service.PostService;
 import com.djccnt15.spring_board.domain.user.service.UserService;
@@ -27,5 +28,28 @@ public class CommentBusiness {
         var post = postService.getPost(postId);
         var comment = commentService.createComment(userEntity, post);
         commentService.createCommentContent(comment, request);
+    }
+    
+    public CommentResponse getCommentUpdatePlaceholder(
+        UserSession user,
+        Long commentId
+    ) {
+        var comment = commentService.getComment(commentId);
+        commentService.validateAuthor(user, comment);
+        var commentContent = commentService.getLastCommentContent(comment);
+        return CommentResponse.builder()
+            .content(commentContent.getContent())
+            .build();
+    }
+    
+    public void updateComment(
+        UserSession user,
+        Long commentId,
+        CommentCreateRequest request
+    ) {
+        var comment = commentService.getComment(commentId);
+        commentService.validateAuthor(user, comment);
+        var commentContent = commentService.getLastCommentContent(comment);
+        commentService.updateCommentContent(comment, commentContent, request);
     }
 }

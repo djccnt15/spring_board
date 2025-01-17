@@ -101,6 +101,15 @@
           <div th:text="${#temporals.format(comment.updatedDateTime, 'yyyy-MM-dd HH:mm')}"></div>
         </div>
       </div>
+      <div class="my-3">
+        <a
+          th:href="@{|/board/${mainCategory}/${response.id}/comment/${comment.id}/form|}"
+          class="btn btn-sm btn-outline-secondary"
+          sec:authorize="isAuthenticated()"
+          th:if="${comment.authorId != null and #authentication.getPrincipal().getUserId() == comment.authorId}"
+          th:text="수정"
+        ></a>
+      </div>
     </div>
   </div>
 </div>

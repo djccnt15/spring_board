@@ -17,4 +17,16 @@ public class CommentContentConverter {
             .comment(comment)
             .build();
     }
+    
+    public CommentContentEntity toEntity(
+        CommentEntity comment,
+        CommentContentEntity commentContent,
+        CommentCreateRequest request
+    ) {
+        return CommentContentEntity.builder()
+            .version(commentContent.getVersion() + 1)
+            .content(request.getContent())
+            .comment(comment)
+            .build();
+    }
 }
