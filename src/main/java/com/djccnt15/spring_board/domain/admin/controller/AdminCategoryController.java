@@ -64,7 +64,7 @@ public class AdminCategoryController {
     ) {
         model.addAttribute("showAdminLeftNav", true);
         var updateForm = business.getMainCategoryUpdatePlaceholder(id);
-        model.addAttribute("placeholders", updateForm);
+        model.addAttribute("placeholder", updateForm);
         model.addAttribute("form", new CategoryCreateRequest());
         return "category-main-update-form";
     }

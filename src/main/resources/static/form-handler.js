@@ -1,8 +1,8 @@
 export const CaseType = Object.freeze({
-  DEFAULT: "default",
-  CREATE: "create",
-  UPDATE: "update",
-  DELETE: "delete",
+  POST: "POST",
+  PUT: "PUT",
+  PATCH: "PATCH",
+  DELETE: "DELETE",
 });
 
 function handleError(errors) {
@@ -30,9 +30,11 @@ function handlingDeleteSuccess(formData) {
 
 function successHandlerFactory(caseType) {
   switch (caseType) {
-    case CaseType.CREATE:
+    case CaseType.POST:
       return handlingCreateSuccess;
-    case CaseType.UPDATE:
+    case CaseType.PUT:
+      return handlingUpdateSuccess;
+    case CaseType.PATCH:
       return handlingUpdateSuccess;
     case CaseType.DELETE:
       return handlingDeleteSuccess;
@@ -56,7 +58,7 @@ async function submitForm(url, data, method) {
 
 function handlingConfirmCreate(formData) {
   const name = formData.get("name");
-  const confirmation = confirm(`${name}를 생성하시겠습니까?`);
+  const confirmation = confirm(`${name}을/를 생성하시겠습니까?`);
   if (!confirmation) {
     return false;
   }
@@ -73,7 +75,9 @@ function handlingConfirmUpdate(formData) {
 
 function handlingConfirmDelete(formData) {
   const name = formData.get("name");
-  const confirmation = confirm(`${name}을/를 삭제하시겠습니까?`);
+  const confirmMessage = name ? `${name}을/를 삭제하시겠습니까?` : "삭제하시겠습니까?";
+
+  const confirmation = confirm(confirmMessage);
   if (!confirmation) {
     return false;
   }
@@ -82,9 +86,11 @@ function handlingConfirmDelete(formData) {
 
 function confirmHandlerFactory(caseType) {
   switch (caseType) {
-    case CaseType.CREATE:
+    case CaseType.POST:
       return handlingConfirmCreate;
-    case CaseType.UPDATE:
+    case CaseType.PUT:
+      return handlingConfirmUpdate;
+    case CaseType.PATCH:
       return handlingConfirmUpdate;
     case CaseType.DELETE:
       return handlingConfirmDelete;
@@ -99,10 +105,14 @@ export function handleFormSubmit(event) {
   const form = event.target; // get the form element that triggered the event
   const formData = new FormData(form); // gather form data
   const actionUrl = form.action; // get the URL from the form's action attribute
-  const method = form.method; // get the method from the form's method attribute
-  const caseType = form.dataset.caseType || CaseType.DEFAULT; // get data-case-type from the form attribute
-  const confirmHandler = confirmHandlerFactory(caseType);
-  const successHandler = successHandlerFactory(caseType);
+
+  // get the method from the form's method attribute
+  // check if the form has a hidden `_method` field
+  const hiddenMethodInput = form.querySelector('input[name="_method"]');
+  const method = hiddenMethodInput ? hiddenMethodInput.value : form.method; // Use hidden method if available
+
+  const confirmHandler = confirmHandlerFactory(method);
+  const successHandler = successHandlerFactory(method);
 
   // confirm
   const confirmation = confirmHandler(formData)

@@ -12,10 +12,10 @@
     method="post"
   >
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-    <input type="hidden" name="_method" value="patch" />
+    <input type="hidden" name="_method" value="PATCH" />
     <div class="mb-3">
       <label th:for="name" class="form-label">카테고리 이름</label>
-      <input type="text" id="name" name="name" class="form-control" th:value="${placeholders.name}" th:placeholder="${placeholders.name}" autofocus>
+      <input type="text" id="name" name="name" class="form-control" th:value="${placeholder.name}" th:placeholder="${placeholder.name}" autofocus>
     </div>
     <div class="mb-3">
       <label th:for="mainId" class="form-label">게시판</label>
