@@ -4,6 +4,7 @@ import com.djccnt15.spring_board.db.entity.CategoryEntity;
 import com.djccnt15.spring_board.db.entity.PostContentEntity;
 import com.djccnt15.spring_board.db.entity.PostEntity;
 import com.djccnt15.spring_board.db.entity.UserEntity;
+import com.djccnt15.spring_board.db.repository.CommentRepository;
 import com.djccnt15.spring_board.db.repository.PostContentRepository;
 import com.djccnt15.spring_board.db.repository.PostRepository;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
@@ -12,7 +13,9 @@ import com.djccnt15.spring_board.domain.board.converter.PostConverter;
 import com.djccnt15.spring_board.domain.board.model.PostMinimalResponse;
 import com.djccnt15.spring_board.domain.board.model.PostCreateRequest;
 import com.djccnt15.spring_board.domain.board.model.PostDetailResponse;
+import com.djccnt15.spring_board.exception.ApiInvalidAuthorException;
 import com.djccnt15.spring_board.exception.DataNotFoundException;
+import com.djccnt15.spring_board.exception.ForbiddenException;
 import com.djccnt15.spring_board.exception.InvalidAuthorException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +32,7 @@ public class PostService {
     private final PostConverter postConverter;
     private final PostContentRepository postContentRepository;
     private final PostContentConverter postContentConverter;
+    private final CommentRepository commentRepository;
     
     public PostEntity createPost(
         UserEntity user,
@@ -108,6 +112,15 @@ public class PostService {
         }
     }
     
+    public void apiValidateAuthor(
+        UserSession user,
+        PostEntity post
+    ) {
+        if (!post.getAuthor().getId().equals(user.getUserId())) {
+            throw new ApiInvalidAuthorException("invalid author exception");
+        }
+    }
+    
     public void updatePost(
         PostEntity post,
         CategoryEntity category
@@ -123,5 +136,17 @@ public class PostService {
     ) {
         var entity = postContentConverter.toEntity(post, postContent, request);
         postContentRepository.save(entity);
+    }
+    
+    public void deletePost(PostEntity post) {
+        post.setActive(false);
+        postRepository.save(post);
+    }
+    
+    public void validateComment(PostEntity post) {
+        var commentList = commentRepository.findByPostAndIsActive(post, true);
+        if (!commentList.isEmpty()) {
+            throw new ForbiddenException("you can't delete commented post");
+        }
     }
 }

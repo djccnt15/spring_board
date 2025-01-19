@@ -1,6 +1,7 @@
 package com.djccnt15.spring_board.domain.board.business;
 
 import com.djccnt15.spring_board.annotations.Business;
+import com.djccnt15.spring_board.db.entity.CategoryEntity;
 import com.djccnt15.spring_board.db.entity.PostEntity;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.board.model.*;
@@ -117,5 +118,15 @@ public class PostBusiness {
         var postContent = postService.getLastPostContent(post);
         postService.updatePost(post, category);
         postService.updatePostContent(post, postContent, request);
+    }
+    
+    public void deletePost(
+        UserSession user,
+        Long postId
+    ) {
+        var post = postService.getPost(postId);
+        postService.apiValidateAuthor(user, post);
+        postService.validateComment(post);
+        postService.deletePost(post);
     }
 }

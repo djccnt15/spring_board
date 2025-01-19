@@ -37,6 +37,16 @@
           th:if="${response.authorId != null and #authentication.getPrincipal().getUserId() == response.authorId}"
           th:text="수정"
         ></a>
+        <form
+          th:action="@{|/board/${mainCategory}/${response.id}|}"
+          method="post"
+          sec:authorize="isAuthenticated()"
+          th:if="${response.authorId != null and #authentication.getPrincipal().getUserId() == response.authorId}"
+          class="delete d-inline-block"
+        >
+          <input type="hidden" name="_method" value="DELETE" />
+          <button type="submit" class="btn btn-sm btn-outline-secondary">삭제</button>
+        </form>
       </div>
     </div>
   </div>
@@ -113,4 +123,5 @@
     </div>
   </div>
 </div>
+<script layout:fragment="script" type="text/javascript" th:src="@{/post-detail.js}"></script>
 </html>
