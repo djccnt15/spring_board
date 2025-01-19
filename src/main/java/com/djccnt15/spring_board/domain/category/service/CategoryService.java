@@ -24,7 +24,7 @@ public class CategoryService {
     private final CategoryRepository repository;
     private final CategoryConverter converter;
     
-    public List<CategoryEntity> getCategoryByTier(int tier) {
+    public List<CategoryEntity> getCategoryByTier(Integer tier) {
         return repository.findByTierAndIsActiveOrderByName(tier, true);
     }
     
