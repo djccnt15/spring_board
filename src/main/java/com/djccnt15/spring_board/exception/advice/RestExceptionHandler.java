@@ -1,6 +1,7 @@
 package com.djccnt15.spring_board.exception.advice;
 
 import com.djccnt15.spring_board.exception.ApiDataNotFoundException;
+import com.djccnt15.spring_board.exception.ApiInvalidAuthorException;
 import com.djccnt15.spring_board.exception.DuplicatedKeyException;
 import com.djccnt15.spring_board.exception.advice.model.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -31,5 +32,22 @@ public class RestExceptionHandler {
             .status(HttpStatus.BAD_REQUEST)
             .build();
         return ResponseEntity.badRequest().body(errResponse);
+    }
+    
+    /**
+     * handle UnAuthorized Exception
+     * @param ex UnAuthorized Exception
+     * @return ResponseEntity
+     */
+    @ExceptionHandler(value = {ApiInvalidAuthorException.class})
+    public ResponseEntity<ErrorResponse> handleInvalidException(Exception ex) {
+        var errResponse = ErrorResponse.builder()
+            .timestamp(LocalDateTime.now())
+            .message(ex.getMessage())
+            .status(HttpStatus.UNAUTHORIZED)
+            .build();
+        return ResponseEntity
+            .status(HttpStatus.UNAUTHORIZED)
+            .body(errResponse);
     }
 }
