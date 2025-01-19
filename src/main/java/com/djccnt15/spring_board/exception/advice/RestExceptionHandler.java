@@ -3,6 +3,7 @@ package com.djccnt15.spring_board.exception.advice;
 import com.djccnt15.spring_board.exception.ApiDataNotFoundException;
 import com.djccnt15.spring_board.exception.ApiInvalidAuthorException;
 import com.djccnt15.spring_board.exception.DuplicatedKeyException;
+import com.djccnt15.spring_board.exception.ForbiddenException;
 import com.djccnt15.spring_board.exception.advice.model.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -48,6 +49,23 @@ public class RestExceptionHandler {
             .build();
         return ResponseEntity
             .status(HttpStatus.UNAUTHORIZED)
+            .body(errResponse);
+    }
+    
+    /**
+     * handle Forbidden Exception
+     * @param ex Forbidden Exception
+     * @return ResponseEntity
+     */
+    @ExceptionHandler(value = {ForbiddenException.class})
+    public ResponseEntity<ErrorResponse> handleForbiddenException(Exception ex) {
+        var errResponse = ErrorResponse.builder()
+            .timestamp(LocalDateTime.now())
+            .message(ex.getMessage())
+            .status(HttpStatus.FORBIDDEN)
+            .build();
+        return ResponseEntity
+            .status(HttpStatus.FORBIDDEN)
             .body(errResponse);
     }
 }
