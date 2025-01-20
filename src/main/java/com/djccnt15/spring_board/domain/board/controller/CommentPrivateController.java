@@ -38,7 +38,7 @@ public class CommentPrivateController {
             return "post-detail";
         }
         commentBusiness.createComment(user, request, postId);
-        return "redirect:/board/%s/%s".formatted(mainCategory, postId);
+        return "redirect:/board/%s/%s#comment-form".formatted(mainCategory, postId);
     }
     
     /**
@@ -73,7 +73,7 @@ public class CommentPrivateController {
      * @param commentId comment id
      * @param request data model for comment update
      * @param bindingResult validated result. this must come right after the form
-     * @return redirect to post detail page
+     * @return redirect anchor to post detail page
      */
     @PutMapping(path = "/{mainCategory}/{postId}/comment/{commentId}/form")
     public String updateComment(
@@ -91,6 +91,6 @@ public class CommentPrivateController {
             return "comment-update-form";
         }
         commentBusiness.updateComment(user, commentId, request);
-        return "redirect:/board/%s/%s".formatted(mainCategory, postId);
+        return "redirect:/board/%s/%s#comment-%s".formatted(mainCategory, postId, commentId);
     }
 }
