@@ -9,7 +9,7 @@ import lombok.Data;
 public class UserCreateForm {
     
     @Size(min = 3, max = 25)
-    @NotBlank(message = "user id is essential and must contain at least one non-whitespace character")
+    @NotBlank(message = "user ID is essential and must contain at least one non-whitespace character")
     private String username;
     
     @NotBlank(message = "password is essential and must contain at least one non-whitespace character")
@@ -18,7 +18,7 @@ public class UserCreateForm {
     @NotBlank(message = "password validation is essential and must contain at least one non-whitespace character")
     private String password2;
     
-    @NotBlank(message = "email is essential and must contain at least one non-whitespace character")
+    @NotBlank(message = "Email is essential and must contain at least one non-whitespace character")
     @Email
     private String email;
 }

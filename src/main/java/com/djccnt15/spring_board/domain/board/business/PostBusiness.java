@@ -109,10 +109,10 @@ public class PostBusiness {
     
     public void updatePost(
         UserSession user,
-        Long postId,
+        Long id,
         PostCreateRequest request
     ) {
-        var post = postService.getPost(postId);
+        var post = postService.getPost(id);
         postService.validateAuthor(user, post);
         var category = categoryService.getCategory(request.getCategory());
         var postContent = postService.getLastPostContent(post);
@@ -122,9 +122,9 @@ public class PostBusiness {
     
     public void deletePost(
         UserSession user,
-        Long postId
+        Long id
     ) {
-        var post = postService.getPost(postId);
+        var post = postService.getPost(id);
         postService.apiValidateAuthor(user, post);
         postService.validateComment(post);
         postService.deletePost(post);

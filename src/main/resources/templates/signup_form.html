@@ -8,7 +8,7 @@
   <div class="my-3 border-bottom">
     <h4>회원가입</h4>
   </div>
-  <form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post">
+  <form th:action="@{/user/signup}" th:object="${userCreateForm}" method="POST">
     <div th:replace="~{form_errors :: formErrorsFragment}"></div>
     <div class="mb-3">
       <label for="username" class="form-label">사용자ID</label>

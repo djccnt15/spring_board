@@ -34,7 +34,7 @@
         </button>
         <form
           th:action="@{|/admin/user/role|}"
-          method="post"
+          method="POST"
           onsubmit="return confirm('권한을 회수하시겠습니까?');"
         >
           <input type="hidden" name="_method" value="PATCH" />
@@ -50,7 +50,7 @@
         </form>
         <form
           th:action="@{|/admin/user/role|}"
-          method="post"
+          method="POST"
           onsubmit="return confirm('권한을 부여하시겠습니까?');"
         >
           <input type="hidden" name="_method" value="PATCH" />

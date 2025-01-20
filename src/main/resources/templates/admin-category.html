@@ -50,7 +50,7 @@
               <td>
                 <form
                   th:action="@{|/admin/category/${main.id}|}"
-                  method="post"
+                  method="POST"
                   th:onsubmit="return confirm('[[${main.name}]] 게시판을 삭제하시겠습니까?');"
                   sec:authorize="hasRole('ROLE_ADMIN')"
                 >
@@ -101,7 +101,7 @@
               <td>
                 <form
                   th:action="@{|/admin/category/${sub.id}|}"
-                  method="post"
+                  method="POST"
                   th:onsubmit="return confirm('[[${sub.name}]] 카테고리를 삭제하시겠습니까?');"
                   sec:authorize="hasRole('ROLE_ADMIN')"
                 >
@@ -127,7 +127,7 @@
           id="mainCategoryCreateForm"
           th:action="@{/admin/category/main}"
           th:object="${mainCategoryForm}"
-          method="post"
+          method="POST"
         >
           <div class="modal-body">
             <div class="mb-3">
@@ -156,7 +156,7 @@
           id="subCategoryCreateForm"
           th:action="@{/admin/category/sub}"
           th:object="${subCategoryForm}"
-          method="post"
+          method="POST"
         >
           <div class="modal-body">
             <div class="mb-3">

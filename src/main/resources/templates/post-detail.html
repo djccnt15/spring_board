@@ -39,7 +39,7 @@
         ></a>
         <form
           th:action="@{|/board/${mainCategory}/${response.id}|}"
-          method="post"
+          method="POST"
           sec:authorize="isAuthenticated()"
           th:if="${response.authorId != null and #authentication.getPrincipal().getUserId() == response.authorId}"
           class="delete d-inline-block"
@@ -59,7 +59,7 @@
   <form
     th:action="@{|/board/${mainCategory}/${response.id}/comment/form|}"
     th:object="${commentForm}"
-    method="post"
+    method="POST"
     class="my-3"
   >
     <div th:replace="~{form_errors :: formErrorsFragment}"></div>

@@ -22,7 +22,7 @@ public class UserService {
     private final PasswordEncoder encoder;
     private final UserConverter converter;
     
-    public void create(UserCreateForm form) {
+    public void createUser(UserCreateForm form) {
         var userEntity = UserEntity.builder()
             .username(form.getUsername())
             .password(encoder.encode(form.getPassword1()))

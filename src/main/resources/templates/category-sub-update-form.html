@@ -9,7 +9,7 @@
   <form
     id="subCategoryUpdateForm"
     th:object="${form}"
-    method="post"
+    method="POST"
   >
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <input type="hidden" name="_method" value="PATCH" />

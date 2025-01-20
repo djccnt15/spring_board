@@ -73,7 +73,7 @@ public class CommentPrivateController {
      * @param commentId comment id
      * @param request data model for comment update
      * @param bindingResult validated result. this must come right after the form
-     * @return redirect anchor to post detail page
+     * @return redirect to anchor in post detail page
      */
     @PutMapping(path = "/{mainCategory}/{postId}/comment/{commentId}/form")
     public String updateComment(

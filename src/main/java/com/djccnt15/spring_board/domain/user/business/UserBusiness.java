@@ -12,8 +12,8 @@ public class UserBusiness {
     
     private final UserService service;
     
-    public void create(UserCreateForm form) {
-        service.create(form);
+    public void createUser(UserCreateForm form) {
+        service.createUser(form);
     }
     
     public void resign(UserSession user) {

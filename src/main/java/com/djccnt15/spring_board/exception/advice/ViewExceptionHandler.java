@@ -18,7 +18,7 @@ public class ViewExceptionHandler {
      * @param model model injection from spring
      * @return general error page
      */
-    @ExceptionHandler({Exception.class})
+    @ExceptionHandler(value = {Exception.class})
     public String handleException(
         Exception ex,
         Model model
@@ -34,9 +34,9 @@ public class ViewExceptionHandler {
      * DataNotFoundException handler
      * @param ex DataNotFoundException
      * @param model model injection from spring
-     * @return ResponseEntity
+     * @return error page view
      */
-    @ExceptionHandler({DataNotFoundException.class})
+    @ExceptionHandler(value = {DataNotFoundException.class})
     public String handleDataNotFoundException(
         Exception ex,
         Model model
