@@ -32,7 +32,8 @@
           </thead>
           <tbody>
             <tr
-              class="text-center" th:each="main : ${categoryList.mainList}"
+              class="text-center"
+              th:each="main : ${categoryList.mainList}"
               th:classappend="${main.id == selectedMain} ? 'table-primary'"
               th:onclick="|location.href='?main=${main.id}'|"
             >
@@ -48,13 +49,12 @@
               </td>
               <td>
                 <form
-                  class="d-inline"
                   th:action="@{|/admin/category/${main.id}|}"
                   method="post"
                   th:onsubmit="return confirm('[[${main.name}]] 게시판을 삭제하시겠습니까?');"
                   sec:authorize="hasRole('ROLE_ADMIN')"
                 >
-                  <input type="hidden" name="_method" value="delete" />
+                  <input type="hidden" name="_method" value="DELETE" />
                   <button class="btn btn-sm btn-outline-secondary">삭제</button>
                 </form>
               </td>
@@ -105,7 +105,7 @@
                   th:onsubmit="return confirm('[[${sub.name}]] 카테고리를 삭제하시겠습니까?');"
                   sec:authorize="hasRole('ROLE_ADMIN')"
                 >
-                  <input type="hidden" name="_method" value="delete" />
+                  <input type="hidden" name="_method" value="DELETE" />
                   <button class="btn btn-sm btn-outline-secondary">삭제</button>
                 </form>
               </td>

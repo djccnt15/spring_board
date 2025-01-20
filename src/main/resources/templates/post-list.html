@@ -30,8 +30,8 @@
     </div>
     <div class="col-2">
       <div class="input-group">
-        <label class="input-group-text" for="list_size">개수</label>
-        <select class="form-select" id="list_size">
+        <label class="input-group-text" for="list-size">개수</label>
+        <select class="form-select" id="list-size">
           <option value="10" th:selected="${size == 10}">10</option>
           <option value="20" th:selected="${size == 20}">20</option>
           <option value="50" th:selected="${size == 50}">50</option>
@@ -41,9 +41,9 @@
     </div>
     <div class="col-6">
       <div class="input-group">
-        <label for="search_kw" class="d-none"></label>
-        <input type="text" id="search_kw" class="form-control" th:value="${kw}">
-        <button class="btn btn-outline-secondary" type="button" id="btn_search">찾기</button>
+        <label for="search-kw" class="d-none"></label>
+        <input type="text" id="search-kw" class="form-control" th:value="${kw}">
+        <button class="btn btn-outline-secondary" type="button" id="btn-search">찾기</button>
       </div>
     </div>
   </div>

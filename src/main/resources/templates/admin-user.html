@@ -37,7 +37,7 @@
           method="post"
           onsubmit="return confirm('권한을 회수하시겠습니까?');"
         >
-          <input type="hidden" name="_method" value="patch" />
+          <input type="hidden" name="_method" value="PATCH" />
           <input type="hidden" name="action" value="REVOKE" />
           <input type="hidden" name="id" th:value="${user.id}" />
           <input type="hidden" name="page" th:value="${userList.number}" />
@@ -53,7 +53,7 @@
           method="post"
           onsubmit="return confirm('권한을 부여하시겠습니까?');"
         >
-          <input type="hidden" name="_method" value="patch" />
+          <input type="hidden" name="_method" value="PATCH" />
           <input type="hidden" name="action" value="GRANT" />
           <input type="hidden" name="id" th:value="${user.id}" />
           <input type="hidden" name="page" th:value="${userList.number}" />
