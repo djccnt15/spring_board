@@ -140,13 +140,5 @@
     <input type="hidden" id="page" name="page" th:value="${page}">
   </form>
 </div>
-<script layout:fragment="script" type='text/javascript'>
-  const btn_search = document.getElementById("btn_search");
-  btn_search.addEventListener('click', function() {
-    document.getElementById('kw').value = document.getElementById('search_kw').value;
-    document.getElementById('size').value = document.getElementById('list_size').value;
-    document.getElementById('page').value = 0;  // 검색버튼을 클릭할 경우 0페이지부터 조회한다.
-    document.getElementById('searchForm').submit();
-  });
-</script>
+<script layout:fragment="script" type="text/javascript" th:src="@{/post-list.js}"></script>
 </html>
