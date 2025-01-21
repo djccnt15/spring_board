@@ -2,6 +2,7 @@ package com.djccnt15.spring_board.db.repository;
 
 import com.djccnt15.spring_board.db.dto.CommentProjection;
 import com.djccnt15.spring_board.db.entity.CommentEntity;
+import com.djccnt15.spring_board.db.entity.PostEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -54,4 +55,6 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
         nativeQuery = true
     )
     List<CommentProjection> getCommentListByPostId(@Param("post_id") Long postId);
+    
+    List<CommentEntity> findByPostAndIsActive(PostEntity post, Boolean isActive);
 }
