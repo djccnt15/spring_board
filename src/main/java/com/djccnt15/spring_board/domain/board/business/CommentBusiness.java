@@ -52,4 +52,13 @@ public class CommentBusiness {
         var commentContent = commentService.getLastCommentContent(comment);
         commentService.updateCommentContent(comment, commentContent, request);
     }
+    
+    public void deleteComment(
+        UserSession user,
+        Long commentId
+    ) {
+        var comment = commentService.getComment(commentId);
+        commentService.validateAuthor(user, comment);
+        commentService.deleteComment(comment);
+    }
 }

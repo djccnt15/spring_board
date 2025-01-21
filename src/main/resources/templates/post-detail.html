@@ -121,6 +121,16 @@
           th:if="${comment.authorId != null and #authentication.getPrincipal().getUserId() == comment.authorId}"
           th:text="수정"
         ></a>
+        <form
+          th:action="@{|/board/${mainCategory}/${response.id}/comment/${comment.id}|}"
+          method="POST"
+          sec:authorize="isAuthenticated()"
+          th:if="${comment.authorId != null and #authentication.getPrincipal().getUserId() == comment.authorId}"
+          class="d-inline-block"
+        >
+          <input type="hidden" name="_method" value="DELETE" />
+          <button type="submit" class="btn btn-sm btn-outline-secondary">삭제</button>
+        </form>
       </div>
     </div>
   </div>

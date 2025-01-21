@@ -82,4 +82,9 @@ public class CommentService {
         var entity = commentContentConverter.toEntity(comment, commentContent, request);
         commentContentRepository.save(entity);
     }
+    
+    public void deleteComment(CommentEntity comment) {
+        comment.setActive(false);
+        commentRepository.save(comment);
+    }
 }

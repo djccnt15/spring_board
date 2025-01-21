@@ -93,4 +93,23 @@ public class CommentPrivateController {
         commentBusiness.updateComment(user, commentId, request);
         return "redirect:/board/%s/%s#comment-%s".formatted(mainCategory, postId, commentId);
     }
+    
+    /**
+     * rest controller for comment delete
+     * @param user user session
+     * @param mainCategory name of the main category
+     * @param postId post id
+     * @param commentId comment id
+     * @return redirect to anchor in post detail page
+     */
+    @DeleteMapping(path = "/{mainCategory}/{postId}/comment/{commentId}")
+    public String deleteComment(
+        @AuthenticationPrincipal UserSession user,
+        @PathVariable(value = "mainCategory") String mainCategory,
+        @PathVariable(value = "postId") Long postId,
+        @PathVariable(value = "commentId") Long commentId
+    ) {
+        commentBusiness.deleteComment(user, commentId);
+        return "redirect:/board/%s/%s#comment-form".formatted(mainCategory, postId);
+    }
 }
