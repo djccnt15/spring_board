@@ -27,8 +27,8 @@ spring:
     # dev
     url: jdbc:postgresql://localhost:5432/spring_board
     driver-class-name: org.postgresql.Driver
-    username: username
-    password: password
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 logging:
   logback:
     rollingpolicy:
