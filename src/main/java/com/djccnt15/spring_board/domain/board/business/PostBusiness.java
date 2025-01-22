@@ -129,4 +129,17 @@ public class PostBusiness {
         postService.validateComment(post);
         postService.deletePost(post);
     }
+    
+    public void votePost(
+        UserSession user,
+        Long id
+    ) {
+        var userEntity = userService.getUser(user);
+        var post = postService.getPost(id);
+        var isVoted = postService.getVoted(post, userEntity);
+        isVoted.ifPresentOrElse(
+            postService::revokeVote,
+            () -> postService.votePost(post, userEntity)
+        );
+    }
 }

@@ -31,6 +31,21 @@
       </div>
       <div class="my-3">
         <a
+          class="recommend btn btn-sm btn-outline-secondary"
+          th:href="@{|/board/${mainCategory}/${response.id}/vote|}"
+          sec:authorize="isAuthenticated()"
+        >
+          추천
+          <span class="badge rounded-pill bg-success" th:text="${response.voteCount}"></span>
+        </a>
+        <button
+          class="recommend btn btn-secondary btn-sm btn-outline-secondary"
+          sec:authorize="isAnonymous()" disabled
+        >
+          추천
+          <span class="badge rounded-pill bg-success" th:text="${response.voteCount}"></span>
+        </button>
+        <a
           th:href="@{|/board/${mainCategory}/${response.id}/form|}"
           class="btn btn-sm btn-outline-secondary"
           sec:authorize="isAuthenticated()"

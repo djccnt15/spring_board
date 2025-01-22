@@ -1,15 +1,14 @@
 package com.djccnt15.spring_board.domain.board.service;
 
-import com.djccnt15.spring_board.db.entity.CategoryEntity;
-import com.djccnt15.spring_board.db.entity.PostContentEntity;
-import com.djccnt15.spring_board.db.entity.PostEntity;
-import com.djccnt15.spring_board.db.entity.UserEntity;
+import com.djccnt15.spring_board.db.entity.*;
 import com.djccnt15.spring_board.db.repository.CommentRepository;
 import com.djccnt15.spring_board.db.repository.PostContentRepository;
 import com.djccnt15.spring_board.db.repository.PostRepository;
+import com.djccnt15.spring_board.db.repository.PostVoterRepository;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.board.converter.PostContentConverter;
 import com.djccnt15.spring_board.domain.board.converter.PostConverter;
+import com.djccnt15.spring_board.domain.board.converter.PostVoterConverter;
 import com.djccnt15.spring_board.domain.board.model.PostMinimalResponse;
 import com.djccnt15.spring_board.domain.board.model.PostCreateRequest;
 import com.djccnt15.spring_board.domain.board.model.PostDetailResponse;
@@ -22,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -33,6 +33,8 @@ public class PostService {
     private final PostContentRepository postContentRepository;
     private final PostContentConverter postContentConverter;
     private final CommentRepository commentRepository;
+    private final PostVoterRepository postVoterRepository;
+    private final PostVoterConverter postVoterConverter;
     
     public PostEntity createPost(
         UserEntity user,
@@ -148,5 +150,24 @@ public class PostService {
         if (!commentList.isEmpty()) {
             throw new ForbiddenException("you can't delete commented post");
         }
+    }
+    
+    public Optional<PostVoterEntity> getVoted(
+        PostEntity post,
+        UserEntity user
+    ) {
+        return postVoterRepository.findByPostAndUser(post, user);
+    }
+    
+    public void revokeVote(PostVoterEntity postVoter) {
+        postVoterRepository.delete(postVoter);
+    }
+    
+    public void votePost(
+        PostEntity post,
+        UserEntity user
+    ) {
+        var entity = postVoterConverter.toEntity(post, user);
+        postVoterRepository.save(entity);
     }
 }

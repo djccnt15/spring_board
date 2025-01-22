@@ -115,4 +115,21 @@ public class PostPrivateController {
         business.updatePost(user, id, request);
         return "redirect:/board/%s/%s".formatted(mainCategory, id);
     }
+    
+    /**
+     * controller for vote post
+     * @param user user session
+     * @param mainCategory name of the main category
+     * @param id post id
+     * @return redirect to post page
+     */
+    @GetMapping(path = "/{mainCategory}/{id}/vote")
+    public String votePost(
+        @AuthenticationPrincipal UserSession user,
+        @PathVariable(value = "mainCategory") String mainCategory,
+        @PathVariable(value = "id") Long id
+    ) {
+        business.votePost(user, id);
+        return "redirect:/board/%s/%s".formatted(mainCategory, id);
+    }
 }
