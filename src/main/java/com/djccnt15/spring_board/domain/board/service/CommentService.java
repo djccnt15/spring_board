@@ -1,14 +1,13 @@
 package com.djccnt15.spring_board.domain.board.service;
 
-import com.djccnt15.spring_board.db.entity.CommentContentEntity;
-import com.djccnt15.spring_board.db.entity.CommentEntity;
-import com.djccnt15.spring_board.db.entity.PostEntity;
-import com.djccnt15.spring_board.db.entity.UserEntity;
+import com.djccnt15.spring_board.db.entity.*;
 import com.djccnt15.spring_board.db.repository.CommentContentRepository;
 import com.djccnt15.spring_board.db.repository.CommentRepository;
+import com.djccnt15.spring_board.db.repository.CommentVoterRepository;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.board.converter.CommentContentConverter;
 import com.djccnt15.spring_board.domain.board.converter.CommentConverter;
+import com.djccnt15.spring_board.domain.board.converter.CommentVoterConverter;
 import com.djccnt15.spring_board.domain.board.model.CommentCreateRequest;
 import com.djccnt15.spring_board.domain.board.model.CommentResponse;
 import com.djccnt15.spring_board.domain.board.model.PostDetailResponse;
@@ -19,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -29,6 +29,8 @@ public class CommentService {
     private final CommentConverter commentConverter;
     private final CommentContentRepository commentContentRepository;
     private final CommentContentConverter commentContentConverter;
+    private final CommentVoterRepository commentVoterRepository;
+    private final CommentVoterConverter commentVoterConverter;
     
     public CommentEntity createComment(
         UserEntity user,
@@ -86,5 +88,24 @@ public class CommentService {
     public void deleteComment(CommentEntity comment) {
         comment.setActive(false);
         commentRepository.save(comment);
+    }
+    
+    public Optional<CommentVoterEntity> getVoted(
+        CommentEntity comment,
+        UserEntity user
+    ) {
+        return commentVoterRepository.findByCommentAndUser(comment, user);
+    }
+    
+    public void revokeVote(CommentVoterEntity commentVoter) {
+        commentVoterRepository.delete(commentVoter);
+    }
+    
+    public void voteComment(
+        CommentEntity comment,
+        UserEntity user
+    ) {
+        var entity = commentVoterConverter.toEntity(comment, user);
+        commentVoterRepository.save(entity);
     }
 }

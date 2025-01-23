@@ -112,4 +112,23 @@ public class CommentPrivateController {
         commentBusiness.deleteComment(user, commentId);
         return "redirect:/board/%s/%s#comment-form".formatted(mainCategory, postId);
     }
+    
+    /**
+     * controller for vote comment
+     * @param user user session
+     * @param mainCategory name of the main category
+     * @param postId post id
+     * @param commentId comment id
+     * @return redirect to anchor of the comment
+     */
+    @GetMapping(path = "/{mainCategory}/{postId}/comment/{commentId}/vote")
+    public String voteComment(
+        @AuthenticationPrincipal UserSession user,
+        @PathVariable(value = "mainCategory") String mainCategory,
+        @PathVariable(value = "postId") Long postId,
+        @PathVariable(value = "commentId") Long commentId
+    ) {
+        commentBusiness.voteComment(user, commentId);
+        return "redirect:/board/%s/%s#comment-%s".formatted(mainCategory, postId, commentId);
+    }
 }

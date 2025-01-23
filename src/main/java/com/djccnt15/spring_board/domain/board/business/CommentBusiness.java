@@ -61,4 +61,17 @@ public class CommentBusiness {
         commentService.validateAuthor(user, comment);
         commentService.deleteComment(comment);
     }
+    
+    public void voteComment(
+        UserSession user,
+        Long id
+    ) {
+        var userEntity = userService.getUser(user);
+        var comment = commentService.getComment(id);
+        var isVoted = commentService.getVoted(comment, userEntity);
+        isVoted.ifPresentOrElse(
+            commentService::revokeVote,
+            () -> commentService.voteComment(comment, userEntity)
+        );
+    }
 }
