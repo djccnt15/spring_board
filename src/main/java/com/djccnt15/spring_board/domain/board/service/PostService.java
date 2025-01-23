@@ -100,7 +100,7 @@ public class PostService {
     }
     
     public PostContentEntity getLastPostContent(PostEntity post) {
-        return postContentRepository.findFirstByPostIdOrderByIdDesc(post.getId()).orElseThrow(
+        return postContentRepository.findFirstByPostOrderByIdDesc(post).orElseThrow(
             () -> new DataNotFoundException("can't fine requested post")
         );
     }

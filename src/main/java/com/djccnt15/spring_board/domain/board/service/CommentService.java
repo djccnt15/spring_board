@@ -69,7 +69,7 @@ public class CommentService {
     }
     
     public CommentContentEntity getLastCommentContent(CommentEntity comment) {
-        return commentContentRepository.findFirstByCommentIdOrderByIdDesc(comment.getId()).orElseThrow(
+        return commentContentRepository.findFirstByCommentOrderByIdDesc(comment).orElseThrow(
             () -> new DataNotFoundException("can't find requested comment")
         );
     }

@@ -38,8 +38,8 @@ public class UserService {
             );
     }
     
-    public UserEntity getUser(Long userId) {
-        return repository.findById(userId).orElseThrow(
+    public UserEntity getUser(UserSession user) {
+        return repository.findById(user.getUserId()).orElseThrow(
             () -> new DataNotFoundException("User Not Found")
         );
     }

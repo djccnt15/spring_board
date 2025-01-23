@@ -17,7 +17,7 @@ public class UserBusiness {
     }
     
     public void resign(UserSession user) {
-        var userEntity = service.getUser(user.getUserId());
+        var userEntity = service.getUser(user);
         service.resign(userEntity);
     }
 }

@@ -24,7 +24,7 @@ public class CommentBusiness {
         CommentCreateRequest request,
         Long postId
     ) {
-        var userEntity = userService.getUser(user.getUserId());
+        var userEntity = userService.getUser(user);
         var post = postService.getPost(postId);
         var comment = commentService.createComment(userEntity, post);
         commentService.createCommentContent(comment, request);

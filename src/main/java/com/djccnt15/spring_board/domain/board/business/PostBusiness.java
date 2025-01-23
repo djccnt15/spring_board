@@ -36,7 +36,7 @@ public class PostBusiness {
         UserSession user,
         PostCreateRequest request
     ) {
-        var userEntity = userService.getUser(user.getUserId());
+        var userEntity = userService.getUser(user);
         var category = categoryService.getCategory(request.getCategory());
         var post = postService.createPost(userEntity, category);
         postService.createContent(post, request);
