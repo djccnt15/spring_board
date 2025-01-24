@@ -9,59 +9,72 @@
   class="container my-3"
 >
   <!-- 게시글 -->
-  <h6 class="border-bottom py-2" th:text="|게시판: ${mainCategory} / 카테고리: ${response.category}|"></h6>
+  <h6 class="border-bottom py-2">
+    게시판:
+    <a
+      th:text="|${mainCategory}|"
+      th:href="@{|/board/${mainCategory}|}"
+    ></a>
+    / 카테고리:
+    <a
+      th:text="${response.category}"
+      th:href="@{|/board/${mainCategory}?category=${response.category}|}"
+    ></a>
+  </h6>
   <h2 class="border-bottom py-2" th:text="${response.title}"></h2>
   <div class="card my-3">
     <div class="card-body">
       <div class="card-text" th:utext="${@commonUtil.markdown(response.content)}"></div>
       <div class="d-flex justify-content-end">
+        <div class="me-auto">
+          <a
+            class="recommend btn btn-sm btn-outline-secondary"
+            th:href="@{|/board/${mainCategory}/${response.id}/vote|}"
+            sec:authorize="isAuthenticated()"
+          >
+            추천
+            <span class="badge rounded-pill bg-success" th:text="${response.voteCount}"></span>
+          </a>
+          <button
+            class="recommend btn btn-secondary btn-sm btn-outline-secondary"
+            sec:authorize="isAnonymous()" disabled
+          >
+            추천
+            <span class="badge rounded-pill bg-success" th:text="${response.voteCount}"></span>
+          </button>
+          <a
+            th:href="@{|/board/${mainCategory}/${response.id}/form|}"
+            class="btn btn-sm btn-outline-secondary"
+            sec:authorize="isAuthenticated()"
+            th:if="${response.authorId != null and #authentication.getPrincipal().getUserId() == response.authorId}"
+            th:text="수정"
+          ></a>
+          <form
+            th:action="@{|/board/${mainCategory}/${response.id}|}"
+            method="POST"
+            sec:authorize="isAuthenticated()"
+            th:if="${response.authorId != null and #authentication.getPrincipal().getUserId() == response.authorId}"
+            class="delete d-inline-block"
+          >
+            <input type="hidden" name="_method" value="DELETE" />
+            <button type="submit" class="btn btn-sm btn-outline-secondary">삭제</button>
+          </form>
+        </div>
         <div class="badge bg-light text-dark p-2 text-start">
-          <div class="mb-2">
-            <span th:if="${response.author != null}" th:text="${response.author}"></span>
-          </div>
-          <div th:text="${#temporals.format(response.createdDateTime, 'yyyy-MM-dd HH:mm')}"></div>
+          <div class="mb-2">작성자</div>
+          <span th:if="${response.author != null}" th:text="${response.author}"></span>
+        </div>
+        <div class="badge bg-light text-dark p-2 text-start ms-2">
+          <div class="mb-2">작성일</div>
+          <div th:text="${#temporals.format(response.updatedDateTime, 'yyyy-MM-dd HH:mm')}"></div>
         </div>
         <div
           th:if="${response.updatedDateTime != null && response.version > 1 }"
-          class="badge bg-light text-dark p-2 text-start mx-3"
+          class="badge bg-light text-dark p-2 text-start ms-2"
         >
-          <div class="mb-2">modified at</div>
+          <div class="mb-2">수정일</div>
           <div th:text="${#temporals.format(response.updatedDateTime, 'yyyy-MM-dd HH:mm')}"></div>
         </div>
-      </div>
-      <div class="my-3">
-        <a
-          class="recommend btn btn-sm btn-outline-secondary"
-          th:href="@{|/board/${mainCategory}/${response.id}/vote|}"
-          sec:authorize="isAuthenticated()"
-        >
-          추천
-          <span class="badge rounded-pill bg-success" th:text="${response.voteCount}"></span>
-        </a>
-        <button
-          class="recommend btn btn-secondary btn-sm btn-outline-secondary"
-          sec:authorize="isAnonymous()" disabled
-        >
-          추천
-          <span class="badge rounded-pill bg-success" th:text="${response.voteCount}"></span>
-        </button>
-        <a
-          th:href="@{|/board/${mainCategory}/${response.id}/form|}"
-          class="btn btn-sm btn-outline-secondary"
-          sec:authorize="isAuthenticated()"
-          th:if="${response.authorId != null and #authentication.getPrincipal().getUserId() == response.authorId}"
-          th:text="수정"
-        ></a>
-        <form
-          th:action="@{|/board/${mainCategory}/${response.id}|}"
-          method="POST"
-          sec:authorize="isAuthenticated()"
-          th:if="${response.authorId != null and #authentication.getPrincipal().getUserId() == response.authorId}"
-          class="delete d-inline-block"
-        >
-          <input type="hidden" name="_method" value="DELETE" />
-          <button type="submit" class="btn btn-sm btn-outline-secondary">삭제</button>
-        </form>
       </div>
     </div>
   </div>
@@ -114,53 +127,55 @@
     <div class="card-body">
       <div class="card-text" th:utext="${@commonUtil.markdown(comment.content)}"></div>
       <div class="d-flex justify-content-end">
+        <div class="me-auto">
+          <a
+            class="recommend btn btn-sm btn-outline-secondary"
+            th:href="@{|/board/${mainCategory}/${response.id}/comment/${comment.id}/vote|}"
+            sec:authorize="isAuthenticated()"
+          >
+            추천
+            <span class="badge rounded-pill bg-success" th:text="${comment.voteCount}"></span>
+          </a>
+          <button
+            class="recommend btn btn-secondary btn-sm btn-outline-secondary"
+            sec:authorize="isAnonymous()" disabled
+          >
+            추천
+            <span class="badge rounded-pill bg-success" th:text="${comment.voteCount}"></span>
+          </button>
+          <a
+            th:href="@{|/board/${mainCategory}/${response.id}/comment/${comment.id}/form|}"
+            class="btn btn-sm btn-outline-secondary"
+            sec:authorize="isAuthenticated()"
+            th:if="${comment.authorId != null and #authentication.getPrincipal().getUserId() == comment.authorId}"
+            th:text="수정"
+          ></a>
+          <form
+            th:action="@{|/board/${mainCategory}/${response.id}/comment/${comment.id}|}"
+            method="POST"
+            sec:authorize="isAuthenticated()"
+            th:if="${comment.authorId != null and #authentication.getPrincipal().getUserId() == comment.authorId}"
+            class="d-inline-block"
+          >
+            <input type="hidden" name="_method" value="DELETE" />
+            <button type="submit" class="btn btn-sm btn-outline-secondary">삭제</button>
+          </form>
+        </div>
         <div class="badge bg-light text-dark p-2 text-start">
-          <div class="mb-2">
-            <span th:if="${comment.author != null}" th:text="|작성자: ${comment.author}|"></span>
-          </div>
+          <div class="mb-2">작성자</div>
+          <div th:if="${comment.author != null}" th:text="${comment.author}"></div>
+        </div>
+        <div class="badge bg-light text-dark p-2 text-start ms-2">
+          <div class="mb-2">작성일</div>
           <div th:text="${#temporals.format(comment.createdDateTime, 'yyyy-MM-dd HH:mm')}"></div>
         </div>
         <div
           th:if="${comment.updatedDateTime != null && comment.version > 1}"
-          class="badge bg-light text-dark p-2 text-start mx-3"
+          class="badge bg-light text-dark p-2 text-start ms-2"
         >
-          <div class="mb-2">modified at</div>
+          <div class="mb-2">수정일</div>
           <div th:text="${#temporals.format(comment.updatedDateTime, 'yyyy-MM-dd HH:mm')}"></div>
         </div>
-      </div>
-      <div class="my-3">
-        <a
-          class="recommend btn btn-sm btn-outline-secondary"
-          th:href="@{|/board/${mainCategory}/${response.id}/comment/${comment.id}/vote|}"
-          sec:authorize="isAuthenticated()"
-        >
-          추천
-          <span class="badge rounded-pill bg-success" th:text="${comment.voteCount}"></span>
-        </a>
-        <button
-          class="recommend btn btn-secondary btn-sm btn-outline-secondary"
-          sec:authorize="isAnonymous()" disabled
-        >
-          추천
-          <span class="badge rounded-pill bg-success" th:text="${comment.voteCount}"></span>
-        </button>
-        <a
-          th:href="@{|/board/${mainCategory}/${response.id}/comment/${comment.id}/form|}"
-          class="btn btn-sm btn-outline-secondary"
-          sec:authorize="isAuthenticated()"
-          th:if="${comment.authorId != null and #authentication.getPrincipal().getUserId() == comment.authorId}"
-          th:text="수정"
-        ></a>
-        <form
-          th:action="@{|/board/${mainCategory}/${response.id}/comment/${comment.id}|}"
-          method="POST"
-          sec:authorize="isAuthenticated()"
-          th:if="${comment.authorId != null and #authentication.getPrincipal().getUserId() == comment.authorId}"
-          class="d-inline-block"
-        >
-          <input type="hidden" name="_method" value="DELETE" />
-          <button type="submit" class="btn btn-sm btn-outline-secondary">삭제</button>
-        </form>
       </div>
     </div>
   </div>
