@@ -2,7 +2,9 @@ package com.djccnt15.spring_board.domain.user.business;
 
 import com.djccnt15.spring_board.annotations.Business;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
+import com.djccnt15.spring_board.domain.user.converter.UserConverter;
 import com.djccnt15.spring_board.domain.user.model.UserCreateForm;
+import com.djccnt15.spring_board.domain.user.model.UserProfile;
 import com.djccnt15.spring_board.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 
@@ -11,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 public class UserBusiness {
     
     private final UserService service;
+    private final UserConverter converter;
     
     public void createUser(UserCreateForm form) {
         service.createUser(form);
@@ -19,5 +22,10 @@ public class UserBusiness {
     public void resign(UserSession user) {
         var userEntity = service.getUser(user);
         service.resign(userEntity);
+    }
+    
+    public UserProfile getUserProfile(UserSession user) {
+        var entity = service.getUser(user);
+        return converter.toProfile(entity);
     }
 }

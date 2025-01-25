@@ -1,0 +1,43 @@
+<html
+  lang="ko"
+  layout:decorate="~{layout}"
+  xmlns:layout="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.w3.org/1999/xhtml"
+>
+<div layout:fragment="content" class="container">
+  <h5 class="my-3 border-bottom pb-2">My Page</h5>
+  <form th:action="@{/user/profile}" th:object="${form}" method="POST">
+    <input type="hidden" name="_method" value="PUT" />
+    <div th:replace="~{form_errors :: formErrorsFragment}"></div>
+    <div class="mb-3">
+      <label for="username" class="form-label">사용자ID</label>
+      <input
+        id="username" type="text" name="username" class="form-control"
+        th:value="${placeholder.username}"
+      >
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">현재 비밀번호</label>
+      <input id="password" type="password" th:field="*{password}" class="form-control">
+    </div>
+    <div class="d-flex flex-row gap-3 mb-3">
+      <div class="flex-grow-1">
+        <label for="password1" class="form-label">비밀번호 변경</label>
+        <input id="password1" type="password" th:field="*{password1}" class="form-control">
+      </div>
+      <div class="flex-grow-1">
+        <label for="password2" class="form-label">비밀번호 변경 확인</label>
+        <input id="password2" type="password" th:field="*{password2}" class="form-control">
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">이메일</label>
+      <input
+        id="email" type="text" name="email" class="form-control"
+        th:value="${placeholder.email}"
+      >
+    </div>
+    <button type="submit" class="btn btn-primary">저장</button>
+  </form>
+</div>
+</html>
