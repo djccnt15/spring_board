@@ -38,7 +38,7 @@ public class CommentPrivateController {
             return "post-detail";
         }
         commentBusiness.createComment(user, request, postId);
-        return "redirect:/board/%s/%s#comment-form".formatted(mainCategory, postId);
+        return "redirect:/board/%s/%s#comment-list".formatted(mainCategory, postId);
     }
     
     /**
@@ -110,7 +110,7 @@ public class CommentPrivateController {
         @PathVariable(value = "commentId") Long commentId
     ) {
         commentBusiness.deleteComment(user, commentId);
-        return "redirect:/board/%s/%s#comment-form".formatted(mainCategory, postId);
+        return "redirect:/board/%s/%s#comment-list".formatted(mainCategory, postId);
     }
     
     /**

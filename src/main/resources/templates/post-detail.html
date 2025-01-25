@@ -121,7 +121,7 @@
     >
   </form>
   <!-- 댓글 반복 시작 -->
-  <a id="comment-form"></a>
+  <a id="comment-list"></a>
   <div class="card my-3" th:each="comment : ${response.commentList}">
     <a th:id="|comment-${comment.id}|"></a>
     <div class="card-body">
