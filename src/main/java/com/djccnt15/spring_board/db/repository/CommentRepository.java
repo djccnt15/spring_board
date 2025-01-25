@@ -51,10 +51,16 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
                 c.is_active = TRUE
                 AND c.post_id = :post_id
             ORDER BY c.id DESC
+            OFFSET :page ROWS
+            FETCH FIRST :size ROWS ONLY
             """,
         nativeQuery = true
     )
-    List<CommentProjection> getCommentListByPostId(@Param("post_id") Long postId);
+    List<CommentProjection> getCommentListByPostId(
+        @Param("post_id") Long postId,
+        @Param("size") Integer size,
+        @Param("page") Integer page
+    );
     
     List<CommentEntity> findByPostAndIsActive(PostEntity post, Boolean isActive);
 }

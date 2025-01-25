@@ -48,8 +48,12 @@ public class CommentService {
         commentContentRepository.save(entity);
     }
     
-    public List<CommentResponse> getCommentList(PostDetailResponse post) {
-        var commentList = commentRepository.getCommentListByPostId(post.getId());
+    public List<CommentResponse> getCommentList(
+        PostDetailResponse post,
+        Integer size,
+        Integer page
+    ) {
+        var commentList = commentRepository.getCommentListByPostId(post.getId(), size, size * page);
         return commentList.stream()
             .map(commentConverter::toResponse)
             .toList();

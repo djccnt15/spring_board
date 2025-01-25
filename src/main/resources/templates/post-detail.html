@@ -179,6 +179,56 @@
       </div>
     </div>
   </div>
+  <!-- 댓글 페이징처리 시작 -->
+  <div th:if="${response.commentCount != 0}">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" th:classappend="${page == 0} ? 'disabled'">
+        <a
+          class="page-link"
+          th:href="@{|?page=0&size=${size}|}"
+        >
+          <span>처음</span>
+        </a>
+      </li>
+      <li class="page-item" th:classappend="${page == 0} ? 'disabled'">
+        <a
+          class="page-link"
+          th:href="@{|?page=${page - 1}&size=${size}|}"
+        >
+          <span>이전</span>
+        </a>
+      </li>
+      <li
+        th:each="commentList: ${#numbers.sequence(0, response.totalCommentPages - 1)}"
+        th:if="${commentList >= page - 5 and commentList <= page + 5}"
+        th:classappend="${commentList == page} ? 'active'"
+        class="page-item"
+      >
+        <a
+          class="page-link"
+          th:text="${commentList}"
+          th:href="@{|/board/${mainCategory}/${response.id}?page=${commentList}&size=${size}|}"
+        ></a>
+      </li>
+      <li class="page-item" th:classappend="${page + 1 == response.totalCommentPages} ? 'disabled'">
+        <a
+          class="page-link"
+          th:href="@{|?page=${page + 1}&size=${size}|}"
+        >
+          <span>다음</span>
+        </a>
+      </li>
+      <li class="page-item" th:classappend="${page + 1 == response.totalCommentPages} ? 'disabled'">
+        <a
+          class="page-link"
+          th:href="@{|?page=${response.totalCommentPages - 1}&size=${size}|}"
+        >
+          <span>끝</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <!-- 댓글 페이징처리 끝 -->
 </div>
 <script layout:fragment="script" type="text/javascript" th:src="@{/post-detail.js}"></script>
 </html>

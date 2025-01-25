@@ -72,10 +72,14 @@ public class PostController {
     public String getPostDetail(
         Model model,
         @PathVariable(value = "mainCategory") String mainCategory,
-        @PathVariable(value = "id") Long id
+        @PathVariable(value = "id") Long id,
+        @RequestParam(value = "size", defaultValue = "10") int size,
+        @RequestParam(value = "page", defaultValue = "0") int page
     ) {
-        var response = business.getPostDetail(id);
+        var response = business.getPostDetail(id, size, page);
         model.addAttribute(mainCategory);
+        model.addAttribute("size", size);
+        model.addAttribute("page", page);
         model.addAttribute("response", response);
         model.addAttribute("commentForm", new CommentCreateRequest());
         return "post-detail";

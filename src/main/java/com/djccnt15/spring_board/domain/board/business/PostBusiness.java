@@ -82,10 +82,16 @@ public class PostBusiness {
             .build();
     }
     
-    public PostDetailResponse getPostDetail(Long id) {
+    public PostDetailResponse getPostDetail(
+        Long id,
+        Integer size,
+        Integer page
+    ) {
         var post = postService.getPostDetail(id);
-        var commentList = commentService.getCommentList(post);
+        var commentList = commentService.getCommentList(post, size, page);
         post.setCommentList(commentList);
+        var totalCommentPages = (int) Math.ceil((double) post.getCommentCount() / size);
+        post.setTotalCommentPages(totalCommentPages);
         return post;
     }
     

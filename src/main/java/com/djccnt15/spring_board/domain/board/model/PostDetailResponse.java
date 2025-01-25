@@ -32,5 +32,7 @@ public class PostDetailResponse {
     
     private Long voteCount;
     
+    private Integer totalCommentPages;
+    
     private List<CommentResponse> commentList;
 }
