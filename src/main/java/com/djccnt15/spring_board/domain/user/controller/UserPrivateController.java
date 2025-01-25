@@ -3,15 +3,16 @@ package com.djccnt15.spring_board.domain.user.controller;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.user.business.UserBusiness;
 import com.djccnt15.spring_board.domain.user.model.UserUpdateForm;
+import com.djccnt15.spring_board.exception.FormValidationException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Controller
@@ -56,6 +57,37 @@ public class UserPrivateController {
         var placeholder = business.getUserProfile(user);
         model.addAttribute("placeholder", placeholder);
         model.addAttribute("form", new UserUpdateForm());
+        return "user-profile";
+    }
+    
+    /**
+     * controller for update user profile
+     * @param model inject from spring
+     * @param user user session
+     * @param form user create form data
+     * @param bindingResult validated result of form data
+     * @return redirect to user profile page
+     */
+    @PutMapping(path = "/profile")
+    public String updateProfile(
+        Model model,
+        @AuthenticationPrincipal UserSession user,
+        @Valid @ModelAttribute(name = "form") UserUpdateForm form,
+        BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("placeholder", business.getUserProfile(user));
+            return "user-profile";
+        }
+        try {
+            business.updateProfile(user, form);
+        } catch (FormValidationException e) {
+            log.error("", e);  // must input throwable as a second argument for stack tracing
+            bindingResult.reject("updateFailed", e.getMessage());
+            model.addAttribute("placeholder", business.getUserProfile(user));
+            return "user-profile";
+        }
+        model.addAttribute("placeholder", business.getUserProfile(user));
         return "user-profile";
     }
 }

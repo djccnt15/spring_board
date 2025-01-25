@@ -6,7 +6,9 @@ import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.user.converter.UserConverter;
 import com.djccnt15.spring_board.domain.user.model.UserCreateForm;
 import com.djccnt15.spring_board.domain.user.model.UserResponse;
+import com.djccnt15.spring_board.domain.user.model.UserUpdateForm;
 import com.djccnt15.spring_board.exception.DataNotFoundException;
+import com.djccnt15.spring_board.exception.FormValidationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -55,6 +57,41 @@ public class UserService {
         user.setUsername(null);
         user.setPassword(null);
         user.setEmail(null);
+        repository.save(user);
+    }
+    
+    public UserEntity validateUpdateForm(
+        UserSession user,
+        UserUpdateForm form
+    ) {
+        var userEntity = repository.findById(user.getUserId()).orElseThrow(
+            () -> new DataNotFoundException("can't find user")
+        );
+        if (!encoder.matches(form.getPassword(), userEntity.getPassword())) {
+            throw new FormValidationException("비밀번호가 틀렸습니다.");
+        } else if (form.getPassword() != null && !form.getPassword1().equals(form.getPassword2())) {
+            throw new FormValidationException("2개의 패스워드가 일치하지 않습니다.");
+        }
+        var userEntityByName = repository.findByUsernameAndIdNot(form.getUsername(), user.getUserId());
+        userEntityByName.ifPresent(it -> {
+            throw new FormValidationException("이미 사용중인 ID입니다.");
+        });
+        var userEntityByEmail = repository.findByEmailAndIdNot(form.getEmail(), user.getUserId());
+        userEntityByEmail.ifPresent(it -> {
+            throw new FormValidationException("이미 사용중인 Email입니다.");
+        });
+        return userEntity;
+    }
+    
+    public void updateUser(
+        UserEntity user,
+        UserUpdateForm form
+    ) {
+        user.setUsername(form.getUsername());
+        user.setEmail(form.getEmail());
+        if (!form.getPassword1().isEmpty()) {
+            user.setPassword(encoder.encode(form.getPassword1()));
+        }
         repository.save(user);
     }
 }
