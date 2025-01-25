@@ -24,7 +24,7 @@
   <h2 class="border-bottom py-2" th:text="${response.title}"></h2>
   <div class="card my-3">
     <div class="card-body">
-      <div class="card-text" th:utext="${@commonUtil.markdown(response.content)}"></div>
+      <div class="card-text" th:utext="${@commonUtil.renderMarkdown(response.content)}"></div>
       <div class="d-flex justify-content-end">
         <div class="me-auto">
           <a
@@ -125,7 +125,7 @@
   <div class="card my-3" th:each="comment : ${response.commentList}">
     <a th:id="|comment-${comment.id}|"></a>
     <div class="card-body">
-      <div class="card-text" th:utext="${@commonUtil.markdown(comment.content)}"></div>
+      <div class="card-text" th:utext="${@commonUtil.renderMarkdown(comment.content)}"></div>
       <div class="d-flex justify-content-end">
         <div class="me-auto">
           <a
