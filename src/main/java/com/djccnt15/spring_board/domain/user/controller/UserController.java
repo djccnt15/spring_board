@@ -2,11 +2,13 @@ package com.djccnt15.spring_board.domain.user.controller;
 
 import com.djccnt15.spring_board.domain.user.business.UserBusiness;
 import com.djccnt15.spring_board.domain.user.model.UserCreateForm;
+import com.djccnt15.spring_board.domain.user.model.UserRecoveryForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,5 +62,16 @@ public class UserController {
     @GetMapping(path = "/login")
     public String login() {
         return "login_form";
+    }
+    
+    /**
+     * view controller for user recovery
+     * @param model inject from spring
+     * @return user password recovery page
+     */
+    @GetMapping(path = "/recovery")
+    public String recoveryView(Model model) {
+        model.addAttribute("form", new UserRecoveryForm());
+        return "user-recovery";
     }
 }
