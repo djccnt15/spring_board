@@ -2,6 +2,7 @@ package com.djccnt15.spring_board.domain.user.service;
 
 import com.djccnt15.spring_board.db.entity.UserEntity;
 import com.djccnt15.spring_board.db.repository.UserRepository;
+import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.user.converter.UserConverter;
 import com.djccnt15.spring_board.domain.user.model.UserCreateForm;
 import com.djccnt15.spring_board.domain.user.model.UserResponse;
