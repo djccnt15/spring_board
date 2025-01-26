@@ -84,4 +84,23 @@ public class PostController {
         model.addAttribute("commentForm", new CommentCreateRequest());
         return "post-detail";
     }
+    
+    /**
+     * view controller for post history
+     * @param model inject from spring
+     * @param mainCategory name of category
+     * @param id post id
+     * @return post history view
+     */
+    @GetMapping(path = "{mainCategory}/{id}/history")
+    public String getPostHistory(
+        Model model,
+        @PathVariable(value = "mainCategory") String mainCategory,
+        @PathVariable(value = "id") Long id
+    ) {
+        var response = business.getHistory(id);
+        model.addAttribute("response", response);
+        model.addAttribute("id", id);
+        return "post-history";
+    }
 }

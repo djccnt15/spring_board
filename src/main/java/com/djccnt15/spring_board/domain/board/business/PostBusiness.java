@@ -4,6 +4,7 @@ import com.djccnt15.spring_board.annotations.Business;
 import com.djccnt15.spring_board.db.entity.CategoryEntity;
 import com.djccnt15.spring_board.db.entity.PostEntity;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
+import com.djccnt15.spring_board.domain.board.converter.PostContentConverter;
 import com.djccnt15.spring_board.domain.board.model.*;
 import com.djccnt15.spring_board.domain.board.service.CommentService;
 import com.djccnt15.spring_board.domain.board.service.PostService;
@@ -26,6 +27,7 @@ public class PostBusiness {
     private final CategoryConverter categoryConverter;
     private final PostService postService;
     private final CommentService commentService;
+    private final PostContentConverter postContentConverter;
     
     public List<CategoryResponse> getCategoryList(String categoryName) {
         var mainCategory = categoryService.getCategory(categoryName);
@@ -147,5 +149,12 @@ public class PostBusiness {
             postService::revokeVote,
             () -> postService.votePost(post, userEntity)
         );
+    }
+    
+    public List<PostContentResponse> getHistory(Long id) {
+        var postHistory = postService.getPostHistory(id);
+        return postHistory.stream()
+            .map(postContentConverter::toResponse)
+            .toList();
     }
 }

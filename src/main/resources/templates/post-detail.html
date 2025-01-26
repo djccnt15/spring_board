@@ -68,13 +68,14 @@
           <div class="mb-2">작성일</div>
           <div th:text="${#temporals.format(response.updatedDateTime, 'yyyy-MM-dd HH:mm')}"></div>
         </div>
-        <div
+        <a
+          th:href="@{|/board/${mainCategory}/${response.id}/history|}"
           th:if="${response.updatedDateTime != null && response.version > 1 }"
           class="badge bg-light text-dark p-2 text-start ms-2"
         >
           <div class="mb-2">수정일</div>
           <div th:text="${#temporals.format(response.updatedDateTime, 'yyyy-MM-dd HH:mm')}"></div>
-        </div>
+        </a>
       </div>
     </div>
   </div>

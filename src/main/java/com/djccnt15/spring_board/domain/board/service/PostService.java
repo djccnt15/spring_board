@@ -170,4 +170,8 @@ public class PostService {
         var entity = postVoterConverter.toEntity(post, user);
         postVoterRepository.save(entity);
     }
+    
+    public List<PostContentEntity> getPostHistory(Long id) {
+        return postContentRepository.findByPostIdOrderByIdDesc(id);
+    }
 }
