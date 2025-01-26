@@ -170,13 +170,14 @@
           <div class="mb-2">작성일</div>
           <div th:text="${#temporals.format(comment.createdDateTime, 'yyyy-MM-dd HH:mm')}"></div>
         </div>
-        <div
+        <a
+          th:href="@{|/board/${mainCategory}/${response.id}/comment/${comment.id}/history|}"
           th:if="${comment.updatedDateTime != null && comment.version > 1}"
           class="badge bg-light text-dark p-2 text-start ms-2"
         >
           <div class="mb-2">수정일</div>
           <div th:text="${#temporals.format(comment.updatedDateTime, 'yyyy-MM-dd HH:mm')}"></div>
-        </div>
+        </a>
       </div>
     </div>
   </div>

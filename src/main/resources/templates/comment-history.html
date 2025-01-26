@@ -1,0 +1,18 @@
+<html
+  layout:decorate="~{layout}"
+  xmlns:layout="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.w3.org/1999/xhtml"
+  lang="ko"
+>
+<div layout:fragment="content" class="container">
+  <div class="card my-3" th:each="post : ${response}">
+    <div class="card-body">
+      <h6
+        class="card-subtitle mb-2 text-body-secondary"
+        th:text="|작성일시: ${#temporals.format(post.createdDateTime, 'yyyy-MM-dd HH:mm')}"
+      ></h6>
+      <div class="card-text" th:utext="${@commonUtil.renderMarkdown(post.content)}"></div>
+    </div>
+  </div>
+</div>
+</html>

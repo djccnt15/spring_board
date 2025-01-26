@@ -112,4 +112,8 @@ public class CommentService {
         var entity = commentVoterConverter.toEntity(comment, user);
         commentVoterRepository.save(entity);
     }
+    
+    public List<CommentContentEntity> getCommentHistory(Long id) {
+        return commentContentRepository.findByCommentIdOrderByIdDesc(id);
+    }
 }

@@ -2,6 +2,8 @@ package com.djccnt15.spring_board.domain.board.business;
 
 import com.djccnt15.spring_board.annotations.Business;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
+import com.djccnt15.spring_board.domain.board.converter.CommentContentConverter;
+import com.djccnt15.spring_board.domain.board.model.CommentContentResponse;
 import com.djccnt15.spring_board.domain.board.model.CommentCreateRequest;
 import com.djccnt15.spring_board.domain.board.model.CommentResponse;
 import com.djccnt15.spring_board.domain.board.service.CommentService;
@@ -9,6 +11,8 @@ import com.djccnt15.spring_board.domain.board.service.PostService;
 import com.djccnt15.spring_board.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 
 @Slf4j
 @Business
@@ -18,6 +22,7 @@ public class CommentBusiness {
     private final UserService userService;
     private final PostService postService;
     private final CommentService commentService;
+    private final CommentContentConverter commentContentConverter;
     
     public void createComment(
         UserSession user,
@@ -73,5 +78,12 @@ public class CommentBusiness {
             commentService::revokeVote,
             () -> commentService.voteComment(comment, userEntity)
         );
+    }
+    
+    public List<CommentContentResponse> getCommentHistory(Long id) {
+        var commentHistory = commentService.getCommentHistory(id);
+        return commentHistory.stream()
+            .map(commentContentConverter::toResponse)
+            .toList();
     }
 }
