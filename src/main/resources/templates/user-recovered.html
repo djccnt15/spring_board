@@ -1,0 +1,17 @@
+<html
+  lang="ko"
+  layout:decorate="~{layout}"
+  xmlns:layout="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org">
+<div layout:fragment="content" class="container">
+  <h5 class="my-3 border-bottom pb-2">비밀번호 찾기</h5>
+  <div class="card my-3">
+    <div class="card-body">
+      <div class="card-text">
+        Email로 임시 비밀번호가 발송되었습니다.
+        <a th:href="@{/user/login}">임시 비밀번호로 로그인하세요</a>
+      </div>
+    </div>
+  </div>
+</div>
+</html>

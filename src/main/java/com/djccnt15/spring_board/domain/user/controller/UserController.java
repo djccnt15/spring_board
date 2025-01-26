@@ -3,6 +3,8 @@ package com.djccnt15.spring_board.domain.user.controller;
 import com.djccnt15.spring_board.domain.user.business.UserBusiness;
 import com.djccnt15.spring_board.domain.user.model.UserCreateForm;
 import com.djccnt15.spring_board.domain.user.model.UserRecoveryForm;
+import com.djccnt15.spring_board.exception.DataNotFoundException;
+import com.djccnt15.spring_board.exception.UserRecoveryFailedException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -73,5 +76,31 @@ public class UserController {
     public String recoveryView(Model model) {
         model.addAttribute("form", new UserRecoveryForm());
         return "user-recovery";
+    }
+    
+    /**
+     * controller for user recovery business logic
+     * @param form actual data for user recovery
+     * @param bindingResult validated result of the form. this must come right after the form
+     * @return redirect to login page
+     */
+    @PostMapping(path = "/recovery")
+    public String recoverUser(
+        @Valid @ModelAttribute(name = "form") UserRecoveryForm form,
+        BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) {
+            return "user-recovery";
+        }
+        try {
+            business.recoverUser(form);
+        } catch (DataNotFoundException e) {
+            bindingResult.reject("userNotFound", e.getMessage());
+            return "user-recovery";
+        } catch (UserRecoveryFailedException e) {
+            bindingResult.reject("validationFailed", e.getMessage());
+            return "user-recovery";
+        }
+        return "user-recovered";
     }
 }

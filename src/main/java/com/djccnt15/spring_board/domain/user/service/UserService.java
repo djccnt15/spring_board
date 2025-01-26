@@ -5,6 +5,7 @@ import com.djccnt15.spring_board.db.repository.UserRepository;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.user.converter.UserConverter;
 import com.djccnt15.spring_board.domain.user.model.UserCreateForm;
+import com.djccnt15.spring_board.domain.user.model.UserRecoveryForm;
 import com.djccnt15.spring_board.domain.user.model.UserResponse;
 import com.djccnt15.spring_board.domain.user.model.UserUpdateForm;
 import com.djccnt15.spring_board.exception.DataNotFoundException;
@@ -34,11 +35,10 @@ public class UserService {
         repository.save(userEntity);
     }
     
-    @Deprecated
     public UserEntity getUser(String username) {
         return repository.findByUsername(username).orElseThrow(
-                () -> new DataNotFoundException("User Not Found")
-            );
+            () -> new DataNotFoundException("User Not Found")
+        );
     }
     
     public UserEntity getUser(UserSession user) {
@@ -92,6 +92,21 @@ public class UserService {
         if (!form.getPassword1().isEmpty()) {
             user.setPassword(encoder.encode(form.getPassword1()));
         }
+        repository.save(user);
+    }
+    
+    public boolean validateRecoverEmail(
+        UserRecoveryForm form,
+        UserEntity user
+    ) {
+        return form.getEmail().equals(user.getEmail());
+    }
+    
+    public void recoverUser(
+        UserEntity user,
+        String password
+    ) {
+        user.setPassword(encoder.encode(password));
         repository.save(user);
     }
 }
