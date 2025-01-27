@@ -22,18 +22,32 @@ public class CommentPrivateController {
     private final PostBusiness postBusiness;
     private final CommentBusiness commentBusiness;
     
+    /**
+     * controller for create comment
+     * @param model inject from spring
+     * @param user user session
+     * @param mainCategory name of the main category
+     * @param postId id of the post
+     * @param request data model for comment create
+     * @param bindingResult validated result. this must come right after the form
+     * @return redirect to anchor in post page
+     */
     @PostMapping(path = "/{mainCategory}/{id}/comment/form")
     public String createComment(
         Model model,
         @AuthenticationPrincipal UserSession user,
         @PathVariable(value = "mainCategory") String mainCategory,
         @PathVariable(value = "id") Long postId,
+        @RequestParam(value = "size", defaultValue = "10") int size,
+        @RequestParam(value = "page", defaultValue = "0") int page,
         @Valid @ModelAttribute(name = "commentForm") CommentCreateRequest request,
         BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {
-            var postDetail = postBusiness.getPostDetail(postId);
+            var postDetail = postBusiness.getPostDetail(postId, size, page);
             model.addAttribute(mainCategory);
+            model.addAttribute("size", size);
+            model.addAttribute("page", page);
             model.addAttribute("response", postDetail);
             return "post-detail";
         }
