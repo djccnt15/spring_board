@@ -8,15 +8,15 @@ import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.board.converter.CommentContentConverter;
 import com.djccnt15.spring_board.domain.board.converter.CommentConverter;
 import com.djccnt15.spring_board.domain.board.converter.CommentVoterConverter;
-import com.djccnt15.spring_board.domain.board.model.CommentCreateRequest;
-import com.djccnt15.spring_board.domain.board.model.CommentResponse;
-import com.djccnt15.spring_board.domain.board.model.PostDetailResponse;
+import com.djccnt15.spring_board.domain.board.model.*;
 import com.djccnt15.spring_board.exception.DataNotFoundException;
 import com.djccnt15.spring_board.exception.InvalidAuthorException;
+import com.djccnt15.spring_board.utils.CommonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +31,7 @@ public class CommentService {
     private final CommentContentConverter commentContentConverter;
     private final CommentVoterRepository commentVoterRepository;
     private final CommentVoterConverter commentVoterConverter;
+    private final CommonUtil commonUtil;
     
     public CommentEntity createComment(
         UserEntity user,
@@ -115,5 +116,16 @@ public class CommentService {
     
     public List<CommentContentEntity> getCommentHistory(Long id) {
         return commentContentRepository.findByCommentIdOrderByIdDesc(id);
+    }
+    
+    public HistoryResponse createHistoryCsv(List<CommentContentHistory> history) {
+        var tableName = "CommentHistory_%s.csv".formatted(
+            commonUtil.datetimeFormatter(LocalDateTime.now(), "yyyyMMdd_HHmmss")
+        );
+        var tableData = commonUtil.generateCsv(history, CommentContentHistory.class);
+        return HistoryResponse.builder()
+            .tableName(tableName)
+            .tableData(tableData)
+            .build();
     }
 }
