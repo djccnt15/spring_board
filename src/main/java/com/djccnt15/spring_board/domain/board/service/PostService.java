@@ -9,17 +9,17 @@ import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.board.converter.PostContentConverter;
 import com.djccnt15.spring_board.domain.board.converter.PostConverter;
 import com.djccnt15.spring_board.domain.board.converter.PostVoterConverter;
-import com.djccnt15.spring_board.domain.board.model.PostMinimalResponse;
-import com.djccnt15.spring_board.domain.board.model.PostCreateRequest;
-import com.djccnt15.spring_board.domain.board.model.PostDetailResponse;
+import com.djccnt15.spring_board.domain.board.model.*;
 import com.djccnt15.spring_board.exception.ApiInvalidAuthorException;
 import com.djccnt15.spring_board.exception.DataNotFoundException;
 import com.djccnt15.spring_board.exception.ForbiddenException;
 import com.djccnt15.spring_board.exception.InvalidAuthorException;
+import com.djccnt15.spring_board.utils.CommonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +35,7 @@ public class PostService {
     private final CommentRepository commentRepository;
     private final PostVoterRepository postVoterRepository;
     private final PostVoterConverter postVoterConverter;
+    private final CommonUtil commonUtil;
     
     public PostEntity createPost(
         UserEntity user,
@@ -173,5 +174,19 @@ public class PostService {
     
     public List<PostContentEntity> getPostHistory(Long id) {
         return postContentRepository.findByPostIdOrderByIdDesc(id);
+    }
+    
+    public HistoryResponse createHistoryCsv(List<PostContentEntity> history) {
+        var postHistory = history.stream()
+            .map(postContentConverter::toHistory)
+            .toList();
+        var tableName = "PostHistory_%s.csv".formatted(
+            commonUtil.datetimeFormatter(LocalDateTime.now(), "yyyyMMdd_HHmmss")
+        );
+        var tableData = commonUtil.generateCsv(postHistory, PostContentHistory.class);
+        return HistoryResponse.builder()
+            .tableName(tableName)
+            .tableData(tableData)
+            .build();
     }
 }

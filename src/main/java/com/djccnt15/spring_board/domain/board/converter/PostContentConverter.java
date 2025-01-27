@@ -3,13 +3,17 @@ package com.djccnt15.spring_board.domain.board.converter;
 import com.djccnt15.spring_board.annotations.Converter;
 import com.djccnt15.spring_board.db.entity.PostContentEntity;
 import com.djccnt15.spring_board.db.entity.PostEntity;
+import com.djccnt15.spring_board.domain.board.model.PostContentHistory;
 import com.djccnt15.spring_board.domain.board.model.PostContentResponse;
 import com.djccnt15.spring_board.domain.board.model.PostCreateRequest;
+import com.djccnt15.spring_board.utils.CommonUtil;
 import lombok.RequiredArgsConstructor;
 
 @Converter
 @RequiredArgsConstructor
 public class PostContentConverter {
+    
+    private final CommonUtil commonUtil;
     
     public PostContentEntity toEntity(
         PostCreateRequest request,
@@ -41,6 +45,18 @@ public class PostContentConverter {
             .title(entity.getTitle())
             .content(entity.getContent())
             .createdDateTime(entity.getCreatedDatetime())
+            .build();
+    }
+    
+    public PostContentHistory toHistory(PostContentEntity entity) {
+        var createDateTime = commonUtil.datetimeFormatter(
+            entity.getCreatedDatetime(), "yyyy-MM-dd HH:mm:ss"
+        );
+        return PostContentHistory.builder()
+            .id(entity.getId())
+            .title(entity.getTitle())
+            .content(entity.getContent())
+            .createdDateTime(createDateTime)
             .build();
     }
 }

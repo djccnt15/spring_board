@@ -157,4 +157,9 @@ public class PostBusiness {
             .map(postContentConverter::toResponse)
             .toList();
     }
+    
+    public HistoryResponse createHistoryCsv(Long id) {
+        var history = postService.getPostHistory(id);
+        return postService.createHistoryCsv(history);
+    }
 }
