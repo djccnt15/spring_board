@@ -61,9 +61,8 @@ public class CommentService {
     }
     
     public CommentEntity getComment(Long commentId) {
-        return commentRepository.findById(commentId).orElseThrow(
-            () -> new DataNotFoundException("can't find requested comment")
-        );
+        return commentRepository.findById(commentId)
+            .orElseThrow(() -> new DataNotFoundException("can't find requested comment"));
     }
     
     public void validateAuthor(
@@ -76,9 +75,8 @@ public class CommentService {
     }
     
     public CommentContentEntity getLastCommentContent(CommentEntity comment) {
-        return commentContentRepository.findFirstByCommentOrderByIdDesc(comment).orElseThrow(
-            () -> new DataNotFoundException("can't find requested comment")
-        );
+        return commentContentRepository.findFirstByCommentOrderByIdDesc(comment)
+            .orElseThrow(() -> new DataNotFoundException("can't find requested comment"));
     }
     
     public void updateCommentContent(

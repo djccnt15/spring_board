@@ -39,15 +39,13 @@ public class UserService {
     }
     
     public UserEntity getUser(String username) {
-        return userRepository.findByUsername(username).orElseThrow(
-            () -> new DataNotFoundException("User Not Found")
-        );
+        return userRepository.findByUsername(username)
+            .orElseThrow(() -> new DataNotFoundException("User Not Found"));
     }
     
     public UserEntity getUser(UserSession user) {
-        return userRepository.findById(user.getUserId()).orElseThrow(
-            () -> new DataNotFoundException("User Not Found")
-        );
+        return userRepository.findById(user.getUserId())
+            .orElseThrow(() -> new DataNotFoundException("User Not Found"));
     }
     
     public Page<UserResponse> getList(int page) {
@@ -67,9 +65,8 @@ public class UserService {
         UserSession user,
         UserUpdateForm form
     ) {
-        var userEntity = userRepository.findById(user.getUserId()).orElseThrow(
-            () -> new DataNotFoundException("can't find user")
-        );
+        var userEntity = userRepository.findById(user.getUserId())
+            .orElseThrow(() -> new DataNotFoundException("can't find user"));
         if (!encoder.matches(form.getPassword(), userEntity.getPassword())) {
             throw new FormValidationException("비밀번호가 틀렸습니다.");
         } else if (form.getPassword() != null && !form.getPassword1().equals(form.getPassword2())) {

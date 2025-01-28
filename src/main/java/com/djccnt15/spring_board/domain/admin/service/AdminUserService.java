@@ -15,17 +15,15 @@ public class AdminUserService {
     private final UserRepository userRepository;
     
     public void grantManager(Long id) {
-        var userEntity = userRepository.findById(id).orElseThrow(
-            () -> new DataNotFoundException("can't find user")
-        );
+        var userEntity = userRepository.findById(id)
+            .orElseThrow(() -> new DataNotFoundException("can't find user"));
         userEntity.setRole(UserRoleEnum.STAFF);
         userRepository.save(userEntity);
     }
     
     public void revokeManager(Long id) {
-        var userEntity = userRepository.findById(id).orElseThrow(
-            () -> new DataNotFoundException("can't find user")
-        );
+        var userEntity = userRepository.findById(id)
+            .orElseThrow(() -> new DataNotFoundException("can't find user"));
         userEntity.setRole(null);
         userRepository.save(userEntity);
     }

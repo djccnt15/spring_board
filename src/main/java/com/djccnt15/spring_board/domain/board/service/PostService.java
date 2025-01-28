@@ -88,22 +88,18 @@ public class PostService {
     
     public PostDetailResponse getPostDetail(Long id) {
         var projection = postRepository.getPostDetailById(id)
-            .orElseThrow(
-                () -> new DataNotFoundException("can't find data")
-            );
+            .orElseThrow(() -> new DataNotFoundException("can't find data"));
         return postConverter.toResponse(projection);
     }
     
     public PostEntity getPost(Long id) {
-        return postRepository.findById(id).orElseThrow(
-            () -> new DataNotFoundException("can't fine requested post")
-        );
+        return postRepository.findById(id)
+            .orElseThrow(() -> new DataNotFoundException("can't fine requested post"));
     }
     
     public PostContentEntity getLastPostContent(PostEntity post) {
-        return postContentRepository.findFirstByPostOrderByIdDesc(post).orElseThrow(
-            () -> new DataNotFoundException("can't fine requested post")
-        );
+        return postContentRepository.findFirstByPostOrderByIdDesc(post)
+            .orElseThrow(() -> new DataNotFoundException("can't fine requested post"));
     }
     
     public void validateAuthor(

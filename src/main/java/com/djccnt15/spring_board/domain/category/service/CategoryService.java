@@ -33,11 +33,10 @@ public class CategoryService {
     }
     
     public void validateName(CategoryCreateRequest request) {
-        repository.findByName(request.getName()).ifPresent(
-            it -> {
-                throw new DuplicatedKeyException("name of category must be unique");
-            }
-        );
+        repository.findByName(request.getName())
+            .ifPresent(
+                it -> {throw new DuplicatedKeyException("name of category must be unique");}
+            );
     }
     
     public void createCategory(CategoryEntity entity) {
@@ -45,9 +44,8 @@ public class CategoryService {
     }
     
     public CategoryEntity getCategory(Long id) {
-        return repository.findByIdAndIsActive(id, true).orElseThrow(
-            () -> new ApiDataNotFoundException("can't find requested category")
-        );
+        return repository.findByIdAndIsActive(id, true)
+            .orElseThrow(() -> new ApiDataNotFoundException("can't find requested category"));
     }
     
     public void updateCategory(CategoryEntity entity) {
@@ -62,9 +60,8 @@ public class CategoryService {
     }
     
     public CategoryEntity getCategory(String categoryName) {
-        return repository.findByNameAndIsActive(categoryName, true).orElseThrow(
-            () -> new DataNotFoundException("can't find requested category")
-        );
+        return repository.findByNameAndIsActive(categoryName, true)
+            .orElseThrow(() -> new DataNotFoundException("can't find requested category"));
     }
     
     public Optional<CategoryEntity> getOptionalCategory(String categoryName) {
