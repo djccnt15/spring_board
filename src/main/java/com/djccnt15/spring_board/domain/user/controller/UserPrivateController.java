@@ -54,6 +54,7 @@ public class UserPrivateController {
         Model model,
         @AuthenticationPrincipal UserSession user
     ) {
+        model.addAttribute("showProfileLeftNav", true);
         var placeholder = business.getUserProfile(user);
         model.addAttribute("placeholder", placeholder);
         model.addAttribute("form", new UserUpdateForm());
@@ -75,6 +76,7 @@ public class UserPrivateController {
         @Valid @ModelAttribute(name = "form") UserUpdateForm form,
         BindingResult bindingResult
     ) {
+        model.addAttribute("showProfileLeftNav", true);
         if (bindingResult.hasErrors()) {
             model.addAttribute("placeholder", business.getUserProfile(user));
             return "user-profile";
