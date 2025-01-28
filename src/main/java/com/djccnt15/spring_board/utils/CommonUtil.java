@@ -82,4 +82,8 @@ public class CommonUtil {
             })
             .toList();
     }
+    
+    public Integer getTotalPageCount(Integer total, Integer size) {
+        return (int) Math.ceil((double) total / size);
+    }
 }
