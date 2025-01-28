@@ -4,10 +4,7 @@ import com.djccnt15.spring_board.annotations.Business;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.mailing.service.EmailService;
 import com.djccnt15.spring_board.domain.user.converter.UserConverter;
-import com.djccnt15.spring_board.domain.user.model.UserCreateForm;
-import com.djccnt15.spring_board.domain.user.model.UserProfile;
-import com.djccnt15.spring_board.domain.user.model.UserRecoveryForm;
-import com.djccnt15.spring_board.domain.user.model.UserUpdateForm;
+import com.djccnt15.spring_board.domain.user.model.*;
 import com.djccnt15.spring_board.domain.user.service.UserService;
 import com.djccnt15.spring_board.exception.UserRecoveryFailedException;
 import com.djccnt15.spring_board.utils.MessageTemplateReader;
@@ -63,5 +60,19 @@ public class UserBusiness {
         } else {
             throw new UserRecoveryFailedException("failed to recover user password");
         }
+    }
+    
+    public UserItemListResponse getUserPost(
+        UserSession user,
+        Integer size,
+        Integer page
+    ) {
+        var postList = service.getUserPost(user, size, page);
+        var postListCount = service.getUserPostListCount(user);
+        var totalPageCount = (int) Math.ceil((double) postListCount / size);
+        return UserItemListResponse.builder()
+            .totalPages(totalPageCount)
+            .itemList(postList)
+            .build();
     }
 }
