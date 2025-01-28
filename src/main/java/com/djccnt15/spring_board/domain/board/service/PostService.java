@@ -189,4 +189,11 @@ public class PostService {
             .tableData(tableData)
             .build();
     }
+    
+    public void updateViewCount(Long id) {
+        var entity = postRepository.findById(id)
+            .orElseThrow(() -> new DataNotFoundException("can't find requested post"));
+        entity.setViews(entity.getViews() + 1);
+        postRepository.save(entity);
+    }
 }

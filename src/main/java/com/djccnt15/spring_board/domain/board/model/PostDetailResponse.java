@@ -28,6 +28,8 @@ public class PostDetailResponse {
     
     private Integer version;
     
+    private Integer viewCount;
+    
     private Long commentCount;
     
     private Long voteCount;

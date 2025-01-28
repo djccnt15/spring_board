@@ -31,6 +31,12 @@ public class PostEntity extends BaseEntity {
     @NotNull
     private boolean isActive = true;
     
+    @Column(name = "view_count")
+    @ColumnDefault(value = "0")
+    @Builder.Default
+    @NotNull
+    private Integer views = 0;
+    
     @JoinColumn(name = "category_id")
     @ManyToOne
     private CategoryEntity category;

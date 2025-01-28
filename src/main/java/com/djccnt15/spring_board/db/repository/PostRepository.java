@@ -54,6 +54,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
                 pc.title,
                 pc.content,
                 pc.version,
+                COALESCE(p.view_count, 0) AS view_count,
                 COALESCE(comment.commentCount, 0) AS commentCount,
                 COALESCE(vote.vote_count, 0) AS vote_count
             FROM post AS p
@@ -198,6 +199,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
                 pc.title,
                 pc.content,
                 pc.version,
+                p.view_count,
                 COALESCE(comment.commentCount, 0) AS commentCount,
                 COALESCE(vote.vote_count, 0) AS vote_count
             FROM post p

@@ -20,6 +20,10 @@
       th:text="${response.category}"
       th:href="@{|/board/${mainCategory}?category=${response.category}|}"
     ></a>
+    <span
+      class="ms-auto"
+      th:text="|조회수: ${response.viewCount}|"
+    ></span>
   </h6>
   <h2 class="border-bottom py-2" th:text="${response.title}"></h2>
   <div class="card my-3">

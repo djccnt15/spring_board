@@ -14,6 +14,7 @@ import com.djccnt15.spring_board.domain.category.service.CategoryService;
 import com.djccnt15.spring_board.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -84,11 +85,13 @@ public class PostBusiness {
             .build();
     }
     
+    @Transactional
     public PostDetailResponse getPostDetail(
         Long id,
         Integer size,
         Integer page
     ) {
+        postService.updateViewCount(id);
         var post = postService.getPostDetail(id);
         var commentList = commentService.getCommentList(post, size, page);
         post.setCommentList(commentList);
