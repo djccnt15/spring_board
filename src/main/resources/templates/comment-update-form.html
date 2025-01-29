@@ -12,10 +12,11 @@
     <input type="hidden" name="_method" value="PUT" />
     <div th:replace="~{form_errors :: formErrorsFragment}"></div>
     <div class="mb-3">
-      <label for="content" class="form-label">내용</label>
+      <label for="comment-update-content" class="form-label">내용</label>
       <textarea
-        id="content" type="text" name="content" class="form-control" rows="10"
+        id="comment-update-content" type="text" name="content" class="form-control" rows="10"
         th:text="${placeholder.content}"
+        th:data-editor-id="|comment-update-content-${id}|"
       ></textarea>
     </div>
     <input type="submit" value="저장하기" class="btn btn-primary my-2">

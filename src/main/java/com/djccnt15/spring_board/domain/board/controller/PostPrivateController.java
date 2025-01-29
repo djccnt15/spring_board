@@ -83,6 +83,7 @@ public class PostPrivateController {
         var placeholder = business.getPostUpdatePlaceholder(user, mainCategory, id);
         model.addAttribute("placeholder", placeholder);
         model.addAttribute(mainCategory);
+        model.addAttribute("id", id);
         model.addAttribute("form", new PostCreateRequest());
         return "post-update-form";
     }

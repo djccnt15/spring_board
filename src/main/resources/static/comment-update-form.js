@@ -1,11 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
+  const editorId = document.getElementById("comment-update-content").getAttribute("data-editor-id");
   var simplemde = new SimpleMDE({
-    element: document.getElementById("content"),
+    element: document.getElementById("comment-update-content"),
     autofocus: true,
     spellChecker: false,
     autosave: {
       enabled: true,
-      uniqueId: "comment-update-editor",
+      uniqueId: editorId,
       delay: 1000,
     },
     toolbar: [

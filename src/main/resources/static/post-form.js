@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   var simplemde = new SimpleMDE({
-    element: document.getElementById("content"),
+    element: document.getElementById("post-create-content"),
     spellChecker: false,
     autosave: {
       enabled: true,

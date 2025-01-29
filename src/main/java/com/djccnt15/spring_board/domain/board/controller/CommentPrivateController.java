@@ -76,6 +76,7 @@ public class CommentPrivateController {
         @RequestParam(value = "size", defaultValue = "10") int size,
         @RequestParam(value = "page", defaultValue = "0") int page
     ) {
+        model.addAttribute("id", commentId);
         model.addAttribute("form", new CommentCreateRequest());
         var placeholder = commentBusiness.getCommentUpdatePlaceholder(user, commentId);
         model.addAttribute("placeholder", placeholder);

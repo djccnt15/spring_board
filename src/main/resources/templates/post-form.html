@@ -21,11 +21,11 @@
     </select>
     <div class="mb-3">
       <label for="title" class="form-label">제목</label>
-      <input id="title" type="text" th:field="*{title}" class="form-control">
+      <input id="title" type="text" th:field="*{title}" class="form-control" autofocus>
     </div>
     <div class="mb-3">
-      <label for="content" class="form-label">내용</label>
-      <textarea id="content" th:field="*{content}" class="form-control" rows="10"></textarea>
+      <label for="post-create-content" class="form-label">내용</label>
+      <textarea id="post-create-content" th:field="*{content}" class="form-control" rows="10"></textarea>
     </div>
     <input type="submit" value="저장하기" class="btn btn-primary my-2">
   </form>
