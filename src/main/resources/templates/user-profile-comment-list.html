@@ -1,0 +1,79 @@
+<html
+  lang="ko"
+  layout:decorate="~{layout}"
+  xmlns:layout="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.w3.org/1999/xhtml"
+>
+<div layout:fragment="content" class="container">
+  <h5 class="my-3 border-bottom pb-2">작성 댓글 보기</h5>
+  <div class="card my-3" th:each="comment : ${response.itemList}">
+    <div class="card-header d-flex justify-content-end">
+      <a
+        class="fs-6"
+        th:href="@{|/board/${comment.category}/${comment.postId}|}"
+      >보러가기</a>
+    </div>
+    <div class="card-body">
+      <h6 class="card-subtitle text-body-secondary mb-2">
+        <span th:text="|추천수: ${comment.voteCount}"></span>
+      </h6>
+      <div class="card-text" th:utext="${@stringUtil.renderMarkdown(comment.content)}"></div>
+    </div>
+    <div class="d-flex card-footer text-body-secondary gap-2">
+      <span th:text="|작성일시: ${#temporals.format(comment.createdDateTime, 'yyyy-MM-dd HH:mm')}"></span>
+      <span>/</span>
+      <span th:text="|수정일시: ${#temporals.format(comment.updatedDateTime, 'yyyy-MM-dd HH:mm')}"></span>
+    </div>
+  </div>
+  <!-- 페이징처리 시작 -->
+  <div th:if="${!response.itemList.isEmpty()}">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" th:classappend="${page == 0} ? 'disabled'">
+        <a
+          class="page-link"
+          th:href="@{|?page=0&size=${size}|}"
+        >
+          <span>처음</span>
+        </a>
+      </li>
+      <li class="page-item" th:classappend="${page == 0} ? 'disabled'">
+        <a
+          class="page-link"
+          th:href="@{|?page=${page - 1}&size=${size}|}"
+        >
+          <span>이전</span>
+        </a>
+      </li>
+      <li
+        th:each="pageList: ${#numbers.sequence(0, response.totalPages - 1)}"
+        th:if="${pageList >= page - 5 and pageList <= page + 5}"
+        th:classappend="${pageList == page} ? 'active'"
+        class="page-item"
+      >
+        <a
+          class="page-link"
+          th:text="${pageList}"
+          th:href="@{|?page=${pageList}&size=${size}|}"
+        ></a>
+      </li>
+      <li class="page-item" th:classappend="${page + 1 == response.totalPages} ? 'disabled'">
+        <a
+          class="page-link"
+          th:href="@{|?page=${page + 1}&size=${size}|}"
+        >
+          <span>다음</span>
+        </a>
+      </li>
+      <li class="page-item" th:classappend="${page + 1 == response.totalPages} ? 'disabled'">
+        <a
+          class="page-link"
+          th:href="@{|?page=${response.totalPages - 1}&size=${size}|}"
+        >
+          <span>끝</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <!-- 페이징처리 끝 -->
+</div>
+</html>

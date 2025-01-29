@@ -1,9 +1,11 @@
 package com.djccnt15.spring_board.domain.user.service;
 
 import com.djccnt15.spring_board.db.entity.UserEntity;
+import com.djccnt15.spring_board.db.repository.CommentRepository;
 import com.djccnt15.spring_board.db.repository.PostRepository;
 import com.djccnt15.spring_board.db.repository.UserRepository;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
+import com.djccnt15.spring_board.domain.board.converter.CommentConverter;
 import com.djccnt15.spring_board.domain.board.converter.PostConverter;
 import com.djccnt15.spring_board.domain.user.converter.UserConverter;
 import com.djccnt15.spring_board.domain.user.model.*;
@@ -28,6 +30,8 @@ public class UserService {
     private final UserConverter userConverter;
     private final PostRepository postRepository;
     private final PostConverter postConverter;
+    private final CommentRepository commentRepository;
+    private final CommentConverter commentConverter;
     
     public void createUser(UserCreateForm form) {
         var userEntity = UserEntity.builder()
@@ -119,5 +123,20 @@ public class UserService {
     
     public Integer getUserPostListCount(UserSession user) {
         return postRepository.countByIsActiveAndAuthorId(true, user.getUserId());
+    }
+    
+    public List<UserItemResponse> getUserComment(
+        UserSession user,
+        Integer size,
+        Integer page
+    ) {
+        var commentList = commentRepository.getCommentListByUserId(user.getUserId(), size, size * page);
+        return commentList.stream()
+            .map(commentConverter::toResponse)
+            .toList();
+    }
+    
+    public Integer getUserCommentListCount(UserSession user) {
+        return commentRepository.countByIsActiveAndAuthorId(true, user.getUserId());
     }
 }

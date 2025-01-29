@@ -77,4 +77,18 @@ public class UserBusiness {
             .itemList(postList)
             .build();
     }
+    
+    public UserItemListResponse getUserComment(
+        UserSession user,
+        Integer size,
+        Integer page
+    ) {
+        var commentList = service.getUserComment(user, size, page);
+        var commentListCount = service.getUserCommentListCount(user);
+        var totalPageCount = commonUtil.getTotalPageCount(commentListCount, size);
+        return UserItemListResponse.builder()
+            .totalPages(totalPageCount)
+            .itemList(commentList)
+            .build();
+    }
 }

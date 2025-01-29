@@ -115,4 +115,27 @@ public class UserPrivateController {
         model.addAttribute("page", page);
         return "user-profile-post-list";
     }
+    
+    /**
+     * view controller for user post list page
+     * @param model inject from spring
+     * @param user user session
+     * @param size size of post list
+     * @param page number of page
+     * @return user post list view
+     */
+    @GetMapping(path = "/profile/comment-list")
+    public String getCommentList(
+        Model model,
+        @AuthenticationPrincipal UserSession user,
+        @RequestParam(value = "size", defaultValue = "10") int size,
+        @RequestParam(value = "page", defaultValue = "0") int page
+    ) {
+        model.addAttribute("showProfileLeftNav", true);
+        var response = business.getUserComment(user, size, page);
+        model.addAttribute("response", response);
+        model.addAttribute("size", size);
+        model.addAttribute("page", page);
+        return "user-profile-comment-list";
+    }
 }
