@@ -7,6 +7,7 @@ import com.djccnt15.spring_board.domain.user.converter.UserConverter;
 import com.djccnt15.spring_board.domain.user.model.*;
 import com.djccnt15.spring_board.domain.user.service.UserService;
 import com.djccnt15.spring_board.exception.UserRecoveryFailedException;
+import com.djccnt15.spring_board.utils.CommonUtil;
 import com.djccnt15.spring_board.utils.MessageTemplateReader;
 import com.djccnt15.spring_board.utils.RandomString;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class UserBusiness {
     private final EmailService emailService;
     private final RandomString randomString;
     private final MessageTemplateReader templateReader;
+    private final CommonUtil commonUtil;
     
     public void createUser(UserCreateForm form) {
         service.createUser(form);
@@ -69,7 +71,7 @@ public class UserBusiness {
     ) {
         var postList = service.getUserPost(user, size, page);
         var postListCount = service.getUserPostListCount(user);
-        var totalPageCount = (int) Math.ceil((double) postListCount / size);
+        var totalPageCount = commonUtil.getTotalPageCount(postListCount, size);
         return UserItemListResponse.builder()
             .totalPages(totalPageCount)
             .itemList(postList)
