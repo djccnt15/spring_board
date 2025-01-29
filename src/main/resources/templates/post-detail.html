@@ -137,7 +137,7 @@
         <div class="me-auto">
           <a
             class="recommend btn btn-sm btn-outline-secondary"
-            th:href="@{|/board/${mainCategory}/${response.id}/comment/${comment.id}/vote|}"
+            th:href="@{|/board/${mainCategory}/${response.id}/comment/${comment.id}/vote?page=${page}&size=${size}|}"
             sec:authorize="isAuthenticated()"
           >
             추천
@@ -151,7 +151,7 @@
             <span class="badge rounded-pill bg-success" th:text="${comment.voteCount}"></span>
           </button>
           <a
-            th:href="@{|/board/${mainCategory}/${response.id}/comment/${comment.id}/form|}"
+            th:href="@{|/board/${mainCategory}/${response.id}/comment/${comment.id}/form?page=${page}&size=${size}|}"
             class="btn btn-sm btn-outline-secondary"
             sec:authorize="isAuthenticated()"
             th:if="${comment.authorId != null and #authentication.getPrincipal().getUserId() == comment.authorId}"
