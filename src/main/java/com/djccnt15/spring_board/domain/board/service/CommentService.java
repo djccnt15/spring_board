@@ -11,7 +11,8 @@ import com.djccnt15.spring_board.domain.board.converter.CommentVoterConverter;
 import com.djccnt15.spring_board.domain.board.model.*;
 import com.djccnt15.spring_board.exception.DataNotFoundException;
 import com.djccnt15.spring_board.exception.InvalidAuthorException;
-import com.djccnt15.spring_board.utils.CommonUtil;
+import com.djccnt15.spring_board.utils.DownloadFileGenerator;
+import com.djccnt15.spring_board.utils.StringUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,8 @@ public class CommentService {
     private final CommentContentConverter commentContentConverter;
     private final CommentVoterRepository commentVoterRepository;
     private final CommentVoterConverter commentVoterConverter;
-    private final CommonUtil commonUtil;
+    private final StringUtil stringUtil;
+    private final DownloadFileGenerator fileGenerator;
     
     public CommentEntity createComment(
         UserEntity user,
@@ -118,9 +120,9 @@ public class CommentService {
     
     public HistoryResponse createHistoryCsv(List<CommentContentHistory> history) {
         var tableName = "CommentHistory_%s.csv".formatted(
-            commonUtil.datetimeFormatter(LocalDateTime.now(), "yyyyMMdd_HHmmss")
+            stringUtil.datetimeFormatter(LocalDateTime.now(), "yyyyMMdd_HHmmss")
         );
-        var tableData = commonUtil.generateCsv(history, CommentContentHistory.class);
+        var tableData = fileGenerator.generateCsv(history, CommentContentHistory.class);
         return HistoryResponse.builder()
             .tableName(tableName)
             .tableData(tableData)

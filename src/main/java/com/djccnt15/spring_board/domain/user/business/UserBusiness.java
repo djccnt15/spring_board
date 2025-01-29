@@ -9,7 +9,7 @@ import com.djccnt15.spring_board.domain.user.service.UserService;
 import com.djccnt15.spring_board.exception.UserRecoveryFailedException;
 import com.djccnt15.spring_board.utils.CommonUtil;
 import com.djccnt15.spring_board.utils.MessageTemplateReader;
-import com.djccnt15.spring_board.utils.RandomString;
+import com.djccnt15.spring_board.utils.StringUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +20,7 @@ public class UserBusiness {
     private final UserService service;
     private final UserConverter converter;
     private final EmailService emailService;
-    private final RandomString randomString;
+    private final StringUtil stringUtil;
     private final MessageTemplateReader templateReader;
     private final CommonUtil commonUtil;
     
@@ -52,7 +52,7 @@ public class UserBusiness {
         var validation = service.validateRecoverEmail(form, user);
         if (validation) {
             var mailingTemplate = templateReader.getMailingTemplate();
-            var password = randomString.generate(12);
+            var password = stringUtil.generateRandomString(12);
             service.recoverUser(user, password);
             emailService.sendEmail(
                 user.getEmail(),

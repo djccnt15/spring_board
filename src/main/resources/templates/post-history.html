@@ -23,7 +23,7 @@
         class="card-subtitle mb-2 text-body-secondary"
         th:text="|작성일시: ${#temporals.format(post.createdDateTime, 'yyyy-MM-dd HH:mm')}"
       ></h6>
-      <div class="card-text" th:utext="${@commonUtil.renderMarkdown(post.content)}"></div>
+      <div class="card-text" th:utext="${@stringUtil.renderMarkdown(post.content)}"></div>
     </div>
   </div>
 </div>

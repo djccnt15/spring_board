@@ -6,14 +6,14 @@ import com.djccnt15.spring_board.db.entity.PostEntity;
 import com.djccnt15.spring_board.domain.board.model.PostContentHistory;
 import com.djccnt15.spring_board.domain.board.model.PostContentResponse;
 import com.djccnt15.spring_board.domain.board.model.PostCreateRequest;
-import com.djccnt15.spring_board.utils.CommonUtil;
+import com.djccnt15.spring_board.utils.StringUtil;
 import lombok.RequiredArgsConstructor;
 
 @Converter
 @RequiredArgsConstructor
 public class PostContentConverter {
     
-    private final CommonUtil commonUtil;
+    private final StringUtil stringUtil;
     
     public PostContentEntity toEntity(
         PostCreateRequest request,
@@ -49,7 +49,7 @@ public class PostContentConverter {
     }
     
     public PostContentHistory toHistory(PostContentEntity entity) {
-        var createDateTime = commonUtil.datetimeFormatter(
+        var createDateTime = stringUtil.datetimeFormatter(
             entity.getCreatedDatetime(), "yyyy-MM-dd HH:mm:ss"
         );
         return PostContentHistory.builder()

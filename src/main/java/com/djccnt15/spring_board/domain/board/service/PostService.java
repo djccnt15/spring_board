@@ -14,7 +14,8 @@ import com.djccnt15.spring_board.exception.ApiInvalidAuthorException;
 import com.djccnt15.spring_board.exception.DataNotFoundException;
 import com.djccnt15.spring_board.exception.ForbiddenException;
 import com.djccnt15.spring_board.exception.InvalidAuthorException;
-import com.djccnt15.spring_board.utils.CommonUtil;
+import com.djccnt15.spring_board.utils.DownloadFileGenerator;
+import com.djccnt15.spring_board.utils.StringUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,8 @@ public class PostService {
     private final CommentRepository commentRepository;
     private final PostVoterRepository postVoterRepository;
     private final PostVoterConverter postVoterConverter;
-    private final CommonUtil commonUtil;
+    private final StringUtil stringUtil;
+    private final DownloadFileGenerator fileGenerator;
     
     public PostEntity createPost(
         UserEntity user,
@@ -177,9 +179,9 @@ public class PostService {
             .map(postContentConverter::toHistory)
             .toList();
         var tableName = "PostHistory_%s.csv".formatted(
-            commonUtil.datetimeFormatter(LocalDateTime.now(), "yyyyMMdd_HHmmss")
+            stringUtil.datetimeFormatter(LocalDateTime.now(), "yyyyMMdd_HHmmss")
         );
-        var tableData = commonUtil.generateCsv(postHistory, PostContentHistory.class);
+        var tableData = fileGenerator.generateCsv(history, PostContentHistory.class);
         return HistoryResponse.builder()
             .tableName(tableName)
             .tableData(tableData)
