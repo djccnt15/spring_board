@@ -9,7 +9,9 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class UserPostResponse extends UserItemResponse {
     
-    private String category;
+    private String mainCategory;
+
+    private String subCategory;
     
     private String title;
     

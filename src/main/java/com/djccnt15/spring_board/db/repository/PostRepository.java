@@ -234,6 +234,14 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
                     GROUP BY post_id
                 ) AS t2 ON t1.post_id = t2.post_id AND t1.version = t2.max_version
             ),
+            Categories AS (
+                SELECT
+                    c.id,
+                    c.name AS sub_category,
+                    p.name AS main_category
+                FROM category c
+                JOIN category p ON c.parent_id = p.id
+            ),
             CommentCounts AS (
                 SELECT
                     c.post_id,
@@ -253,14 +261,15 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
                 p.id,
                 p.created_datetime,
                 pc.created_datetime AS updated_datetime,
-                c.name AS category,
+                c.main_category,
+                c.sub_category,
                 pc.title,
                 pc.content,
                 COALESCE(p.view_count, 0) AS view_count,
                 COALESCE(comment.comment_count, 0) AS comment_count,
                 COALESCE(vote.vote_count, 0) AS vote_count
             FROM post AS p
-            JOIN category c ON p.category_id = c.id
+            JOIN Categories c ON p.category_id = c.id
             JOIN user_info u ON p.author_id = u.id
             JOIN LatestPostContent AS pc ON p.id = pc.post_id
             LEFT JOIN CommentCounts AS comment ON p.id = comment.post_id

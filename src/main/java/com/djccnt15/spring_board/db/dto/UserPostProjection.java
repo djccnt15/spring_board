@@ -10,7 +10,9 @@ public interface UserPostProjection {
     
     LocalDateTime getUpdatedDatetime();
     
-    String getCategory();
+    String getMainCategory();
+    
+    String getSubCategory();
     
     String getTitle();
     
