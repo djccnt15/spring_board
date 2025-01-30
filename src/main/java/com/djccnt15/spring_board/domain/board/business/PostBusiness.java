@@ -165,6 +165,9 @@ public class PostBusiness {
     
     public HistoryResponse createHistoryCsv(Long id) {
         var history = postService.getPostHistory(id);
-        return postService.createHistoryCsv(history);
+        var postHistory = history.stream()
+            .map(postContentConverter::toHistory)
+            .toList();
+        return postService.createHistoryCsv(postHistory);
     }
 }

@@ -174,10 +174,7 @@ public class PostService {
         return postContentRepository.findByPostIdOrderByIdDesc(id);
     }
     
-    public HistoryResponse createHistoryCsv(List<PostContentEntity> history) {
-        var postHistory = history.stream()
-            .map(postContentConverter::toHistory)
-            .toList();
+    public HistoryResponse createHistoryCsv(List<PostContentHistory> history) {
         var tableName = "PostHistory_%s.csv".formatted(
             stringUtil.datetimeFormatter(LocalDateTime.now(), "yyyyMMdd_HHmmss")
         );
