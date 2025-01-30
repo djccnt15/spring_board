@@ -1,13 +1,19 @@
 package com.djccnt15.spring_board.domain.user.model;
 
+import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.SuperBuilder;
+
+import java.time.LocalDateTime;
 
 @Data
-@SuperBuilder
-@EqualsAndHashCode(callSuper = true)
-public class UserPostResponse extends UserItemResponse {
+@Builder
+public class UserPostResponse {
+    
+    private Long id;
+    
+    private LocalDateTime createdDateTime;
+    
+    private LocalDateTime updatedDateTime;
     
     private String mainCategory;
 
@@ -15,7 +21,13 @@ public class UserPostResponse extends UserItemResponse {
     
     private String title;
     
+    private String content;
+    
+    private Integer version;
+    
     private Integer viewCount;
     
     private Integer commentCount;
+    
+    private Integer voteCount;
 }

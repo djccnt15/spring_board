@@ -5,8 +5,6 @@ import com.djccnt15.spring_board.db.repository.CommentRepository;
 import com.djccnt15.spring_board.db.repository.PostRepository;
 import com.djccnt15.spring_board.db.repository.UserRepository;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
-import com.djccnt15.spring_board.domain.board.converter.CommentConverter;
-import com.djccnt15.spring_board.domain.board.converter.PostConverter;
 import com.djccnt15.spring_board.domain.user.converter.UserConverter;
 import com.djccnt15.spring_board.domain.user.model.*;
 import com.djccnt15.spring_board.exception.DataNotFoundException;
@@ -29,9 +27,7 @@ public class UserService {
     private final PasswordEncoder encoder;
     private final UserConverter userConverter;
     private final PostRepository postRepository;
-    private final PostConverter postConverter;
     private final CommentRepository commentRepository;
-    private final CommentConverter commentConverter;
     
     public void createUser(UserCreateForm form) {
         var userEntity = UserEntity.builder()
@@ -114,10 +110,14 @@ public class UserService {
         userRepository.save(user);
     }
     
-    public List<UserItemResponse> getUserPost(UserSession user, Integer size, Integer page) {
+    public List<UserPostResponse> getUserPost(
+        UserSession user,
+        Integer size,
+        Integer page
+    ) {
         var postList = postRepository.getPostListByUserId(user.getUserId(), size, size * page);
         return postList.stream()
-            .map(postConverter::toResponse)
+            .map(userConverter::toResponse)
             .toList();
     }
     
@@ -125,14 +125,14 @@ public class UserService {
         return postRepository.countByIsActiveAndAuthorId(true, user.getUserId());
     }
     
-    public List<UserItemResponse> getUserComment(
+    public List<UserCommentResponse> getUserComment(
         UserSession user,
         Integer size,
         Integer page
     ) {
         var commentList = commentRepository.getCommentListByUserId(user.getUserId(), size, size * page);
         return commentList.stream()
-            .map(commentConverter::toResponse)
+            .map(userConverter::toResponse)
             .toList();
     }
     

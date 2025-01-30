@@ -11,5 +11,5 @@ public class UserItemListResponse {
     
     private Integer totalPages;
     
-    private List<UserItemResponse> itemList;
+    private List<?> itemList;
 }
