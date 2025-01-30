@@ -7,9 +7,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ResponseMessageEnum {
     
-    CREATE("create"),
-    UPDATE("update"),
-    DELETE("delete")
+    CREATE("CREATED"),
+    UPDATE("UPDATED"),
+    DELETE("DELETED"),
     ;
     
     private final String message;

@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum ManagerRoleActionEnum {
     
     GRANT("GRANT"),
-    REVOKE("REVOKE")
+    REVOKE("REVOKE"),
     ;
     
     private final String value;
