@@ -134,4 +134,15 @@ public class AdminCategoryApiController {
         business.updateSubCategory(id, form);
         return ResponseEntity.ok(ResponseMessageEnum.UPDATE);
     }
+    
+    /**
+     * controller for delete main category
+     * @param id id of category to delete
+     * @return redirect to admin category page
+     */
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<?> deleteCategory(@PathVariable(value = "id") Long id) {
+        business.deleteCategory(id);
+        return ResponseEntity.ok(ResponseMessageEnum.DELETE);
+    }
 }

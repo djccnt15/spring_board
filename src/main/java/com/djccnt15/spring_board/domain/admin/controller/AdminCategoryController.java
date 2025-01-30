@@ -41,17 +41,6 @@ public class AdminCategoryController {
     }
     
     /**
-     * controller for delete main category
-     * @param id id of category to delete
-     * @return redirect to admin category page
-     */
-    @DeleteMapping(path = "/{id}")
-    public String deleteCategory(@PathVariable(value = "id") Long id) {
-        business.deleteCategory(id);
-        return "redirect:/admin/category";
-    }
-    
-    /**
      * view controller for update category
      * @param model inject from spring
      * @param id id of category to update
