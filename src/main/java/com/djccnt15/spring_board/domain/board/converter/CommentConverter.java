@@ -43,6 +43,7 @@ public class CommentConverter {
             .createdDateTime(comment.getCreatedDatetime())
             .updatedDateTime(comment.getUpdatedDatetime())
             .content(comment.getContent())
+            .version(comment.getVersion())
             .voteCount(comment.getVoteCount())
             .postId(comment.getPostId())
             .build();

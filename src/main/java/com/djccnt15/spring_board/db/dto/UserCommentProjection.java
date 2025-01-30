@@ -16,5 +16,7 @@ public interface UserCommentProjection {
     
     String getContent();
     
+    Integer getVersion();
+    
     Integer getVoteCount();
 }

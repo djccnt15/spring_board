@@ -101,6 +101,7 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
             c.created_datetime,
             cc.created_datetime AS updated_datetime,
             cc.content,
+            cc.version,
             COALESCE(vote.vote_count, 0) AS vote_count
         FROM comment AS c
         JOIN post p ON c.post_id = p.id

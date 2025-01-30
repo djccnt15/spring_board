@@ -265,6 +265,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
                 c.sub_category,
                 pc.title,
                 pc.content,
+                pc.version,
                 COALESCE(p.view_count, 0) AS view_count,
                 COALESCE(comment.comment_count, 0) AS comment_count,
                 COALESCE(vote.vote_count, 0) AS vote_count

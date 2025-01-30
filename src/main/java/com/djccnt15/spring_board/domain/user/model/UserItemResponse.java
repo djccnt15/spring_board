@@ -17,5 +17,7 @@ public class UserItemResponse {
     
     private String content;
     
+    private Integer version;
+    
     private Integer voteCount;
 }

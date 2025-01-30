@@ -18,6 +18,8 @@ public interface UserPostProjection {
     
     String getContent();
     
+    Integer getVersion();
+    
     Integer getViewCount();
     
     Integer getCommentCount();

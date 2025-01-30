@@ -33,8 +33,11 @@
     </div>
     <div class="d-flex card-footer text-body-secondary align-items-center gap-2">
       <span th:text="|작성일시: ${#temporals.format(post.createdDateTime, 'yyyy-MM-dd HH:mm')}"></span>
-      <span>/</span>
-      <span th:text="|수정일시: ${#temporals.format(post.updatedDateTime, 'yyyy-MM-dd HH:mm')}"></span>
+      <span th:if="${post.version} > 1">/</span>
+      <span
+        th:if="${post.version} > 1"
+        th:text="|수정일시: ${#temporals.format(post.updatedDateTime, 'yyyy-MM-dd HH:mm')}"
+      ></span>
     </div>
   </div>
   <!-- 페이징처리 시작 -->
