@@ -18,5 +18,5 @@ public interface CommentProjection {
     
     Integer getVersion();
     
-    Long getVoteCount();
+    Integer getVoteCount();
 }

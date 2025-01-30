@@ -24,7 +24,7 @@ public interface PostDetailProjection {
     
     Integer getViewCount();
     
-    Long getCommentCount();
+    Integer getCommentCount();
     
-    Long getVoteCount();
+    Integer getVoteCount();
 }

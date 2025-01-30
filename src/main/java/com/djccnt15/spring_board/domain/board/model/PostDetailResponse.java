@@ -30,9 +30,9 @@ public class PostDetailResponse {
     
     private Integer viewCount;
     
-    private Long commentCount;
+    private Integer commentCount;
     
-    private Long voteCount;
+    private Integer voteCount;
     
     private Integer totalCommentPages;
     

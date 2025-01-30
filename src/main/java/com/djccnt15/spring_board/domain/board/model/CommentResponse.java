@@ -23,5 +23,5 @@ public class CommentResponse {
     
     private Integer version;
     
-    private Long voteCount;
+    private Integer voteCount;
 }
