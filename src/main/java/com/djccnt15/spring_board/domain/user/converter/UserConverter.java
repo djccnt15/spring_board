@@ -6,7 +6,6 @@ import com.djccnt15.spring_board.db.dto.UserPostProjection;
 import com.djccnt15.spring_board.db.entity.UserEntity;
 import com.djccnt15.spring_board.domain.user.model.UserCommentResponse;
 import com.djccnt15.spring_board.domain.user.model.UserPostResponse;
-import com.djccnt15.spring_board.domain.user.model.UserProfile;
 import com.djccnt15.spring_board.domain.user.model.UserResponse;
 
 @Converter
@@ -19,13 +18,6 @@ public class UserConverter {
             .email(entity.getEmail())
             .createDateTime(entity.getCreatedDatetime())
             .role(entity.getRole())
-            .build();
-    }
-    
-    public UserProfile toProfile(UserEntity entity) {
-        return UserProfile.builder()
-            .username(entity.getUsername())
-            .email(entity.getEmail())
             .build();
     }
     

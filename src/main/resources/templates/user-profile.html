@@ -9,6 +9,16 @@
   <form th:action="@{/user/profile}" th:object="${form}" method="POST">
     <input type="hidden" name="_method" value="PUT" />
     <div th:replace="~{form_errors :: formErrorsFragment}"></div>
+    <div class="d-flex flex-row gap-3 mb-3">
+      <div class="flex-grow-1">
+        <span th:text="|가입일: ${#temporals.format(placeholder.createDateTime, 'yyyy-MM-dd HH:mm')}|"></span>
+      </div>
+      <div class="flex-grow-1">
+        <span
+          th:if="${placeholder.role != null}"
+          th:text="|권한: ${placeholder.role.getRole()}|"></span>
+      </div>
+    </div>
     <div class="mb-3">
       <label for="username" class="form-label">사용자ID</label>
       <input

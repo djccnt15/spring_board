@@ -55,7 +55,7 @@ public class UserPrivateController {
         @AuthenticationPrincipal UserSession user
     ) {
         model.addAttribute("showProfileLeftNav", true);
-        var placeholder = business.getUserProfile(user);
+        var placeholder = business.getUserInfo(user);
         model.addAttribute("placeholder", placeholder);
         model.addAttribute("form", new UserUpdateForm());
         return "user-profile";
@@ -67,7 +67,7 @@ public class UserPrivateController {
      * @param user user session
      * @param form user create form data
      * @param bindingResult validated result of form data
-     * @return redirect to user profile page
+     * @return user profile page
      */
     @PutMapping(path = "/profile")
     public String updateProfile(
@@ -78,7 +78,7 @@ public class UserPrivateController {
     ) {
         model.addAttribute("showProfileLeftNav", true);
         if (bindingResult.hasErrors()) {
-            model.addAttribute("placeholder", business.getUserProfile(user));
+            model.addAttribute("placeholder", business.getUserInfo(user));
             return "user-profile";
         }
         try {
@@ -86,10 +86,10 @@ public class UserPrivateController {
         } catch (FormValidationException e) {
             log.error("", e);  // must input throwable as a second argument for stack tracing
             bindingResult.reject("updateFailed", e.getMessage());
-            model.addAttribute("placeholder", business.getUserProfile(user));
+            model.addAttribute("placeholder", business.getUserInfo(user));
             return "user-profile";
         }
-        model.addAttribute("placeholder", business.getUserProfile(user));
+        model.addAttribute("placeholder", business.getUserInfo(user));
         return "user-profile";
     }
     

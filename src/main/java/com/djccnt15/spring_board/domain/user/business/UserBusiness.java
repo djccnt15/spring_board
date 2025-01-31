@@ -33,9 +33,9 @@ public class UserBusiness {
         service.resign(userEntity);
     }
     
-    public UserProfile getUserProfile(UserSession user) {
+    public UserResponse getUserInfo(UserSession user) {
         var entity = service.getUser(user);
-        return converter.toProfile(entity);
+        return converter.toResponse(entity);
     }
     
     public void updateProfile(
