@@ -15,6 +15,7 @@ public class CategoryConverter {
             .id(entity.getId())
             .name(entity.getName())
             .tier(entity.getTier())
+            .pinOrder(entity.getPinOrder())
             .mainId(Optional
                 .ofNullable(entity.getParent())
                 .map(CategoryEntity::getId)

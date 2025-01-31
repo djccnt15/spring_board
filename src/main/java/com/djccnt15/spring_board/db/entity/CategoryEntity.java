@@ -33,6 +33,9 @@ public class CategoryEntity extends BaseEntity {
     @NotNull
     private boolean isActive = true;
     
+    @Column(name = "pin_order", unique = true)
+    private Integer pinOrder;
+    
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private CategoryEntity parent;

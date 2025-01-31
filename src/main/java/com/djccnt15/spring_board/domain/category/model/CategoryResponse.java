@@ -17,5 +17,7 @@ public class CategoryResponse {
     
     private String name;
     
+    private Integer pinOrder;
+    
     private Long mainId;
 }
