@@ -40,20 +40,29 @@
               <td th:text="${main.id}"></td>
               <td class="text-start" th:text="${main.name}"></td>
               <td>
+                <button
+                  class="btn btn-sm btn-outline-secondary"
+                  th:if="${main.status.getStatus() == 'DEFAULT'}" disabled
+                >기본</button>
                 <a
                   th:href="@{|/admin/category/main/form/${main.id}|}"
                   class="btn btn-sm btn-outline-secondary"
                   sec:authorize="hasRole('ROLE_ADMIN')"
-                  th:text="수정"
                   onclick="event.stopPropagation();"
-                ></a>
+                  th:if="${main.status.getStatus() != 'DEFAULT'}"
+                >수정</a>
               </td>
               <td>
+                <button
+                  class="btn btn-sm btn-outline-secondary"
+                  th:if="${main.status.getStatus() == 'DEFAULT'}" disabled
+                >기본</button>
                 <form
                   class="delete"
                   th:action="@{|/admin/category/${main.id}|}"
                   method="POST"
                   sec:authorize="hasRole('ROLE_ADMIN')"
+                  th:if="${main.status.getStatus() != 'DEFAULT'}"
                 >
                   <input type="hidden" name="_method" value="DELETE" />
                   <button
@@ -96,22 +105,32 @@
             >
               <td class="text-start" th:text="${sub.name}"></td>
               <td>
+                <button
+                  class="btn btn-sm btn-outline-secondary"
+                  th:if="${sub.status.getStatus() == 'DEFAULT'}" disabled
+                >기본</button>
                 <a
                   th:href="@{|/admin/category/sub/form/${sub.id}|}"
                   class="btn btn-sm btn-outline-secondary"
                   sec:authorize="hasRole('ROLE_ADMIN')"
-                  th:text="수정"
-                ></a>
+                  th:if="${sub.status.getStatus() != 'DEFAULT'}"
+                >수정</a>
               </td>
               <td>
+                <button
+                  class="btn btn-sm btn-outline-secondary"
+                  th:if="${sub.status.getStatus() == 'DEFAULT'}" disabled
+                >기본</button>
                 <form
                   class="delete"
                   th:action="@{|/admin/category/${sub.id}|}"
                   method="POST"
                   sec:authorize="hasRole('ROLE_ADMIN')"
+                  th:if="${sub.status.getStatus() != 'DEFAULT'}"
                 >
                   <input type="hidden" name="_method" value="DELETE" />
-                  <button type="submit" class="btn btn-sm btn-outline-secondary">삭제</button>
+                  <button type="submit" class="btn btn-sm btn-outline-secondary"
+                  >삭제</button>
                 </form>
               </td>
             </tr>

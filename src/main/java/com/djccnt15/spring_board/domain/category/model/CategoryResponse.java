@@ -1,5 +1,6 @@
 package com.djccnt15.spring_board.domain.category.model;
 
+import com.djccnt15.spring_board.domain.category.model.enums.CategoryStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +19,8 @@ public class CategoryResponse {
     private String name;
     
     private Integer pinOrder;
+    
+    private CategoryStatusEnum status;
     
     private Long mainId;
 }

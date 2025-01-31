@@ -32,11 +32,17 @@ public class AdminCategoryBusiness {
         var main = mainList.stream()
             .filter(it -> it.getId().equals(mainId)).findFirst()
             .orElse(mainList.get(0));
-        var subList = service.getCategoryByMain(main);
-        
+        var mainCategoryList = mainList.stream()
+            .map(converter::toResponse)
+            .map(service::setStatus)
+            .toList();
+        var subList = service.getCategoryByMain(main).stream()
+            .map(converter::toResponse)
+            .map(service::setStatus)
+            .toList();
         return AdminCategoryResponse.builder()
-            .mainList(mainList.stream().map(converter::toResponse).toList())
-            .subList(subList.stream().map(converter::toResponse).toList())
+            .mainList(mainCategoryList)
+            .subList(subList)
             .build();
     }
     
@@ -68,12 +74,14 @@ public class AdminCategoryBusiness {
     public void updateMainCategory(Long id, CategoryCreateRequest form) {
         service.validateName(form);
         var entity = service.getCategory(id);
+        service.validateDefault(entity);
         entity.setName(form.getName());
         service.updateCategory(entity);
     }
     
     public void deleteCategory(Long id) {
         var entity = service.getCategory(id);
+        service.validateDefault(entity);
         var children = entity.getChildren();
         if (!children.isEmpty()) {
             children.forEach(service::deleteCategory);
@@ -98,6 +106,7 @@ public class AdminCategoryBusiness {
     
     public void updateSubCategory(Long id, CategoryCreateRequest form) {
         var entity = service.getCategory(id);
+        service.validateDefault(entity);
         var parent = service.getCategory(form.getMainId());
         entity.setName(form.getName());
         entity.setParent(parent);

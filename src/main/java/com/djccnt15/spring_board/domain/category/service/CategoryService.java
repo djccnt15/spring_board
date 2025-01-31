@@ -5,9 +5,12 @@ import com.djccnt15.spring_board.db.repository.CategoryRepository;
 import com.djccnt15.spring_board.domain.category.converter.CategoryConverter;
 import com.djccnt15.spring_board.domain.category.model.CategoryCreateRequest;
 import com.djccnt15.spring_board.domain.category.model.CategoryResponse;
+import com.djccnt15.spring_board.domain.category.model.enums.CategoryStatusEnum;
+import com.djccnt15.spring_board.domain.enums.DefaultCategoryEnum;
 import com.djccnt15.spring_board.exception.ApiDataNotFoundException;
 import com.djccnt15.spring_board.exception.DataNotFoundException;
 import com.djccnt15.spring_board.exception.DuplicatedKeyException;
+import com.djccnt15.spring_board.exception.ForbiddenException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -72,5 +75,23 @@ public class CategoryService {
         return entity.getChildren().stream()
             .map(converter::toResponse)
             .toList();
+    }
+    
+    public void validateDefault(CategoryEntity entity) {
+        var validateResult = DefaultCategoryEnum.contains(entity.getName());
+        if (validateResult) {
+            throw new ForbiddenException("you can't delete/update default category");
+        }
+    }
+    
+    public CategoryResponse setStatus(CategoryResponse category) {
+        if (DefaultCategoryEnum.contains(category.getName())) {
+            category.setStatus(CategoryStatusEnum.DEFAULT);
+        } else if (category.getPinOrder() != null) {
+            category.setStatus(CategoryStatusEnum.PINNED);
+        } else {
+            category.setStatus(CategoryStatusEnum.UNPINNED);
+        }
+        return category;
     }
 }
