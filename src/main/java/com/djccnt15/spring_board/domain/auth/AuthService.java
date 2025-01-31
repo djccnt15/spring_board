@@ -3,7 +3,7 @@ package com.djccnt15.spring_board.domain.auth;
 import com.djccnt15.spring_board.db.entity.enums.UserRoleEnum;
 import com.djccnt15.spring_board.db.repository.UserRepository;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
-import com.djccnt15.spring_board.enums.UserRole;
+import com.djccnt15.spring_board.enums.UserAuthorityEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,13 +31,12 @@ public class AuthService implements UserDetailsService {
         var userEntity = repository.findByUsername(username)
             .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
         
+        // adding user authorities for hasRole(), hasAuthority()
         List<GrantedAuthority> authorities = new ArrayList<>();
-        
-        // adding user authorities to use thymeleaf `sec:authorize` easily
         switch ((userEntity.getRole() == null) ? UserRoleEnum.USER : userEntity.getRole()) {
-            case ADMIN -> authorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.getRole()));
-            case STAFF -> authorities.add(new SimpleGrantedAuthority(UserRole.MANAGER.getRole()));
-            default -> authorities.add(new SimpleGrantedAuthority(UserRole.USER.getRole()));
+            case ADMIN -> authorities.add(new SimpleGrantedAuthority(UserAuthorityEnum.ADMIN.getRole()));
+            case STAFF -> authorities.add(new SimpleGrantedAuthority(UserAuthorityEnum.MANAGER.getRole()));
+            default -> authorities.add(new SimpleGrantedAuthority(UserAuthorityEnum.USER.getRole()));
         }
         
         return UserSession.builder()
