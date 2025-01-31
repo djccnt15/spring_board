@@ -17,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Slf4j
@@ -75,15 +77,20 @@ public class PostBusiness {
             .map(categoryConverter::toResponse)
             .toList();
         var boardList = mainCategoryList.stream()
+            .filter(it -> it.getPinOrder() != null)
             .map(it -> PostSummaryListResponse.builder()
                 .category(categoryConverter.toResponse(it))
                 .postList(postService.getMinimalPostList(it, 10))
                 .build()
             )
             .toList();
+        var boardArray = new ArrayList<>(boardList);
+        boardArray.sort(
+            Comparator.comparing(it -> it.getCategory().getPinOrder())
+        );
         return BoardIndexResponse.builder()
             .categoryList(categoryResponseList)
-            .boardList(boardList)
+            .boardList(boardArray)
             .build();
     }
     
