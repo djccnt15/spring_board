@@ -7,7 +7,7 @@ import com.djccnt15.spring_board.domain.category.converter.CategoryConverter;
 import com.djccnt15.spring_board.domain.category.model.CategoryCreateRequest;
 import com.djccnt15.spring_board.domain.category.model.SubCategoryUpdatePlaceholder;
 import com.djccnt15.spring_board.domain.category.service.CategoryService;
-import com.djccnt15.spring_board.exception.DuplicatedKeyException;
+import com.djccnt15.spring_board.exception.ApiDuplicatedKeyException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -114,7 +114,7 @@ public class AdminCategoryBusiness {
         try {
             service.updateCategory(entity);
         } catch (DataIntegrityViolationException e) {
-            throw new DuplicatedKeyException("name of category must be unique");
+            throw new ApiDuplicatedKeyException("name of category must be unique");
         }
     }
     

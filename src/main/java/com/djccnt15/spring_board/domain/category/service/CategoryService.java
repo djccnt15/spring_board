@@ -7,10 +7,7 @@ import com.djccnt15.spring_board.domain.category.model.CategoryCreateRequest;
 import com.djccnt15.spring_board.domain.category.model.CategoryResponse;
 import com.djccnt15.spring_board.domain.category.model.enums.CategoryStatusEnum;
 import com.djccnt15.spring_board.domain.enums.DefaultCategoryEnum;
-import com.djccnt15.spring_board.exception.ApiDataNotFoundException;
-import com.djccnt15.spring_board.exception.DataNotFoundException;
-import com.djccnt15.spring_board.exception.DuplicatedKeyException;
-import com.djccnt15.spring_board.exception.ForbiddenException;
+import com.djccnt15.spring_board.exception.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -38,7 +35,7 @@ public class CategoryService {
     public void validateName(CategoryCreateRequest request) {
         repository.findFirstByName(request.getName())
             .ifPresent(
-                it -> {throw new DuplicatedKeyException("name of category must be unique");}
+                it -> {throw new ApiDuplicatedKeyException("name of category must be unique");}
             );
     }
     
@@ -80,7 +77,7 @@ public class CategoryService {
     public void validateDefault(CategoryEntity entity) {
         var validateResult = DefaultCategoryEnum.contains(entity.getName());
         if (validateResult) {
-            throw new ForbiddenException("you can't delete/update default category");
+            throw new ApiForbiddenException("you can't delete/update default category");
         }
     }
     

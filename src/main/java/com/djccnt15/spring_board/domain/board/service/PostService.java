@@ -12,7 +12,7 @@ import com.djccnt15.spring_board.domain.board.converter.PostVoterConverter;
 import com.djccnt15.spring_board.domain.board.model.*;
 import com.djccnt15.spring_board.exception.ApiInvalidAuthorException;
 import com.djccnt15.spring_board.exception.DataNotFoundException;
-import com.djccnt15.spring_board.exception.ForbiddenException;
+import com.djccnt15.spring_board.exception.ApiForbiddenException;
 import com.djccnt15.spring_board.exception.InvalidAuthorException;
 import com.djccnt15.spring_board.utils.DownloadFileGenerator;
 import com.djccnt15.spring_board.utils.StringUtil;
@@ -147,7 +147,7 @@ public class PostService {
     public void validateComment(PostEntity post) {
         var commentList = commentRepository.findByPostAndIsActive(post, true);
         if (!commentList.isEmpty()) {
-            throw new ForbiddenException("you can't delete commented post");
+            throw new ApiForbiddenException("you can't delete commented post");
         }
     }
     
