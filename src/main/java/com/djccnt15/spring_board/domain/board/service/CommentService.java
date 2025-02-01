@@ -32,8 +32,6 @@ public class CommentService {
     private final CommentContentConverter commentContentConverter;
     private final CommentVoterRepository commentVoterRepository;
     private final CommentVoterConverter commentVoterConverter;
-    private final StringUtil stringUtil;
-    private final DownloadFileGenerator fileGenerator;
     
     public CommentEntity createComment(
         UserEntity user,
@@ -120,9 +118,9 @@ public class CommentService {
     
     public HistoryResponse createHistoryCsv(List<CommentContentHistory> history) {
         var tableName = "CommentHistory_%s.csv".formatted(
-            stringUtil.datetimeFormatter(LocalDateTime.now(), "yyyyMMdd_HHmmss")
+            StringUtil.datetimeFormatter(LocalDateTime.now(), "yyyyMMdd_HHmmss")
         );
-        var tableData = fileGenerator.generateCsv(history, CommentContentHistory.class);
+        var tableData = DownloadFileGenerator.generateCsv(history, CommentContentHistory.class);
         return HistoryResponse.builder()
             .tableName(tableName)
             .tableData(tableData)

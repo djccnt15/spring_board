@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 @Service
 public class DownloadFileGenerator {
     
-    public <T> byte[] generateCsv(List<T> records, Class<T> type) {
+    public static <T> byte[] generateCsv(List<T> records, Class<T> type) {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         var format = CSVFormat.Builder.create()
             .setHeader(getFieldNames(type))
@@ -41,7 +41,7 @@ public class DownloadFileGenerator {
         return out.toByteArray();
     }
     
-    private <T> String[] getFieldNames(Class<T> type) {
+    private static <T> String[] getFieldNames(Class<T> type) {
         return Stream.of(type.getDeclaredFields())
             .map(field -> {
                 CsvHeader annotation = field.getAnnotation(CsvHeader.class);
@@ -50,7 +50,7 @@ public class DownloadFileGenerator {
             .toArray(String[]::new);
     }
     
-    private <T> List<Object> getFieldValues(T record) {
+    private static <T> List<Object> getFieldValues(T record) {
         return Stream.of(record.getClass().getDeclaredFields())
             .map(field -> {
                 field.setAccessible(true); // Enable access to private fields

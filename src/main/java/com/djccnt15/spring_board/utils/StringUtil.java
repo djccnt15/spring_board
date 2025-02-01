@@ -17,7 +17,7 @@ public class StringUtil {
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*?";
     private static final SecureRandom SECURE_RANDOM = new SecureRandom();
     
-    public String generateRandomString(int length) {
+    public static String generateRandomString(int length) {
         StringBuilder sb = new StringBuilder(length);
         for (int i = 0; i < length; i++) {
             sb.append(CHARACTERS.charAt(SECURE_RANDOM.nextInt(CHARACTERS.length())));
@@ -25,7 +25,7 @@ public class StringUtil {
         return sb.toString();
     }
     
-    public String renderMarkdown(String markdown) {
+    public static String renderMarkdown(String markdown) {
         if (markdown == null) {
             return "";
         }
@@ -35,7 +35,7 @@ public class StringUtil {
         return renderer.render(document);
     }
     
-    public String datetimeFormatter(LocalDateTime dateTime, String format) {
+    public static String datetimeFormatter(LocalDateTime dateTime, String format) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
         return dateTime.format(formatter);
     }

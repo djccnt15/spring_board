@@ -13,8 +13,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CommentContentConverter {
     
-    private final StringUtil stringUtil;
-    
     public CommentContentEntity toEntity(
         CommentCreateRequest request,
         CommentEntity comment
@@ -46,7 +44,7 @@ public class CommentContentConverter {
     }
     
     public CommentContentHistory toHistory(CommentContentEntity entity) {
-        var createDateTime = stringUtil.datetimeFormatter(
+        var createDateTime = StringUtil.datetimeFormatter(
             entity.getCreatedDatetime(), "yyyy-MM-dd HH:mm:ss"
         );
         return CommentContentHistory.builder()

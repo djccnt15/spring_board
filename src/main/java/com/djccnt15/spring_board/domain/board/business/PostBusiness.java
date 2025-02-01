@@ -32,7 +32,6 @@ public class PostBusiness {
     private final PostService postService;
     private final CommentService commentService;
     private final PostContentConverter postContentConverter;
-    private final CommonUtil commonUtil;
     
     public List<CategoryResponse> getCategoryList(String categoryName) {
         var mainCategory = categoryService.getCategory(categoryName);
@@ -64,7 +63,7 @@ public class PostBusiness {
             .orElse(null);
         var postList = postService.getPostList(mainCategory, size, page, kw, subCategoryId);
         var postListCount = postService.getPostListCount(mainCategory, kw, subCategoryId);
-        var totalPageCount = commonUtil.getTotalPageCount(postListCount, size);
+        var totalPageCount = CommonUtil.getTotalPageCount(postListCount, size);
         return PostListResponse.builder()
             .totalPages(totalPageCount)
             .postList(postList)
@@ -104,7 +103,7 @@ public class PostBusiness {
         var post = postService.getPostDetail(id);
         var commentList = commentService.getCommentList(post, size, page);
         post.setCommentList(commentList);
-        var totalCommentPages = commonUtil.getTotalPageCount(post.getCommentCount(), size);
+        var totalCommentPages = CommonUtil.getTotalPageCount(post.getCommentCount(), size);
         post.setTotalCommentPages(totalCommentPages);
         return post;
     }

@@ -13,8 +13,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PostContentConverter {
     
-    private final StringUtil stringUtil;
-    
     public PostContentEntity toEntity(
         PostCreateRequest request,
         PostEntity post
@@ -49,7 +47,7 @@ public class PostContentConverter {
     }
     
     public PostContentHistory toHistory(PostContentEntity entity) {
-        var createDateTime = stringUtil.datetimeFormatter(
+        var createDateTime = StringUtil.datetimeFormatter(
             entity.getCreatedDatetime(), "yyyy-MM-dd HH:mm:ss"
         );
         return PostContentHistory.builder()

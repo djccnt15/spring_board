@@ -36,8 +36,6 @@ public class PostService {
     private final CommentRepository commentRepository;
     private final PostVoterRepository postVoterRepository;
     private final PostVoterConverter postVoterConverter;
-    private final StringUtil stringUtil;
-    private final DownloadFileGenerator fileGenerator;
     
     public PostEntity createPost(
         UserEntity user,
@@ -176,9 +174,9 @@ public class PostService {
     
     public HistoryResponse createHistoryCsv(List<PostContentHistory> history) {
         var tableName = "PostHistory_%s.csv".formatted(
-            stringUtil.datetimeFormatter(LocalDateTime.now(), "yyyyMMdd_HHmmss")
+            StringUtil.datetimeFormatter(LocalDateTime.now(), "yyyyMMdd_HHmmss")
         );
-        var tableData = fileGenerator.generateCsv(history, PostContentHistory.class);
+        var tableData = DownloadFileGenerator.generateCsv(history, PostContentHistory.class);
         return HistoryResponse.builder()
             .tableName(tableName)
             .tableData(tableData)

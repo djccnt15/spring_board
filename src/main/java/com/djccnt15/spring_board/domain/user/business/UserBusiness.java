@@ -20,9 +20,7 @@ public class UserBusiness {
     private final UserService service;
     private final UserConverter converter;
     private final EmailService emailService;
-    private final StringUtil stringUtil;
     private final MessageTemplateReader templateReader;
-    private final CommonUtil commonUtil;
     
     public void createUser(UserCreateForm form) {
         service.createUser(form);
@@ -53,7 +51,7 @@ public class UserBusiness {
         var validation = service.validateRecoverEmail(form, user);
         if (validation) {
             var mailingTemplate = templateReader.getMailingTemplate();
-            var password = stringUtil.generateRandomString(12);
+            var password = StringUtil.generateRandomString(12);
             service.recoverUser(user, password);
             emailService.sendEmail(
                 user.getEmail(),
@@ -72,7 +70,7 @@ public class UserBusiness {
     ) {
         var postList = service.getUserPost(user, size, page);
         var postListCount = service.getUserPostListCount(user);
-        var totalPageCount = commonUtil.getTotalPageCount(postListCount, size);
+        var totalPageCount = CommonUtil.getTotalPageCount(postListCount, size);
         return UserItemListResponse.builder()
             .totalPages(totalPageCount)
             .itemList(postList)
@@ -86,7 +84,7 @@ public class UserBusiness {
     ) {
         var commentList = service.getUserComment(user, size, page);
         var commentListCount = service.getUserCommentListCount(user);
-        var totalPageCount = commonUtil.getTotalPageCount(commentListCount, size);
+        var totalPageCount = CommonUtil.getTotalPageCount(commentListCount, size);
         return UserItemListResponse.builder()
             .totalPages(totalPageCount)
             .itemList(commentList)
