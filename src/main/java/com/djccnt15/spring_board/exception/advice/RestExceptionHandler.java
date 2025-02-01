@@ -1,9 +1,6 @@
 package com.djccnt15.spring_board.exception.advice;
 
-import com.djccnt15.spring_board.exception.ApiDataNotFoundException;
-import com.djccnt15.spring_board.exception.ApiDuplicatedKeyException;
-import com.djccnt15.spring_board.exception.ApiForbiddenException;
-import com.djccnt15.spring_board.exception.ApiInvalidAuthorException;
+import com.djccnt15.spring_board.exception.*;
 import com.djccnt15.spring_board.exception.advice.model.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,7 +21,8 @@ public class RestExceptionHandler {
      */
     @ExceptionHandler(value = {
         ApiDuplicatedKeyException.class,
-        ApiDataNotFoundException.class
+        ApiDataNotFoundException.class,
+        ApiBadRequestException.class
     })
     public ResponseEntity<ErrorResponse> handleBadRequestException(Exception ex) {
         var errResponse = ErrorResponse.builder()

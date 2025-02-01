@@ -8,6 +8,11 @@ Array.from(deleteForm).forEach(function(element) {
   element.addEventListener("submit", handleFormSubmit);
 });
 
+const pinCategoryForm = document.getElementsByClassName("pin-category");
+Array.from(pinCategoryForm).forEach(function(element) {
+  element.addEventListener("submit", handleFormSubmit);
+});
+
 async function handleFormSubmit(event) {
   event.preventDefault();
 
@@ -20,7 +25,6 @@ async function handleFormSubmit(event) {
       break;
     case "PUT":
     case "PATCH":
-      if (!confirm("수정하시겠습니까?")) return;
       break;
     case "DELETE":
       if (!confirm("삭제하시겠습니까?")) return;

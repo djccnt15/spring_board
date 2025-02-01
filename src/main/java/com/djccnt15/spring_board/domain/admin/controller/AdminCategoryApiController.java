@@ -145,4 +145,15 @@ public class AdminCategoryApiController {
         business.deleteCategory(id);
         return ResponseEntity.ok(ResponseMessageEnum.DELETE);
     }
+    
+    /**
+     * api controller for pin category
+     * @param id category id
+     * @return redirect to category manage page
+     */
+    @PatchMapping(path = "/{id}/pin")
+    public ResponseEntity<?> pinCategory(@PathVariable(value = "id") Long id) {
+        business.pinCategory(id);
+        return ResponseEntity.ok(ResponseMessageEnum.UPDATE);
+    }
 }

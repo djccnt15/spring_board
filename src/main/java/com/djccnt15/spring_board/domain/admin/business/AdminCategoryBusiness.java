@@ -122,6 +122,7 @@ public class AdminCategoryBusiness {
     public void pinCategory(Long id) {
         var entity = service.getCategory(id);
         if (entity.getPinOrder() == null) {
+            service.validatePinCount();
             service.pinCategory(entity);
         } else {
             service.unPinCategory(entity);

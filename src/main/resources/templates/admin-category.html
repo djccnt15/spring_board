@@ -46,24 +46,30 @@
                   th:case="'DEFAULT'" disabled
                 >기본</button>
                 <form
-                  class="update"
+                  class="pin-category"
                   th:action="@{|/admin/category/${main.id}/pin|}"
                   method="POST"
                   sec:authorize="hasRole('ROLE_ADMIN')"
                   th:case="'PINNED'"
                 >
                   <input type="hidden" name="_method" value="PATCH" />
-                  <button type="submit" class="btn btn-sm btn-outline-secondary">해제</button>
+                  <button
+                    type="submit" class="btn btn-sm btn-outline-primary"
+                    onclick="event.stopPropagation();"
+                  >해제</button>
                 </form>
                 <form
-                  class="update"
+                  class="pin-category"
                   th:action="@{|/admin/category/${main.id}/pin|}"
                   method="POST"
                   sec:authorize="hasRole('ROLE_ADMIN')"
                   th:case="'UNPINNED'"
                 >
                   <input type="hidden" name="_method" value="PATCH" />
-                  <button type="submit" class="btn btn-sm btn-outline-secondary">고정</button>
+                  <button
+                    type="submit" class="btn btn-sm btn-outline-secondary"
+                    onclick="event.stopPropagation();"
+                  >고정</button>
                 </form>
               </td>
               <td>

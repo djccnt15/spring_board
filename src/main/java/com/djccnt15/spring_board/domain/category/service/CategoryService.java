@@ -10,6 +10,7 @@ import com.djccnt15.spring_board.domain.enums.DefaultCategoryEnum;
 import com.djccnt15.spring_board.exception.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,6 +24,9 @@ public class CategoryService {
     
     private final CategoryRepository repository;
     private final CategoryConverter converter;
+    
+    @Value("${app.category.max-pin}")
+    private int categoryMaxPin;
     
     public List<CategoryEntity> getCategoryByTier(Integer tier) {
         return repository.findByTierAndIsActiveOrderByName(tier, true);
@@ -90,6 +94,13 @@ public class CategoryService {
             category.setStatus(CategoryStatusEnum.UNPINNED);
         }
         return category;
+    }
+    
+    public void validatePinCount() {
+        var count = repository.countByPinOrderIsNotNull();
+        if (count >= categoryMaxPin) {
+            throw new ApiBadRequestException("you can't pin more than %s categories".formatted(categoryMaxPin));
+        }
     }
     
     public void pinCategory(CategoryEntity entity) {

@@ -23,4 +23,6 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> 
     Integer getLastPinOrder();
     
     List<CategoryEntity> findByPinOrderIsNotNullOrderByPinOrder();
+    
+    Integer countByPinOrderIsNotNull();
 }

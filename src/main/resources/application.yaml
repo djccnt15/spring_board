@@ -51,3 +51,6 @@ logging:
     name: D:\log\spring\logFile.log
   pattern:
     dateformat: yyyy-MM-dd HH:mm:ss.SSS,Asia/Seoul
+app:
+  category:
+    max-pin: 6
