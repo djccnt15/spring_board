@@ -99,7 +99,7 @@ public class CommentService {
         CommentEntity comment,
         UserEntity user
     ) {
-        return commentVoterRepository.findByCommentAndUser(comment, user);
+        return commentVoterRepository.findFirstByCommentAndUser(comment, user);
     }
     
     public void revokeVote(CommentVoterEntity commentVoter) {

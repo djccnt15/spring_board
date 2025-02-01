@@ -9,15 +9,15 @@ import java.util.Optional;
 
 public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> {
     
-    Optional<CategoryEntity> findByName(String name);
+    Optional<CategoryEntity> findFirstByName(String name);
     
     List<CategoryEntity> findByTierAndIsActiveOrderByName(Integer tier, Boolean isActive);
     
     List<CategoryEntity> findByParentAndIsActiveOrderByName(CategoryEntity category, Boolean isActive);
     
-    Optional<CategoryEntity> findByIdAndIsActive(Long id, Boolean isActive);
+    Optional<CategoryEntity> findFirstByIdAndIsActive(Long id, Boolean isActive);
     
-    Optional<CategoryEntity> findByNameAndIsActive(String categoryName, Boolean isActive);
+    Optional<CategoryEntity> findFirstByNameAndIsActive(String categoryName, Boolean isActive);
     
     @Query(value = "SELECT COALESCE(MAX(pinOrder), 0) FROM CategoryEntity")
     Integer getLastPinOrder();

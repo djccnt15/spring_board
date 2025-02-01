@@ -9,11 +9,11 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
-    Optional<UserEntity> findByUsername(String username);
+    Optional<UserEntity> findFirstByUsername(String username);
     
     Page<UserEntity> findByUsernameIsNotNullOrderById(Pageable pageable);
     
-    Optional<UserEntity> findByUsernameAndIdNot(String username, Long id);
+    Optional<UserEntity> findFirstByUsernameAndIdNot(String username, Long id);
     
-    Optional<UserEntity> findByEmailAndIdNot(String email, Long id);
+    Optional<UserEntity> findFirstByEmailAndIdNot(String email, Long id);
 }

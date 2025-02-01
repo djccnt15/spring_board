@@ -40,7 +40,7 @@ public class UserService {
     }
     
     public UserEntity getUser(String username) {
-        return userRepository.findByUsername(username)
+        return userRepository.findFirstByUsername(username)
             .orElseThrow(() -> new DataNotFoundException("User Not Found"));
     }
     
@@ -73,11 +73,11 @@ public class UserService {
         } else if (form.getPassword() != null && !form.getPassword1().equals(form.getPassword2())) {
             throw new FormValidationException("2개의 패스워드가 일치하지 않습니다.");
         }
-        var userEntityByName = userRepository.findByUsernameAndIdNot(form.getUsername(), user.getUserId());
+        var userEntityByName = userRepository.findFirstByUsernameAndIdNot(form.getUsername(), user.getUserId());
         userEntityByName.ifPresent(it -> {
             throw new FormValidationException("이미 사용중인 ID입니다.");
         });
-        var userEntityByEmail = userRepository.findByEmailAndIdNot(form.getEmail(), user.getUserId());
+        var userEntityByEmail = userRepository.findFirstByEmailAndIdNot(form.getEmail(), user.getUserId());
         userEntityByEmail.ifPresent(it -> {
             throw new FormValidationException("이미 사용중인 Email입니다.");
         });

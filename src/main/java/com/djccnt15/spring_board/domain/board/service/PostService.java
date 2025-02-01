@@ -155,7 +155,7 @@ public class PostService {
         PostEntity post,
         UserEntity user
     ) {
-        return postVoterRepository.findByPostAndUser(post, user);
+        return postVoterRepository.findFirstByPostAndUser(post, user);
     }
     
     public void revokeVote(PostVoterEntity postVoter) {
