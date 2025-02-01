@@ -94,4 +94,21 @@ public class CategoryService {
         }
         return category;
     }
+    
+    public void pinCategory(CategoryEntity entity) {
+        entity.setPinOrder(repository.getLastPinOrder() + 1);
+        repository.save(entity);
+    }
+    
+    public void unPinCategory(CategoryEntity entity) {
+        entity.setPinOrder(null);
+        repository.save(entity);
+    }
+    
+    public void resetPinOrder() {
+        var categoryList = repository.findByPinOrderIsNotNullOrderByPinOrder();
+        int i = 1;
+        for (CategoryEntity categoryEntity : categoryList) categoryEntity.setPinOrder(i++);
+        repository.saveAll(categoryList);
+    }
 }

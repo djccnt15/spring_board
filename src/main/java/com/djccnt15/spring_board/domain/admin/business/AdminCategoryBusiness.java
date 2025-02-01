@@ -11,6 +11,7 @@ import com.djccnt15.spring_board.exception.DuplicatedKeyException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -114,6 +115,17 @@ public class AdminCategoryBusiness {
             service.updateCategory(entity);
         } catch (DataIntegrityViolationException e) {
             throw new DuplicatedKeyException("name of category must be unique");
+        }
+    }
+    
+    @Transactional
+    public void pinCategory(Long id) {
+        var entity = service.getCategory(id);
+        if (entity.getPinOrder() == null) {
+            service.pinCategory(entity);
+        } else {
+            service.unPinCategory(entity);
+            service.resetPinOrder();
         }
     }
 }

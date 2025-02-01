@@ -69,4 +69,15 @@ public class AdminCategoryController {
         model.addAttribute("form", new CategoryCreateRequest());
         return "category-sub-update-form";
     }
+    
+    /**
+     * controller for pin category
+     * @param id category id
+     * @return redirect to category manage page
+     */
+    @PatchMapping(path = "/{id}/pin")
+    public String pinCategory(@PathVariable(value = "id") Long id) {
+        business.pinCategory(id);
+        return "redirect:/admin/category?main=%s".formatted(id);
+    }
 }

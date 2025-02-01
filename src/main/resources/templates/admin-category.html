@@ -26,6 +26,7 @@
             <tr class="text-center">
               <th>ID</th>
               <th class="text-start" style="width:60%">이름</th>
+              <th>고정</th>
               <th>수정</th>
               <th>삭제</th>
             </tr>
@@ -39,6 +40,32 @@
             >
               <td th:text="${main.id}"></td>
               <td class="text-start" th:text="${main.name}"></td>
+              <td th:switch="${#strings.toString(main.status)}">
+                <button
+                  class="btn btn-sm btn-outline-secondary"
+                  th:case="'DEFAULT'" disabled
+                >기본</button>
+                <form
+                  class="update"
+                  th:action="@{|/admin/category/${main.id}/pin|}"
+                  method="POST"
+                  sec:authorize="hasRole('ROLE_ADMIN')"
+                  th:case="'PINNED'"
+                >
+                  <input type="hidden" name="_method" value="PATCH" />
+                  <button type="submit" class="btn btn-sm btn-outline-secondary">해제</button>
+                </form>
+                <form
+                  class="update"
+                  th:action="@{|/admin/category/${main.id}/pin|}"
+                  method="POST"
+                  sec:authorize="hasRole('ROLE_ADMIN')"
+                  th:case="'UNPINNED'"
+                >
+                  <input type="hidden" name="_method" value="PATCH" />
+                  <button type="submit" class="btn btn-sm btn-outline-secondary">고정</button>
+                </form>
+              </td>
               <td>
                 <button
                   class="btn btn-sm btn-outline-secondary"
