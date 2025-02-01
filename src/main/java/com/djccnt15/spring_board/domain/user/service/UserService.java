@@ -1,6 +1,7 @@
 package com.djccnt15.spring_board.domain.user.service;
 
 import com.djccnt15.spring_board.db.entity.UserEntity;
+import com.djccnt15.spring_board.db.entity.enums.UserRoleEnum;
 import com.djccnt15.spring_board.db.repository.CommentRepository;
 import com.djccnt15.spring_board.db.repository.PostRepository;
 import com.djccnt15.spring_board.db.repository.UserRepository;
@@ -138,5 +139,11 @@ public class UserService {
     
     public Integer getUserCommentListCount(UserSession user) {
         return commentRepository.countByIsActiveAndAuthorId(true, user.getUserId());
+    }
+    
+    public void validateAdmin(UserSession user) {
+        if (user.getRole() != null && user.getRole().equals(UserRoleEnum.ADMIN)) {
+            throw new RuntimeException("NEVER DELETE ADMIN USER");
+        }
     }
 }

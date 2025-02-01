@@ -29,6 +29,7 @@ public class UserBusiness {
     }
     
     public void resign(UserSession user) {
+        service.validateAdmin(user);
         var userEntity = service.getUser(user);
         service.resign(userEntity);
     }
