@@ -104,7 +104,11 @@ public class CategoryService {
     }
     
     public void pinCategory(CategoryEntity entity) {
-        entity.setPinOrder(repository.getLastPinOrder() + 1);
+        repository.findFirstByPinOrderIsNotNullOrderByPinOrderDesc()
+            .ifPresentOrElse(
+            it -> entity.setPinOrder(it.getPinOrder() + 1),
+                () -> entity.setPinOrder(0)
+            );
         repository.save(entity);
     }
     
