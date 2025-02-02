@@ -91,6 +91,7 @@ public class AdminCategoryBusiness {
             children.forEach(service::deleteCategory);
         }
         service.deleteCategory(entity);
+        service.resetPinOrder();
     }
     
     public SubCategoryUpdatePlaceholder getSubCategoryUpdatePlaceholder(Long id) {

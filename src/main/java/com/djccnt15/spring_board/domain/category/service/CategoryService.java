@@ -61,6 +61,7 @@ public class CategoryService {
         var name = "%s_%s".formatted(entity.getName(), LocalDateTime.now().withNano(0));
         entity.setName(name);
         entity.setActive(false);
+        entity.setPinOrder(null);
         repository.save(entity);
     }
     
