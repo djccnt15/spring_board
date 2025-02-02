@@ -10,5 +10,5 @@ import java.util.Optional;
 
 public interface CommentVoterRepository extends JpaRepository<CommentVoterEntity, CommentVoterId> {
     
-    Optional<CommentVoterEntity> findByCommentAndUser(CommentEntity comment, UserEntity user);
+    Optional<CommentVoterEntity> findFirstByCommentAndUser(CommentEntity comment, UserEntity user);
 }
