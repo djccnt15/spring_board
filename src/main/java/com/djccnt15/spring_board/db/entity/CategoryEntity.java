@@ -33,7 +33,7 @@ public class CategoryEntity extends BaseEntity {
     @NotNull
     private boolean isActive = true;
     
-    @Column(name = "pin_order", unique = true)
+    @Column(name = "pin_order")
     private Integer pinOrder;
     
     @ManyToOne
