@@ -2,6 +2,7 @@ package com.djccnt15.spring_board.domain.admin.controller;
 
 import com.djccnt15.spring_board.domain.admin.business.AdminCategoryBusiness;
 import com.djccnt15.spring_board.domain.category.model.CategoryCreateRequest;
+import com.djccnt15.spring_board.domain.category.model.CategoryOrderUpdateRequest;
 import com.djccnt15.spring_board.enums.ResponseMessageEnum;
 import com.djccnt15.spring_board.exception.advice.model.ErrorResponse;
 import jakarta.validation.Valid;
@@ -154,6 +155,21 @@ public class AdminCategoryApiController {
     @PatchMapping(path = "/{id}/pin")
     public ResponseEntity<?> pinCategory(@PathVariable(value = "id") Long id) {
         business.pinCategory(id);
+        return ResponseEntity.ok(ResponseMessageEnum.UPDATE);
+    }
+    
+    /**
+     * api controller for handling category pin order
+     * @param id category id
+     * @param form update form
+     * @return ResponseEntity
+     */
+    @PatchMapping(path = "/order/{id}")
+    public ResponseEntity<?> changeOrder(
+        @PathVariable(value = "id") Long id,
+        CategoryOrderUpdateRequest form
+    ) {
+        business.changeOrder(id, form);
         return ResponseEntity.ok(ResponseMessageEnum.UPDATE);
     }
 }

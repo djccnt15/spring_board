@@ -5,6 +5,7 @@ import com.djccnt15.spring_board.db.entity.CategoryEntity;
 import com.djccnt15.spring_board.domain.admin.model.AdminCategoryResponse;
 import com.djccnt15.spring_board.domain.category.converter.CategoryConverter;
 import com.djccnt15.spring_board.domain.category.model.CategoryCreateRequest;
+import com.djccnt15.spring_board.domain.category.model.CategoryOrderUpdateRequest;
 import com.djccnt15.spring_board.domain.category.model.CategoryResponse;
 import com.djccnt15.spring_board.domain.category.model.SubCategoryUpdatePlaceholder;
 import com.djccnt15.spring_board.domain.category.service.CategoryService;
@@ -137,5 +138,13 @@ public class AdminCategoryBusiness {
         return categoryList.stream()
             .map(converter::toResponse)
             .toList();
+    }
+    
+    public void changeOrder(
+        Long id,
+        CategoryOrderUpdateRequest form
+    ) {
+        var entity = service.getCategory(id);
+        service.changeOrder(entity, form);
     }
 }

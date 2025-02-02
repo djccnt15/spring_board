@@ -4,6 +4,7 @@ import com.djccnt15.spring_board.db.entity.CategoryEntity;
 import com.djccnt15.spring_board.db.repository.CategoryRepository;
 import com.djccnt15.spring_board.domain.category.converter.CategoryConverter;
 import com.djccnt15.spring_board.domain.category.model.CategoryCreateRequest;
+import com.djccnt15.spring_board.domain.category.model.CategoryOrderUpdateRequest;
 import com.djccnt15.spring_board.domain.category.model.CategoryResponse;
 import com.djccnt15.spring_board.domain.category.model.enums.CategoryStatusEnum;
 import com.djccnt15.spring_board.domain.enums.DefaultCategoryEnum;
@@ -130,5 +131,20 @@ public class CategoryService {
     
     public List<CategoryEntity> getPinnedCategory() {
         return repository.findByPinOrderIsNotNullOrderByPinOrder();
+    }
+    
+    public void changeOrder(
+        CategoryEntity entity,
+        CategoryOrderUpdateRequest form
+    ) {
+        var categoryList = repository.findByPinOrderIsNotNullOrderByPinOrder();
+        categoryList.remove(entity);
+        switch (form.getTo()) {
+            case UP -> categoryList.add(entity.getPinOrder() - 1, entity);
+            case DOWN -> categoryList.add(entity.getPinOrder() + 1, entity);
+            default -> throw new ApiBadRequestException("unsupported order direction: %s".formatted(form.getTo()));
+        }
+        reNumberingPinOrder(categoryList);
+        repository.saveAll(categoryList);
     }
 }
