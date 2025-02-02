@@ -127,4 +127,8 @@ public class CategoryService {
         int i = 0;
         for (CategoryEntity categoryEntity : list) categoryEntity.setPinOrder(i++);
     }
+    
+    public List<CategoryEntity> getPinnedCategory() {
+        return repository.findByPinOrderIsNotNullOrderByPinOrder();
+    }
 }

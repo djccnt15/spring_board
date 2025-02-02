@@ -69,4 +69,17 @@ public class AdminCategoryController {
         model.addAttribute("form", new CategoryCreateRequest());
         return "category-sub-update-form";
     }
+    
+    /**
+     * view controller for manage pinned category order
+     * @param model inject from spring
+     * @return pinned category order managing page
+     */
+    @GetMapping(path = "/order")
+    public String changeOrder(Model model) {
+        model.addAttribute("showAdminLeftNav", true);
+        var response = business.getPinnedCategory();
+        model.addAttribute("response", response);
+        return "admin-category-order";
+    }
 }

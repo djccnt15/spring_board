@@ -5,6 +5,7 @@ import com.djccnt15.spring_board.db.entity.CategoryEntity;
 import com.djccnt15.spring_board.domain.admin.model.AdminCategoryResponse;
 import com.djccnt15.spring_board.domain.category.converter.CategoryConverter;
 import com.djccnt15.spring_board.domain.category.model.CategoryCreateRequest;
+import com.djccnt15.spring_board.domain.category.model.CategoryResponse;
 import com.djccnt15.spring_board.domain.category.model.SubCategoryUpdatePlaceholder;
 import com.djccnt15.spring_board.domain.category.service.CategoryService;
 import com.djccnt15.spring_board.exception.ApiDuplicatedKeyException;
@@ -13,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -128,5 +130,12 @@ public class AdminCategoryBusiness {
             service.unPinCategory(entity);
             service.resetPinOrder();
         }
+    }
+    
+    public List<CategoryResponse> getPinnedCategory() {
+        var categoryList = service.getPinnedCategory();
+        return categoryList.stream()
+            .map(converter::toResponse)
+            .toList();
     }
 }

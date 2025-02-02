@@ -18,6 +18,11 @@
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mainCategoryCreateModal">
             게시판 추가
           </button>
+          <a
+            class="btn btn-primary"
+            th:href="@{/admin/category/order}"
+            sec:authorize="hasRole('ADMIN')"
+          >고정 순서 변경</a>
         </div>
       </div>
       <div class="table-responsive">
