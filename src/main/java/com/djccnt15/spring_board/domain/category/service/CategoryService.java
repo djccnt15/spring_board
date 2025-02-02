@@ -119,8 +119,12 @@ public class CategoryService {
     
     public void resetPinOrder() {
         var categoryList = repository.findByPinOrderIsNotNullOrderByPinOrder();
-        int i = 1;
-        for (CategoryEntity categoryEntity : categoryList) categoryEntity.setPinOrder(i++);
+        reNumberingPinOrder(categoryList);
         repository.saveAll(categoryList);
+    }
+    
+    private static void reNumberingPinOrder(List<CategoryEntity> list) {
+        int i = 0;
+        for (CategoryEntity categoryEntity : list) categoryEntity.setPinOrder(i++);
     }
 }
