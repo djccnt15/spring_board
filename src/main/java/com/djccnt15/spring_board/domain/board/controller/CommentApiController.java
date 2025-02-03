@@ -20,14 +20,14 @@ public class CommentApiController {
     private final CommentBusiness business;
     
     /**
-     * rest controller for download comment history
+     * rest controller for download comment history as csv file
      * @param mainCategory name of the category
      * @param postId post id
      * @param commentId comment id
-     * @return comment history table
+     * @return comment history csv file
      */
-    @GetMapping(path = "{mainCategory}/{postId}/comment/{commentId}/history/fileDownload")
-    public ResponseEntity<?> downloadCommentHistory(
+    @GetMapping(path = "{mainCategory}/{postId}/comment/{commentId}/history/csvDownload")
+    public ResponseEntity<?> downloadCommentHistoryCsv(
         @PathVariable(value = "mainCategory") String mainCategory,
         @PathVariable(value = "postId") Long postId,
         @PathVariable(value = "commentId") Long commentId

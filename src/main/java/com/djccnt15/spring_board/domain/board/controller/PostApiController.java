@@ -20,13 +20,13 @@ public class PostApiController {
     private final PostBusiness business;
     
     /**
-     * rest controller for download post history
+     * rest controller for download post history as csv file
      * @param mainCategory name of the category
      * @param id post id
-     * @return post history table
+     * @return post history csv file
      */
-    @GetMapping(path = "{mainCategory}/{id}/history/fileDownload")
-    public ResponseEntity<?> downloadPostHistory(
+    @GetMapping(path = "{mainCategory}/{id}/history/csvDownload")
+    public ResponseEntity<?> downloadPostHistoryCsv(
         @PathVariable(value = "mainCategory") String mainCategory,
         @PathVariable(value = "id") Long id
     ) {
