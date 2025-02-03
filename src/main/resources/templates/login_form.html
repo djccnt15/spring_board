@@ -19,7 +19,10 @@
       <label for="password" class="form-label">비밀번호</label>
       <input type="password" name="password" id="password" class="form-control">
     </div>
-    <button type="submit" class="btn btn-primary">로그인</button>
+    <div>
+      <button type="submit" class="btn btn-primary d-inline-block">로그인</button>
+      <a th:href="@{/user/recovery}" class="btn btn-secondary d-inline-block">비밀번호 찾기</a>
+    </div>
   </form>
 </div>
 </html>
