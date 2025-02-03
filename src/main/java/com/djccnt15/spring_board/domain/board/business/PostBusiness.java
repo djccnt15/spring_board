@@ -13,6 +13,7 @@ import com.djccnt15.spring_board.domain.category.model.CategoryResponse;
 import com.djccnt15.spring_board.domain.category.service.CategoryService;
 import com.djccnt15.spring_board.domain.user.service.UserService;
 import com.djccnt15.spring_board.utils.CommonUtil;
+import com.djccnt15.spring_board.utils.model.FileResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
@@ -169,7 +170,7 @@ public class PostBusiness {
             .toList();
     }
     
-    public HistoryResponse createHistoryCsv(Long id) {
+    public FileResponse createHistoryCsv(Long id) {
         var history = postService.getPostHistory(id);
         var postHistory = history.stream()
             .map(postContentConverter::toHistory)

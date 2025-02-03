@@ -34,9 +34,9 @@ public class PostApiController {
         return ResponseEntity.ok()
             .header(
                 HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=%s".formatted(response.getTableName())
+                "attachment; filename=%s".formatted(response.getFileName())
             )
             .contentType(MediaType.APPLICATION_OCTET_STREAM)
-            .body(response.getTableData());
+            .body(response.getContent());
     }
 }

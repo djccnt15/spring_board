@@ -13,6 +13,7 @@ import com.djccnt15.spring_board.exception.DataNotFoundException;
 import com.djccnt15.spring_board.exception.InvalidAuthorException;
 import com.djccnt15.spring_board.utils.DownloadFileGenerator;
 import com.djccnt15.spring_board.utils.StringUtil;
+import com.djccnt15.spring_board.utils.model.FileResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -116,14 +117,14 @@ public class CommentService {
         return commentContentRepository.findByCommentIdOrderByIdDesc(id);
     }
     
-    public HistoryResponse createHistoryCsv(List<CommentContentHistory> history) {
+    public FileResponse createHistoryCsv(List<CommentContentHistory> history) {
         var tableName = "CommentHistory_%s.csv".formatted(
             StringUtil.datetimeFormatter(LocalDateTime.now(), "yyyyMMdd_HHmmss")
         );
         var tableData = DownloadFileGenerator.generateCsv(history, CommentContentHistory.class);
-        return HistoryResponse.builder()
-            .tableName(tableName)
-            .tableData(tableData)
+        return FileResponse.builder()
+            .fileName(tableName)
+            .content(tableData)
             .build();
     }
 }

@@ -6,10 +6,10 @@ import com.djccnt15.spring_board.domain.board.converter.CommentContentConverter;
 import com.djccnt15.spring_board.domain.board.model.CommentContentResponse;
 import com.djccnt15.spring_board.domain.board.model.CommentCreateRequest;
 import com.djccnt15.spring_board.domain.board.model.CommentResponse;
-import com.djccnt15.spring_board.domain.board.model.HistoryResponse;
 import com.djccnt15.spring_board.domain.board.service.CommentService;
 import com.djccnt15.spring_board.domain.board.service.PostService;
 import com.djccnt15.spring_board.domain.user.service.UserService;
+import com.djccnt15.spring_board.utils.model.FileResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -88,7 +88,7 @@ public class CommentBusiness {
             .toList();
     }
     
-    public HistoryResponse createHistoryCsv(Long id) {
+    public FileResponse createHistoryCsv(Long id) {
         var history = commentService.getCommentHistory(id);
         var commentHistory = history.stream()
             .map(commentContentConverter::toHistory)
