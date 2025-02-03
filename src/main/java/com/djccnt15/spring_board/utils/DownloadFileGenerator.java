@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -18,13 +17,13 @@ import java.util.stream.Stream;
 public class DownloadFileGenerator {
     
     public static <T> byte[] generateCsv(List<T> records, Class<T> type) {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        var out = new ByteArrayOutputStream();
         var format = CSVFormat.Builder.create()
             .setHeader(getFieldNames(type))
             .get();
         try (
-            Writer writer = new OutputStreamWriter(out);
-            CSVPrinter csvPrinter = new CSVPrinter(writer, format)
+            var writer = new OutputStreamWriter(out);
+            var csvPrinter = new CSVPrinter(writer, format)
         ) {
             if (records == null || records.isEmpty()) {
                 csvPrinter.flush();
@@ -34,11 +33,11 @@ public class DownloadFileGenerator {
                 csvPrinter.printRecord(getFieldValues(record));
             }
             csvPrinter.flush();
+            return out.toByteArray();
         } catch (IOException e) {
             log.error("", e);
             throw new RuntimeException(e.getMessage());
         }
-        return out.toByteArray();
     }
     
     private static <T> String[] getFieldNames(Class<T> type) {
