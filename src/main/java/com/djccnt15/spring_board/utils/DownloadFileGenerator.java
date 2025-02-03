@@ -1,6 +1,6 @@
 package com.djccnt15.spring_board.utils;
 
-import com.djccnt15.spring_board.annotations.CsvHeader;
+import com.djccnt15.spring_board.annotations.TableHeader;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -44,7 +44,7 @@ public class DownloadFileGenerator {
     private static <T> String[] getFieldNames(Class<T> type) {
         return Stream.of(type.getDeclaredFields())
             .map(field -> {
-                CsvHeader annotation = field.getAnnotation(CsvHeader.class);
+                var annotation = field.getAnnotation(TableHeader.class);
                 return (annotation != null) ? annotation.value() : field.getName();
             })
             .toArray(String[]::new);
