@@ -1,16 +1,20 @@
-const createForm = document.getElementsByClassName("create")
-Array.from(createForm).forEach(function(element) {
-  element.addEventListener("submit", handleFormSubmit)
-});
+document.addEventListener("DOMContentLoaded", function () {
+  // attach event listeners to forms
+  const formClasses = ["create", "delete", "pin-category"];
+  formClasses.forEach(className => {
+    const forms = document.getElementsByClassName(className);
+    Array.from(forms).forEach(form => {
+      form.addEventListener("submit", handleFormSubmit);
 
-const deleteForm = document.getElementsByClassName("delete");
-Array.from(deleteForm).forEach(function(element) {
-  element.addEventListener("submit", handleFormSubmit);
-});
-
-const pinCategoryForm = document.getElementsByClassName("pin-category");
-Array.from(pinCategoryForm).forEach(function(element) {
-  element.addEventListener("submit", handleFormSubmit);
+      // find submit buttons inside the form and prevent event propagation
+      const submitButton = form.querySelector('button[type="submit"], input[type="submit"]');
+      if (submitButton) {
+        submitButton.addEventListener("click", function (event) {
+          event.stopPropagation();
+        });
+      }
+    });
+  });
 });
 
 async function handleFormSubmit(event) {
