@@ -4,7 +4,7 @@ import com.djccnt15.spring_board.domain.user.business.UserBusiness;
 import com.djccnt15.spring_board.domain.user.model.UserCreateForm;
 import com.djccnt15.spring_board.domain.user.model.UserRecoveryForm;
 import com.djccnt15.spring_board.exception.DataNotFoundException;
-import com.djccnt15.spring_board.exception.UserRecoveryFailedException;
+import com.djccnt15.spring_board.exception.FormValidationException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -97,7 +97,7 @@ public class UserController {
         } catch (DataNotFoundException e) {
             bindingResult.reject("userNotFound", e.getMessage());
             return "user-recovery";
-        } catch (UserRecoveryFailedException e) {
+        } catch (FormValidationException e) {
             bindingResult.reject("validationFailed", e.getMessage());
             return "user-recovery";
         }

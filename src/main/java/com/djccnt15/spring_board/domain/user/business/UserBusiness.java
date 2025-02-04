@@ -6,7 +6,7 @@ import com.djccnt15.spring_board.domain.mailing.service.EmailService;
 import com.djccnt15.spring_board.domain.user.converter.UserConverter;
 import com.djccnt15.spring_board.domain.user.model.*;
 import com.djccnt15.spring_board.domain.user.service.UserService;
-import com.djccnt15.spring_board.exception.UserRecoveryFailedException;
+import com.djccnt15.spring_board.exception.FormValidationException;
 import com.djccnt15.spring_board.utils.CommonUtil;
 import com.djccnt15.spring_board.utils.MessageTemplateReader;
 import com.djccnt15.spring_board.utils.StringUtil;
@@ -49,18 +49,17 @@ public class UserBusiness {
     public void recoverUser(UserRecoveryForm form) {
         var user = service.getUser(form.getUsername());
         var validation = service.validateRecoverEmail(form, user);
-        if (validation) {
-            var mailingTemplate = templateReader.getMailingTemplate();
-            var password = StringUtil.generateRandomString(12);
-            service.recoverUser(user, password);
-            emailService.sendEmail(
-                user.getEmail(),
-                "Spring Board 임시 비밀번호",
-                mailingTemplate.formatted(password)
-            );
-        } else {
-            throw new UserRecoveryFailedException("failed to recover user password");
+        if (!validation) {
+            throw new FormValidationException("incorrect user information");
         }
+        var mailingTemplate = templateReader.getMailingTemplate();
+        var password = StringUtil.generateRandomString(12);
+        service.recoverUser(user, password);
+        emailService.sendEmail(
+            user.getEmail(),
+            "Spring Board 임시 비밀번호",
+            mailingTemplate.formatted(password)
+        );
     }
     
     public UserItemListResponse getUserPost(
