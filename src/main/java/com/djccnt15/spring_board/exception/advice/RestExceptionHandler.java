@@ -15,6 +15,21 @@ import java.time.LocalDateTime;
 public class RestExceptionHandler {
     
     /**
+     * handle Inter Server Exception
+     * @param ex Inter Server Exception
+     * @return ResponseEntity
+     */
+    @ExceptionHandler(value = {ApiInternalServerException.class})
+    public ResponseEntity<ErrorResponse> handleInternalException(Exception ex) {
+        var errResponse = ErrorResponse.builder()
+            .timestamp(LocalDateTime.now())
+            .message(ex.getMessage())
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .build();
+        return ResponseEntity.badRequest().body(errResponse);
+    }
+    
+    /**
      * handle Bad Request Exception
      * @param ex Bad Request Exception
      * @return ResponseEntity
