@@ -3,19 +3,21 @@
   layout:decorate="~{layout}"
   xmlns:layout="http://www.w3.org/1999/xhtml"
   xmlns:th="http://www.w3.org/1999/xhtml"
-  xmlns:sec="http://www.w3.org/1999/xhtml">
+  xmlns:sec="http://www.w3.org/1999/xhtml"
+>
 <div
   layout:fragment="content"
   class="container my-3"
 >
   <!-- 게시글 -->
-  <h6 class="border-bottom py-2">
-    게시판:
+  <h6 class="d-flex border-bottom py-2 gap-2">
+    <span>게시판:</span>
     <a
       th:text="|${mainCategory}|"
       th:href="@{|/board/${mainCategory}|}"
     ></a>
-    / 카테고리:
+    <span>/</span>
+    <span>카테고리:</span>
     <a
       th:text="${response.category}"
       th:href="@{|/board/${mainCategory}?category=${response.category}|}"
@@ -40,7 +42,7 @@
             <span class="badge rounded-pill bg-success" th:text="${response.voteCount}"></span>
           </a>
           <button
-            class="recommend btn btn-secondary btn-sm btn-outline-secondary"
+            class="recommend btn btn-sm btn-outline-secondary"
             sec:authorize="isAnonymous()" disabled
           >
             추천
@@ -51,8 +53,7 @@
             class="btn btn-sm btn-outline-secondary"
             sec:authorize="isAuthenticated()"
             th:if="${response.authorId != null and #authentication.getPrincipal().getUserId() == response.authorId}"
-            th:text="수정"
-          ></a>
+          >수정</a>
           <form
             th:action="@{|/board/${mainCategory}/${response.id}|}"
             method="POST"
@@ -144,7 +145,7 @@
             <span class="badge rounded-pill bg-success" th:text="${comment.voteCount}"></span>
           </a>
           <button
-            class="recommend btn btn-secondary btn-sm btn-outline-secondary"
+            class="recommend btn btn-sm btn-outline-secondary"
             sec:authorize="isAnonymous()" disabled
           >
             추천
@@ -155,8 +156,7 @@
             class="btn btn-sm btn-outline-secondary"
             sec:authorize="isAuthenticated()"
             th:if="${comment.authorId != null and #authentication.getPrincipal().getUserId() == comment.authorId}"
-            th:text="수정"
-          ></a>
+          >수정</a>
           <form
             th:action="@{|/board/${mainCategory}/${response.id}/comment/${comment.id}|}"
             method="POST"

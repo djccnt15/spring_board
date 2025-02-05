@@ -5,10 +5,9 @@
   xmlns:th="http://www.w3.org/1999/xhtml"
 >
 <div layout:fragment="content" class="container">
-  <h5 class="my-3 border-bottom pb-2">My Page</h5>
+  <h5 class="my-3 border-bottom pb-2">회원정보</h5>
   <form th:action="@{/user/profile}" th:object="${form}" method="POST">
     <input type="hidden" name="_method" value="PUT" />
-    <div th:replace="~{form_errors :: formErrorsFragment}"></div>
     <div class="d-flex flex-row gap-3 mb-3">
       <div class="flex-grow-1">
         <span th:text="|가입일: ${#temporals.format(placeholder.createDateTime, 'yyyy-MM-dd HH:mm')}|"></span>
@@ -28,6 +27,7 @@
     </div>
     <div class="mb-3">
       <label for="password" class="form-label">현재 비밀번호</label>
+      <div th:replace="~{form_errors :: formErrorsFragment}"></div>
       <input id="password" type="password" th:field="*{password}" class="form-control">
     </div>
     <div class="d-flex flex-row gap-3 mb-3">

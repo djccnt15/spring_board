@@ -6,7 +6,7 @@
 >
 <div layout:fragment="content" class="container my-3">
   <div class="my-3 border-bottom">
-    <h4>회원가입</h4>
+    <h5>회원가입</h5>
   </div>
   <form th:action="@{/user/signup}" th:object="${userCreateForm}" method="POST">
     <div th:replace="~{form_errors :: formErrorsFragment}"></div>
@@ -14,13 +14,15 @@
       <label for="username" class="form-label">사용자ID</label>
       <input id="username" type="text" th:field="*{username}" class="form-control" autofocus>
     </div>
-    <div class="mb-3">
-      <label for="password1" class="form-label">비밀번호</label>
-      <input id="password1" type="password" th:field="*{password1}" class="form-control">
-    </div>
-    <div class="mb-3">
-      <label for="password2" class="form-label">비밀번호 확인</label>
-      <input id="password2" type="password" th:field="*{password2}" class="form-control">
+    <div class="d-flex flex-row gap-3 mb-3">
+      <div class="flex-grow-1">
+        <label for="password1" class="form-label">비밀번호</label>
+        <input id="password1" type="password" th:field="*{password1}" class="form-control">
+      </div>
+      <div class="flex-grow-1">
+        <label for="password2" class="form-label">비밀번호 확인</label>
+        <input id="password2" type="password" th:field="*{password2}" class="form-control">
+      </div>
     </div>
     <div class="mb-3">
       <label for="email" class="form-label">이메일</label>

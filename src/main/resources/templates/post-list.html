@@ -67,16 +67,16 @@
           th:text="${post.category}"
         ></a>
       </td>
-      <td class="text-start">
+      <td class="text-start d-flex align-items-center gap-2">
         <a
-          class="mw-100 d-inline-block text-truncate"
+          class="text-truncate"
           th:href="@{|/board/${mainCategory}/${post.id}|}"
           th:text="${post.title}"
         ></a>
       </td>
       <td>
         <span
-          class="mw-100 d-inline-block text-truncate"
+          class="text-truncate"
           th:if="${post.author != null}"
           th:text="${post.author}"
         ></span>

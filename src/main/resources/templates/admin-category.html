@@ -6,7 +6,7 @@
   xmlns:sec="http://www.w3.org/1999/xhtml"
 >
 <div layout:fragment="content" class="container my-3">
-  <h4>카테고리 관리</h4>
+  <h5 class="my-3 border-bottom pb-2">카테고리 관리</h5>
   <div class="row">
     <!-- tier 1 Categories -->
     <div class="col-md-6">
@@ -29,7 +29,6 @@
         <table class="table table-hover">
           <thead class="table-secondary">
             <tr class="text-center">
-              <th>ID</th>
               <th class="text-start" style="width:60%">이름</th>
               <th>고정</th>
               <th>수정</th>
@@ -43,13 +42,12 @@
               th:classappend="${main.id == selectedMain} ? 'table-primary'"
               th:onclick="|location.href='?main=${main.id}'|"
             >
-              <td th:text="${main.id}"></td>
               <td class="text-start" th:text="${main.name}"></td>
               <td th:switch="${#strings.toString(main.status)}">
                 <button
                   class="btn btn-sm btn-outline-secondary"
                   th:case="'DEFAULT'" disabled
-                >기본</button>
+                >필수</button>
                 <form
                   class="pin-category"
                   th:action="@{|/admin/category/${main.id}/pin|}"

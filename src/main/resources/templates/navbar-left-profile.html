@@ -10,25 +10,20 @@
         class="nav-link"
         th:href="@{/user/profile}"
         sec:authorize="isAuthenticated()"
-      >
-        회원정보
-      </a>
+      >회원정보</a>
       <a
         class="nav-link"
         th:href="@{/user/profile/post-list}"
         sec:authorize="isAuthenticated()"
-      >
-        작성 글 보기
-      </a>
+      >작성 글 보기</a>
     </li>
     <li>
       <a
         class="nav-link"
         th:href="@{/user/profile/comment-list}"
         sec:authorize="isAuthenticated()"
-      >
-        작성 댓글 보기
-      </a>
+      >작성 댓글 보기</a>
+    </li>
     </li>
   </ul>
 </div>
