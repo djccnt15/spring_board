@@ -5,6 +5,7 @@ import com.djccnt15.spring_board.db.dto.PostMinimalProjection;
 import com.djccnt15.spring_board.db.dto.UserPostProjection;
 import com.djccnt15.spring_board.db.entity.PostEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -291,4 +292,19 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
     );
     
     Integer countByIsActiveAndAuthorId(Boolean isActive, Long userId);
+    
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query(value = """
+        UPDATE post p
+        SET is_active = :is_active
+        FROM category c
+        WHERE p.category_id = c.id
+            AND c.parent_id = :category_id
+        """,
+        nativeQuery = true
+    )
+    void updatePostActiveByCategory(
+        @Param("is_active") Boolean isActive,
+        @Param("category_id") Long categoryId
+    );
 }

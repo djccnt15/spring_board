@@ -5,6 +5,7 @@ import com.djccnt15.spring_board.db.dto.UserCommentProjection;
 import com.djccnt15.spring_board.db.entity.CommentEntity;
 import com.djccnt15.spring_board.db.entity.PostEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -125,4 +126,20 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
     );
     
     Integer countByIsActiveAndAuthorId(Boolean isActive, Long userId);
+    
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query(value = """
+        UPDATE comment
+        SET is_active = :is_active
+        FROM post p
+        JOIN category c ON p.category_id = c.id
+        WHERE comment.post_id = p.id
+        AND c.parent_id = :category_id
+        """,
+        nativeQuery = true
+    )
+    void updateCommentActiveByCategory(
+        @Param("is_active") Boolean isActive,
+        @Param("category_id") Long categoryId
+    );
 }

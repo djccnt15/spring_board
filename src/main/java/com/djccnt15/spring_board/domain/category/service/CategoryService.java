@@ -2,6 +2,8 @@ package com.djccnt15.spring_board.domain.category.service;
 
 import com.djccnt15.spring_board.db.entity.CategoryEntity;
 import com.djccnt15.spring_board.db.repository.CategoryRepository;
+import com.djccnt15.spring_board.db.repository.CommentRepository;
+import com.djccnt15.spring_board.db.repository.PostRepository;
 import com.djccnt15.spring_board.domain.category.converter.CategoryConverter;
 import com.djccnt15.spring_board.domain.category.model.CategoryCreateRequest;
 import com.djccnt15.spring_board.domain.category.model.CategoryOrderUpdateRequest;
@@ -23,38 +25,40 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CategoryService {
     
-    private final CategoryRepository repository;
+    private final CategoryRepository categoryRepository;
     private final CategoryConverter converter;
+    private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
     
     @Value("${app.category.max-pin}")
     private int categoryMaxPin;
     
     public List<CategoryEntity> getCategoryByTier(Integer tier) {
-        return repository.findByTierAndIsActiveOrderByName(tier, true);
+        return categoryRepository.findByTierAndIsActiveOrderByName(tier, true);
     }
     
     public List<CategoryEntity> getCategoryByMain(CategoryEntity parent) {
-        return repository.findByParentAndIsActiveOrderByName(parent, true);
+        return categoryRepository.findByParentAndIsActiveOrderByName(parent, true);
     }
     
     public void validateName(CategoryCreateRequest request) {
-        repository.findFirstByName(request.getName())
+        categoryRepository.findFirstByName(request.getName())
             .ifPresent(
                 it -> {throw new ApiDuplicatedKeyException("name of category must be unique");}
             );
     }
     
     public void createCategory(CategoryEntity entity) {
-        repository.save(entity);
+        categoryRepository.save(entity);
     }
     
     public CategoryEntity getCategory(Long id) {
-        return repository.findFirstByIdAndIsActive(id, true)
+        return categoryRepository.findFirstByIdAndIsActive(id, true)
             .orElseThrow(() -> new ApiDataNotFoundException("can't find requested category"));
     }
     
     public void updateCategory(CategoryEntity entity) {
-        repository.save(entity);
+        categoryRepository.save(entity);
     }
     
     public void deleteCategory(CategoryEntity entity) {
@@ -62,16 +66,16 @@ public class CategoryService {
         entity.setName(name);
         entity.setActive(false);
         entity.setPinOrder(null);
-        repository.save(entity);
+        categoryRepository.save(entity);
     }
     
     public CategoryEntity getCategory(String categoryName) {
-        return repository.findFirstByNameAndIsActive(categoryName, true)
+        return categoryRepository.findFirstByNameAndIsActive(categoryName, true)
             .orElseThrow(() -> new DataNotFoundException("can't find requested category"));
     }
     
     public Optional<CategoryEntity> getOptionalCategory(String categoryName) {
-        return repository.findFirstByNameAndIsActive(categoryName, true);
+        return categoryRepository.findFirstByNameAndIsActive(categoryName, true);
     }
     
     public List<CategoryResponse> getCategoryByParent(CategoryEntity entity) {
@@ -99,30 +103,30 @@ public class CategoryService {
     }
     
     public void validatePinCount() {
-        var count = repository.countByPinOrderIsNotNull();
+        var count = categoryRepository.countByPinOrderIsNotNull();
         if (count >= categoryMaxPin) {
             throw new ApiBadRequestException("you can't pin more than %s categories".formatted(categoryMaxPin));
         }
     }
     
     public void pinCategory(CategoryEntity entity) {
-        repository.findFirstByPinOrderIsNotNullOrderByPinOrderDesc()
+        categoryRepository.findFirstByPinOrderIsNotNullOrderByPinOrderDesc()
             .ifPresentOrElse(
             it -> entity.setPinOrder(it.getPinOrder() + 1),
                 () -> entity.setPinOrder(0)
             );
-        repository.save(entity);
+        categoryRepository.save(entity);
     }
     
     public void unPinCategory(CategoryEntity entity) {
         entity.setPinOrder(null);
-        repository.save(entity);
+        categoryRepository.save(entity);
     }
     
     public void resetPinOrder() {
-        var categoryList = repository.findByPinOrderIsNotNullOrderByPinOrder();
+        var categoryList = categoryRepository.findByPinOrderIsNotNullOrderByPinOrder();
         reNumberingPinOrder(categoryList);
-        repository.saveAll(categoryList);
+        categoryRepository.saveAll(categoryList);
     }
     
     private static void reNumberingPinOrder(List<CategoryEntity> list) {
@@ -131,14 +135,14 @@ public class CategoryService {
     }
     
     public List<CategoryEntity> getPinnedCategory() {
-        return repository.findByPinOrderIsNotNullOrderByPinOrder();
+        return categoryRepository.findByPinOrderIsNotNullOrderByPinOrder();
     }
     
     public void changeOrder(
         CategoryEntity entity,
         CategoryOrderUpdateRequest form
     ) {
-        var categoryList = repository.findByPinOrderIsNotNullOrderByPinOrder();
+        var categoryList = categoryRepository.findByPinOrderIsNotNullOrderByPinOrder();
         categoryList.remove(entity);
         switch (form.getTo()) {
             case UP -> categoryList.add(entity.getPinOrder() - 1, entity);
@@ -146,6 +150,14 @@ public class CategoryService {
             default -> throw new ApiBadRequestException("unsupported order direction: %s".formatted(form.getTo()));
         }
         reNumberingPinOrder(categoryList);
-        repository.saveAll(categoryList);
+        categoryRepository.saveAll(categoryList);
+    }
+    
+    public void deletePost(CategoryEntity entity) {
+        postRepository.updatePostActiveByCategory(false, entity.getId());
+    }
+    
+    public void deleteComment(CategoryEntity entity) {
+        commentRepository.updateCommentActiveByCategory(false, entity.getId());
     }
 }

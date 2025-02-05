@@ -83,6 +83,7 @@ public class AdminCategoryBusiness {
         service.updateCategory(entity);
     }
     
+    @Transactional
     public void deleteCategory(Long id) {
         var entity = service.getCategory(id);
         service.validateDefault(entity);
@@ -92,6 +93,8 @@ public class AdminCategoryBusiness {
         }
         service.deleteCategory(entity);
         service.resetPinOrder();
+        service.deletePost(entity);
+        service.deleteComment(entity);
     }
     
     public SubCategoryUpdatePlaceholder getSubCategoryUpdatePlaceholder(Long id) {
