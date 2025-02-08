@@ -13,6 +13,8 @@ import com.djccnt15.spring_board.exception.DataNotFoundException;
 import com.djccnt15.spring_board.exception.InvalidAuthorException;
 import com.djccnt15.spring_board.utils.DownloadFileGenerator;
 import com.djccnt15.spring_board.utils.StringUtil;
+import com.djccnt15.spring_board.utils.model.ExcelCoverData;
+import com.djccnt15.spring_board.utils.model.ExcelTableSheetData;
 import com.djccnt15.spring_board.utils.model.FileResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -124,6 +126,30 @@ public class CommentService {
         var tableData = DownloadFileGenerator.generateCsv(history, CommentContentHistory.class);
         return FileResponse.builder()
             .fileName(tableName)
+            .content(tableData)
+            .build();
+    }
+    
+    public FileResponse createHistoryExcel(
+        UserSession user,
+        List<CommentContentHistory> history
+    ) {
+        var sheetName = "CommentHistory_%s".formatted(
+            StringUtil.datetimeFormatter(LocalDateTime.now(), "yyyyMMdd_HHmmss")
+        );
+        var sheetData = ExcelTableSheetData.<CommentContentHistory>builder()
+            .records(history)
+            .type(CommentContentHistory.class)
+            .sheetName(sheetName)
+            .build();
+        var coverData = ExcelCoverData.builder()
+            .title("표지")
+            .creator(user.getUsername())
+            .createDateTime(StringUtil.datetimeFormatter(LocalDateTime.now(), "yyyyMMdd_HHmmss"))
+            .build();
+        var tableData = DownloadFileGenerator.generateExcel(coverData, sheetData);
+        return FileResponse.builder()
+            .fileName("%s.xlsx".formatted(sheetName))
             .content(tableData)
             .build();
     }

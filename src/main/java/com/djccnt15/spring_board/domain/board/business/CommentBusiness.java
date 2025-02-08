@@ -95,4 +95,15 @@ public class CommentBusiness {
             .toList();
         return commentService.createHistoryCsv(commentHistory);
     }
+    
+    public FileResponse createHistoryExcel(
+        UserSession user,
+        Long id
+    ) {
+        var entityHistory = commentService.getCommentHistory(id);
+        var commentHistory = entityHistory.stream()
+            .map(commentContentConverter::toHistory)
+            .toList();
+        return commentService.createHistoryExcel(user, commentHistory);
+    }
 }
