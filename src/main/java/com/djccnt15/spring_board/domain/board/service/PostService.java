@@ -16,6 +16,8 @@ import com.djccnt15.spring_board.exception.ApiForbiddenException;
 import com.djccnt15.spring_board.exception.InvalidAuthorException;
 import com.djccnt15.spring_board.utils.DownloadFileGenerator;
 import com.djccnt15.spring_board.utils.StringUtil;
+import com.djccnt15.spring_board.utils.model.ExcelCoverData;
+import com.djccnt15.spring_board.utils.model.ExcelTableSheetData;
 import com.djccnt15.spring_board.utils.model.FileResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -189,5 +191,29 @@ public class PostService {
             .orElseThrow(() -> new DataNotFoundException("can't find requested post"));
         entity.setViews(entity.getViews() + 1);
         postRepository.save(entity);
+    }
+    
+    public FileResponse createHistoryExcel(
+        UserSession user,
+        List<PostContentHistory> history
+    ) {
+        var sheetName = "PostHistory_%s".formatted(
+            StringUtil.datetimeFormatter(LocalDateTime.now(), "yyyyMMdd_HHmmss")
+        );
+        var sheetData = ExcelTableSheetData.<PostContentHistory>builder()
+            .records(history)
+            .type(PostContentHistory.class)
+            .sheetName(sheetName)
+            .build();
+        var coverData = ExcelCoverData.builder()
+            .title("표지")
+            .creator(user.getUsername())
+            .createDateTime(StringUtil.datetimeFormatter(LocalDateTime.now(), "yyyyMMdd_HHmmss"))
+            .build();
+        var tableData = DownloadFileGenerator.generateExcel(coverData, sheetData);
+        return FileResponse.builder()
+            .fileName("%s.xlsx".formatted(sheetName))
+            .content(tableData)
+            .build();
     }
 }

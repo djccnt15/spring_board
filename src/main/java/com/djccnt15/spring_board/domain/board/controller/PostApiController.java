@@ -1,11 +1,13 @@
 package com.djccnt15.spring_board.domain.board.controller;
 
+import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.board.business.PostBusiness;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +33,29 @@ public class PostApiController {
         @PathVariable(value = "id") Long id
     ) {
         var response = business.createHistoryCsv(id);
+        return ResponseEntity.ok()
+            .header(
+                HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=%s".formatted(response.getFileName())
+            )
+            .contentType(MediaType.APPLICATION_OCTET_STREAM)
+            .body(response.getContent());
+    }
+    
+    /**
+     * rest controller for download post history as Excel file
+     * @param user user session
+     * @param mainCategory name of the category
+     * @param id post id
+     * @return post history Excel file
+     */
+    @GetMapping(path = "{mainCategory}/{id}/history/excelDownload")
+    public ResponseEntity<?> downloadPostHistoryExcel(
+        @AuthenticationPrincipal UserSession user,
+        @PathVariable(value = "mainCategory") String mainCategory,
+        @PathVariable(value = "id") Long id
+    ) {
+        var response = business.createHistoryExcel(user, id);
         return ResponseEntity.ok()
             .header(
                 HttpHeaders.CONTENT_DISPOSITION,

@@ -177,4 +177,15 @@ public class PostBusiness {
             .toList();
         return postService.createHistoryCsv(postHistory);
     }
+    
+    public FileResponse createHistoryExcel(
+        UserSession user,
+        Long id
+    ) {
+        var entityHistory = postService.getPostHistory(id);
+        var postHistory = entityHistory.stream()
+            .map(postContentConverter::toHistory)
+            .toList();
+        return postService.createHistoryExcel(user, postHistory);
+    }
 }
