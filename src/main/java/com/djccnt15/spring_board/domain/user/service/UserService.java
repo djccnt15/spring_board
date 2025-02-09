@@ -141,10 +141,9 @@ public class UserService {
         return commentRepository.countByIsActiveAndAuthorId(true, user.getUserId());
     }
     
-    public void validateAdmin(UserSession user) {
-        if (user.getRole() != null && user.getRole().equals(UserRoleEnum.ADMIN)) {
-            throw new RuntimeException("NEVER DELETE ADMIN USER");
-        }
+    public boolean validateAdmin(UserSession user) {
+        return user.getRole() != null && user.getRole().equals(UserRoleEnum.ADMIN);
+    }
     
     public boolean validateManager(UserEntity entity) {
         if (entity.getRole() == null) return false;

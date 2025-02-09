@@ -27,7 +27,10 @@ public class UserBusiness {
     }
     
     public void resign(UserSession user) {
-        service.validateAdmin(user);
+        var validation = service.validateAdmin(user);
+        if (validation) {
+            throw new RuntimeException("NEVER DELETE ADMIN USER");
+        }
         var userEntity = service.getUser(user);
         service.resign(userEntity);
     }
