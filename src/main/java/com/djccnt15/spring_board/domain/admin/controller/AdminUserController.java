@@ -1,9 +1,10 @@
 package com.djccnt15.spring_board.domain.admin.controller;
 
 import com.djccnt15.spring_board.domain.admin.business.AdminUserBusiness;
-import com.djccnt15.spring_board.domain.admin.model.ManagerRoleRequest;
+import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,16 +38,36 @@ public class AdminUserController {
     }
     
     /**
-     * grant/revoke manager role of user
-     * @param request ManagerRoleRequest
+     * grant manager role of user
+     * @param user user session
+     * @param id user id
+     * @param page number of page
      * @return redirect to admin/user page for refresh
      */
-    @PatchMapping(path = "/role")
-    public String manageAuthority(
-        ManagerRoleRequest request,
+    @PatchMapping(path = "/{id}/role/grant")
+    public String grantAuthority(
+        @AuthenticationPrincipal UserSession user,
+        @PathVariable(value = "id") Long id,
         @RequestParam(value = "page", defaultValue = "0") int page
     ) {
-        business.manageAuthority(request);
+        business.grantAuthority(user, id);
+        return "redirect:/admin/user?page=%s".formatted(page);
+    }
+    
+    /**
+     * revoke manager role of user
+     * @param user user session
+     * @param id user id
+     * @param page number of page
+     * @return redirect to admin/user page for refresh
+     */
+    @PatchMapping(path = "/{id}/role/revoke")
+    public String revokeAuthority(
+        @AuthenticationPrincipal UserSession user,
+        @PathVariable(value = "id") Long id,
+        @RequestParam(value = "page", defaultValue = "0") int page
+    ) {
+        business.revokeAuthority(user, id);
         return "redirect:/admin/user?page=%s".formatted(page);
     }
 }

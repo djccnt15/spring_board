@@ -1,8 +1,8 @@
 package com.djccnt15.spring_board.domain.admin.business;
 
 import com.djccnt15.spring_board.annotations.Business;
-import com.djccnt15.spring_board.domain.admin.model.ManagerRoleRequest;
 import com.djccnt15.spring_board.domain.admin.service.AdminUserService;
+import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.user.model.UserResponse;
 import com.djccnt15.spring_board.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +21,27 @@ public class AdminUserBusiness {
         return userService.getList(page);
     }
     
-    public void manageAuthority(ManagerRoleRequest request) {
-        switch (request.getAction()) {
-            case GRANT -> adminUserService.grantManager(request.getId());
-            case REVOKE -> adminUserService.revokeManager(request.getId());
+    public void grantAuthority(
+        UserSession user,
+        Long id
+    ) {
+        var entity = userService.getUser(user);
+        var validation = userService.validateManager(entity);
+        if (!validation) {
+            throw new RuntimeException("you are not manager");
         }
+        adminUserService.grantManager(id);
+    }
+    
+    public void revokeAuthority(
+        UserSession user,
+        Long id
+    ) {
+        var entity = userService.getUser(user);
+        var validation = userService.validateManager(entity);
+        if (!validation) {
+            throw new RuntimeException("you are not manager");
+        }
+        adminUserService.revokeManager(id);
     }
 }

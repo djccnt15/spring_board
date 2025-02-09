@@ -30,13 +30,11 @@
           th:case="'ADMIN'" disabled
         >관리자</button>
         <form
-          th:action="@{|/admin/user/role|}"
+          th:action="@{|/admin/user/${user.id}/role/revoke|}"
           method="POST"
           onsubmit="return confirm('권한을 회수하시겠습니까?');"
         >
           <input type="hidden" name="_method" value="PATCH" />
-          <input type="hidden" name="action" value="REVOKE" />
-          <input type="hidden" name="id" th:value="${user.id}" />
           <input type="hidden" name="page" th:value="${userList.number}" />
           <button
             class="btn btn-sm btn-outline-secondary"
@@ -44,13 +42,11 @@
           >회수</button>
         </form>
         <form
-          th:action="@{|/admin/user/role|}"
+          th:action="@{|/admin/user/${user.id}/role/grant|}"
           method="POST"
           onsubmit="return confirm('권한을 부여하시겠습니까?');"
         >
           <input type="hidden" name="_method" value="PATCH" />
-          <input type="hidden" name="action" value="GRANT" />
-          <input type="hidden" name="id" th:value="${user.id}" />
           <input type="hidden" name="page" th:value="${userList.number}" />
           <button
             class="btn btn-sm btn-outline-secondary"

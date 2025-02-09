@@ -145,5 +145,14 @@ public class UserService {
         if (user.getRole() != null && user.getRole().equals(UserRoleEnum.ADMIN)) {
             throw new RuntimeException("NEVER DELETE ADMIN USER");
         }
+    
+    public boolean validateManager(UserEntity entity) {
+        if (entity.getRole() == null) return false;
+        
+        return switch (entity.getRole()) {
+            case ADMIN, STAFF -> true;
+            case USER -> false;
+            default -> throw new IllegalStateException("Unexpected value: " + entity.getRole());
+        };
     }
 }
