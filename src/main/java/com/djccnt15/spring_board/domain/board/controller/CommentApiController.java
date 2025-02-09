@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,7 @@ public class CommentApiController {
      * @return comment history csv file
      */
     @GetMapping(path = "{mainCategory}/{postId}/comment/{commentId}/history/csvDownload")
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<?> downloadCommentHistoryCsv(
         @PathVariable(value = "mainCategory") String mainCategory,
         @PathVariable(value = "postId") Long postId,
@@ -53,6 +55,7 @@ public class CommentApiController {
      * @return comment history Excel file
      */
     @GetMapping(path = "{mainCategory}/{postId}/comment/{commentId}/history/excelDownload")
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<?> downloadCommentHistoryExcel(
         @AuthenticationPrincipal UserSession user,
         @PathVariable(value = "mainCategory") String mainCategory,
