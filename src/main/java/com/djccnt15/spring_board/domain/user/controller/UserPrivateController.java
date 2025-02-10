@@ -84,7 +84,6 @@ public class UserPrivateController {
         try {
             business.updateProfile(user, form);
         } catch (FormValidationException e) {
-            log.error("", e);  // must input throwable as a second argument for stack tracing
             bindingResult.reject("updateFailed", e.getMessage());
             model.addAttribute("placeholder", business.getUserInfo(user));
             return "user-profile";

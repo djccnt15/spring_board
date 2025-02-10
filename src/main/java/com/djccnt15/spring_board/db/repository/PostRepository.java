@@ -34,7 +34,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
             CommentCounts AS (
                 SELECT
                     c.post_id,
-                    COUNT(*) AS commentCount
+                    COUNT(*) AS comment_count
                 FROM comment c
                 WHERE c.is_active = TRUE
                 GROUP BY c.post_id
@@ -57,7 +57,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
                 pc.content,
                 pc.version,
                 COALESCE(p.view_count, 0) AS view_count,
-                COALESCE(comment.commentCount, 0) AS commentCount,
+                COALESCE(comment.comment_count, 0) AS comment_count,
                 COALESCE(vote.vote_count, 0) AS vote_count
             FROM post AS p
             JOIN category c ON p.category_id = c.id
@@ -179,7 +179,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
             CommentCounts AS (
                 SELECT
                     c.post_id,
-                    COUNT(*) AS commentCount
+                    COUNT(*) AS comment_count
                 FROM comment c
                 WHERE c.is_active = TRUE
                 GROUP BY c.post_id
@@ -202,7 +202,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
                 pc.content,
                 pc.version,
                 p.view_count,
-                COALESCE(comment.commentCount, 0) AS commentCount,
+                COALESCE(comment.comment_count, 0) AS comment_count,
                 COALESCE(vote.vote_count, 0) AS vote_count
             FROM post p
             JOIN LatestPostContent AS pc ON p.id = pc.post_id

@@ -215,7 +215,7 @@
         <a
           class="page-link"
           th:text="${commentList}"
-          th:href="@{|/board/${mainCategory}/${response.id}?page=${commentList}&size=${size}|}"
+          th:href="@{|?page=${commentList}&size=${size}|}"
         ></a>
       </li>
       <li class="page-item" th:classappend="${page + 1 == response.totalCommentPages} ? 'disabled'">

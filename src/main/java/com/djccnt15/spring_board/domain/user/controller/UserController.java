@@ -50,7 +50,6 @@ public class UserController {
         try {
             business.createUser(form);
         } catch (DataIntegrityViolationException e) {
-            log.error("", e);  // must input throwable as a second argument for stack tracing
             bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");
             return "signup_form";
         } catch (Exception e) {

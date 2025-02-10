@@ -26,7 +26,7 @@ public class PostController {
      * @param size size of post list
      * @param page number of page
      * @param keyword search keyword
-     * @param subCategory name of category - sub category
+     * @param category name of category - sub category
      * @return post list view
      */
     @GetMapping(path = "/{mainCategory}")
@@ -36,15 +36,15 @@ public class PostController {
         @RequestParam(value = "size", defaultValue = "10") int size,
         @RequestParam(value = "page", defaultValue = "0") int page,
         @RequestParam(value = "kw", defaultValue = "") String keyword,
-        @RequestParam(value = "category", defaultValue = "") String subCategory
+        @RequestParam(value = "category", defaultValue = "") String category
     ) {
-        var response = business.getPostList(mainCategory, size, page, keyword, subCategory);
+        var response = business.getPostList(mainCategory, size, page, keyword, category);
         model.addAttribute("response", response);
-        model.addAttribute("mainCategory", mainCategory);
+        model.addAttribute(mainCategory);
         model.addAttribute("size", size);
         model.addAttribute("page", page);
         model.addAttribute("kw", keyword);
-        model.addAttribute("category", subCategory);
+        model.addAttribute(category);
         return "post-list";
     }
     
@@ -66,6 +66,8 @@ public class PostController {
      * @param model inject from spring
      * @param mainCategory name of category
      * @param id id of post
+     * @param size size of comment list
+     * @param page number of page
      * @return post detail view
      */
     @GetMapping(path = "/{mainCategory}/{id}")

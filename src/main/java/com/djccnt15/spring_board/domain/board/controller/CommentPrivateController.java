@@ -30,6 +30,8 @@ public class CommentPrivateController {
      * @param user user session
      * @param mainCategory name of the main category
      * @param postId id of the post
+     * @param size size of comment list
+     * @param page number of page
      * @param request data model for comment create
      * @param bindingResult validated result. this must come right after the form
      * @return redirect to anchor in post page

@@ -75,7 +75,10 @@ public class AdminCategoryBusiness {
             .build();
     }
     
-    public void updateMainCategory(Long id, CategoryCreateRequest form) {
+    public void updateMainCategory(
+        Long id,
+        CategoryCreateRequest form
+    ) {
         service.validateName(form);
         var entity = service.getCategory(id);
         service.validateDefault(entity);
@@ -112,7 +115,10 @@ public class AdminCategoryBusiness {
             .build();
     }
     
-    public void updateSubCategory(Long id, CategoryCreateRequest form) {
+    public void updateSubCategory(
+        Long id,
+        CategoryCreateRequest form
+    ) {
         var entity = service.getCategory(id);
         service.validateDefault(entity);
         var parent = service.getCategory(form.getMainId());

@@ -94,7 +94,7 @@ public class PostBusiness {
             .build();
     }
     
-    @Transactional
+    @Transactional  // rollback changed view count if reading db record fails
     public PostDetailResponse getPostDetail(
         Long id,
         Integer size,

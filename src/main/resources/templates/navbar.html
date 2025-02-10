@@ -32,9 +32,7 @@
             class="nav-link"
             sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"
             th:href="@{/admin}"
-          >
-            관리자
-          </a>
+          >관리자</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/profile}">My Page</a>

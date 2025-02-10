@@ -63,7 +63,7 @@
       <td th:text="${post.id}"></td>
       <td>
         <a
-          th:href="@{|/board/${mainCategory}?category=${post.category}|}"
+          th:href="@{|?category=${post.category}|}"
           th:text="${post.category}"
         ></a>
       </td>
@@ -114,7 +114,7 @@
         <a
           class="page-link"
           th:text="${pageList}"
-          th:href="@{|/board/${mainCategory}?page=${pageList}&size=${size}&kw=${kw}&category=${category}|}"
+          th:href="@{|?page=${pageList}&size=${size}&kw=${kw}&category=${category}|}"
         ></a>
       </li>
       <li class="page-item" th:classappend="${page + 1 == response.totalPages} ? 'disabled'">

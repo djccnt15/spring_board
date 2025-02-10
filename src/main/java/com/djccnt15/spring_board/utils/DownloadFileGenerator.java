@@ -1,6 +1,7 @@
 package com.djccnt15.spring_board.utils;
 
 import com.djccnt15.spring_board.annotations.TableHeader;
+import com.djccnt15.spring_board.exception.ApiInternalServerException;
 import com.djccnt15.spring_board.utils.model.ExcelCoverData;
 import com.djccnt15.spring_board.utils.model.ExcelTableSheetData;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +41,7 @@ public class DownloadFileGenerator {
             return out.toByteArray();
         } catch (IOException e) {
             log.error("", e);
-            throw new RuntimeException(e.getMessage());
+            throw new ApiInternalServerException(e.getMessage());
         }
     }
     

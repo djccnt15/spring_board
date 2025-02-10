@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 
 @Slf4j
@@ -48,7 +49,9 @@ public class AdminCategoryApiController {
             return ResponseEntity.badRequest().body(errResponse);
         }
         business.createMainCategory(form);
-        return ResponseEntity.ok(ResponseMessageEnum.CREATE);
+        return ResponseEntity
+            .created(URI.create("/admin/category"))
+            .body(ResponseMessageEnum.CREATE);
     }
     
     /**
@@ -104,7 +107,9 @@ public class AdminCategoryApiController {
             return ResponseEntity.badRequest().body(errResponse);
         }
         business.createSubCategory(form);
-        return ResponseEntity.ok(ResponseMessageEnum.CREATE);
+        return ResponseEntity
+            .created(URI.create("/admin/category"))
+            .body(ResponseMessageEnum.CREATE);
     }
     
     /**
@@ -139,7 +144,7 @@ public class AdminCategoryApiController {
     /**
      * controller for delete main category
      * @param id id of category to delete
-     * @return redirect to admin category page
+     * @return ResponseEntity
      */
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> deleteCategory(@PathVariable(value = "id") Long id) {
@@ -150,7 +155,7 @@ public class AdminCategoryApiController {
     /**
      * api controller for pin category
      * @param id category id
-     * @return redirect to category manage page
+     * @return ResponseEntity
      */
     @PatchMapping(path = "/{id}/pin")
     public ResponseEntity<?> pinCategory(@PathVariable(value = "id") Long id) {
