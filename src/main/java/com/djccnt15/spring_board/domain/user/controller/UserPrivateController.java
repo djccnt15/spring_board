@@ -25,10 +25,12 @@ public class UserPrivateController {
     
     /**
      * view controller for resign page
+     * @param model inject from spring
      * @return resign page view
      */
     @GetMapping(path = "/resign")
-    public String resign() {
+    public String resign(Model model) {
+        model.addAttribute("showProfileLeftNav", true);
         return "resign-form";
     }
     

@@ -24,6 +24,12 @@
         sec:authorize="isAuthenticated()"
       >작성 댓글 보기</a>
     </li>
+    <li>
+      <a
+        class="nav-link"
+        th:href="@{/user/resign}"
+        sec:authorize="isAuthenticated() and !hasRole('ADMIN')"
+      >회원탈퇴</a>
     </li>
   </ul>
 </div>
