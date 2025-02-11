@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -27,7 +28,7 @@ public class DownloadFileGenerator {
             .setHeader(getFieldNames(type))
             .get();
         try (
-            var writer = new OutputStreamWriter(out);
+            var writer = new OutputStreamWriter(out, Charset.forName("EUC-KR"));
             var csvPrinter = new CSVPrinter(writer, format)
         ) {
             if (records == null || records.isEmpty()) {
