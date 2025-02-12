@@ -42,7 +42,7 @@ public class UserPrivateController {
     @DeleteMapping(path = "/resign")
     public String resign(@AuthenticationPrincipal UserSession user) {
         business.resign(user);
-        return "redirect:/";
+        return "redirect:/user/logout";
     }
     
     /**
