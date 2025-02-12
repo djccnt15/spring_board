@@ -73,6 +73,18 @@
           th:href="@{|/board/${mainCategory}/${post.id}|}"
           th:text="${post.title}"
         ></a>
+        <span
+          class="badge rounded bg-primary"
+          th:text="|댓글 ${post.commentCount}|"
+          th:if="${post.commentCount} > 0"
+        >
+        </span>
+        <span
+          class="badge rounded bg-success"
+          th:text="|추천 ${post.voteCount}|"
+          th:if="${post.voteCount} > 0"
+        >
+        </span>
       </td>
       <td>
         <span
