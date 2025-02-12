@@ -8,27 +8,48 @@
   <div class="my-3 border-bottom">
     <h5>회원가입</h5>
   </div>
-  <form th:action="@{/user/signup}" th:object="${userCreateForm}" method="POST">
+  <form th:action="@{/user/signup}" th:object="${userCreateForm}" method="POST" class="needs-validation" novalidate>
     <div th:replace="~{form_errors :: formErrorsFragment}"></div>
     <div class="mb-3">
       <label for="username" class="form-label">사용자ID</label>
-      <input id="username" type="text" th:field="*{username}" class="form-control" autofocus>
+      <input id="username" type="text" th:field="*{username}" class="form-control" autofocus required>
+      <div class="invalid-feedback">ID is essential</div>
     </div>
     <div class="d-flex flex-row gap-3 mb-3">
       <div class="flex-grow-1">
         <label for="password1" class="form-label">비밀번호</label>
-        <input id="password1" type="password" th:field="*{password1}" class="form-control">
+        <input id="password1" type="password" th:field="*{password1}" class="form-control" required>
+        <div class="invalid-feedback">password is essential</div>
       </div>
       <div class="flex-grow-1">
         <label for="password2" class="form-label">비밀번호 확인</label>
-        <input id="password2" type="password" th:field="*{password2}" class="form-control">
+        <input id="password2" type="password" th:field="*{password2}" class="form-control" required>
+        <div class="invalid-feedback">password validation is essential</div>
       </div>
     </div>
     <div class="mb-3">
       <label for="email" class="form-label">이메일</label>
-      <input id="email" type="email" th:field="*{email}" class="form-control">
+      <input id="email" type="email" th:field="*{email}" class="form-control" required>
+      <div class="invalid-feedback">email is essential</div>
     </div>
     <button type="submit" class="btn btn-primary">회원가입</button>
   </form>
 </div>
+<script layout:fragment="script" type='text/javascript'>
+  (() => {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+
+    Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+          form.classList.add('was-validated')
+        }, false)
+      })
+  })()
+</script>
 </html>

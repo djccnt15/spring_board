@@ -6,7 +6,7 @@
 >
 <div layout:fragment="content" class="container">
   <h5 class="my-3 border-bottom pb-2">회원정보</h5>
-  <form th:action="@{/user/profile}" th:object="${form}" method="POST">
+  <form th:action="@{/user/profile}" th:object="${form}" method="POST" class="needs-validation" novalidate>
     <input type="hidden" name="_method" value="PUT" />
     <div class="d-flex flex-row gap-3 mb-3">
       <div class="flex-grow-1">
@@ -28,7 +28,8 @@
     <div class="mb-3">
       <label for="password" class="form-label">현재 비밀번호</label>
       <div th:replace="~{form_errors :: formErrorsFragment}"></div>
-      <input id="password" type="password" th:field="*{password}" class="form-control">
+      <input id="password" type="password" th:field="*{password}" class="form-control" required>
+      <div class="invalid-feedback">password is essential</div>
     </div>
     <div class="d-flex flex-row gap-3 mb-3">
       <div class="flex-grow-1">
@@ -50,4 +51,21 @@
     <button type="submit" class="btn btn-primary">저장</button>
   </form>
 </div>
+<script layout:fragment="script" type='text/javascript'>
+  (() => {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+
+    Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+          form.classList.add('was-validated')
+        }, false)
+      })
+  })()
+</script>
 </html>

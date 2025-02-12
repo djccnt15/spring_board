@@ -5,21 +5,26 @@
   lang="ko"
 >
 <div layout:fragment="content" class="container my-3">
-  <form th:action="@{/user/login}" method="POST">
+  <form th:action="@{/user/login}" method="POST" class="needs-validation" novalidate>
     <div th:if="${param.error}">
-      <div class="alert alert-danger">
-        사용자ID 또는 비밀번호를 확인해 주세요.
-      </div>
+      <div class="alert alert-danger" th:text="${param.error}"></div>
     </div>
     <div class="d-flex flex-row gap-3 mb-3">
       <div class="flex-grow-1">
         <label for="username" class="form-label">사용자ID</label>
-        <input type="text" name="username" id="username" class="form-control" autofocus>
+        <input type="text" name="username" id="username" class="form-control" autofocus required>
+        <div class="invalid-feedback">ID is essential</div>
       </div>
       <div class="flex-grow-1">
         <label for="password" class="form-label">비밀번호</label>
-        <input type="password" name="password" id="password" class="form-control">
+        <input type="password" name="password" id="password" class="form-control" required>
+        <div class="invalid-feedback">password is essential</div>
       </div>
+    </div>
+    <div class="form-check mb-3">
+      <label>
+        <input type="checkbox" class="form-check-input" name="remember-me" checked> 로그인 유지하기
+      </label>
     </div>
     <div>
       <button type="submit" class="btn btn-primary d-inline-block">로그인</button>
@@ -27,4 +32,21 @@
     </div>
   </form>
 </div>
+<script layout:fragment="script" type='text/javascript'>
+  (() => {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+
+    Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+          form.classList.add('was-validated')
+        }, false)
+      })
+  })()
+</script>
 </html>
