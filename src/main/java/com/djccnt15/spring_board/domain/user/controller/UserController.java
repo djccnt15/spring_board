@@ -25,11 +25,22 @@ public class UserController {
     
     private final UserBusiness business;
     
+    /**
+     * view controller to signup form
+     * @param userCreateForm user create form inject for view
+     * @return signup page
+     */
     @GetMapping(path = "/signup")
     public String signup(UserCreateForm userCreateForm) {
         return "signup_form";
     }
     
+    /**
+     * view controller for User signup
+     * @param form user create form data
+     * @param bindingResult validated result of form data
+     * @return redirect to main page
+     */
     @PostMapping(path = "/signup")
     public String signup(
         @Valid UserCreateForm form,
@@ -61,6 +72,10 @@ public class UserController {
         return "redirect:/";
     }
     
+    /**
+     * view controller for login
+     * @return login page
+     */
     @GetMapping(path = "/login")
     public String login() {
         return "login_form";

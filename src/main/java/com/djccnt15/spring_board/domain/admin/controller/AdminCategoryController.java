@@ -58,6 +58,12 @@ public class AdminCategoryController {
         return "category-main-update-form";
     }
     
+    /**
+     * view controller for update sub category
+     * @param model inject from spring
+     * @param id category id
+     * @return sub category update page
+     */
     @GetMapping(path = "/sub/form/{id}")
     public String updateSubCategoryForm(
         Model model,
