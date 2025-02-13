@@ -2,6 +2,7 @@ package com.djccnt15.spring_board.config.security;
 
 import com.djccnt15.spring_board.domain.auth.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,6 +29,12 @@ public class SecurityConfig {
         "/swagger-ui/**",
         "/v3/api-docs/**"
     );
+    
+    @Value("${app.session.remember.token-valid-sec}")
+    private int tokenValidSecond;
+    
+    @Value("${app.session.remember.key}")
+    private String tokenKey;
     
     private final AuthService authService;
     
@@ -62,13 +69,20 @@ public class SecurityConfig {
                 .loginPage("/user/login")
                 .defaultSuccessUrl("/")
             )
+            .rememberMe(remember -> remember
+                .key(tokenKey)
+                .tokenValiditySeconds(tokenValidSecond)
+                .alwaysRemember(true)
+            )
             .logout((logout) -> logout
                 // Spring Security uses ExactRequestMatcher for matching the logout URL, which works only for `POST` requests
                 // use AntPathRequestMatcher to let client logout via `GET` method
                 // not using AntPathRequestMatcher raises `No static resource user/logout.` exception
                 .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
                 .logoutSuccessUrl("/")
-                .invalidateHttpSession(true))
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+            )
         ;
         return http.build();
     }

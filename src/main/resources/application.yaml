@@ -52,5 +52,9 @@ logging:
   pattern:
     dateformat: yyyy-MM-dd HH:mm:ss.SSS,Asia/Seoul
 app:
+  session:
+    remember:
+      token-valid-sec: 1209600  # 2 weeks in seconds
+      key: ${REMEMBER_TOKEN_KEY}
   category:
     max-pin: 6
