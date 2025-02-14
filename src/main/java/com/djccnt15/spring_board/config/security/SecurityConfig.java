@@ -11,7 +11,6 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -36,6 +35,7 @@ public class SecurityConfig {
     @Value("${app.session.remember.key}")
     private String tokenKey;
     
+    private final PasswordEncoder encoder;
     private final AuthService authService;
     
     /**
@@ -94,14 +94,6 @@ public class SecurityConfig {
     }
     
     /**
-     * Bean for password encoding
-     */
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-    
-    /**
      * Bean for Spring Security authentication
      * <br>
      * this bean works with implements of UserDetailsService, PasswordEncoder
@@ -110,7 +102,7 @@ public class SecurityConfig {
     AuthenticationManager authenticationManager() throws Exception {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(authService);
-        authProvider.setPasswordEncoder(passwordEncoder());
+        authProvider.setPasswordEncoder(encoder);
         return new ProviderManager(authProvider);
     }
 }
