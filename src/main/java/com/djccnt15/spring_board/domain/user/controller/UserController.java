@@ -117,4 +117,13 @@ public class UserController {
         }
         return "user-recovered";
     }
+    
+    /**
+     * view controller for session expired
+     * @return session expired page
+     */
+    @GetMapping(path = "/session-expired")
+    public String sessionExpired() {
+        return "session-expired";
+    }
 }

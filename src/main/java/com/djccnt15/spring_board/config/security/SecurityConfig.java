@@ -69,6 +69,12 @@ public class SecurityConfig {
                 .loginPage("/user/login")
                 .defaultSuccessUrl("/")
             )
+            .sessionManagement(session -> session
+                // .invalidSessionUrl("/login?timeout")  // redirect on timeout
+                .sessionFixation().migrateSession()
+                .maximumSessions(1)
+                .expiredUrl("/session-expired")  // redirect when session expires
+            )
             .rememberMe(remember -> remember
                 .key(tokenKey)
                 .tokenValiditySeconds(tokenValidSecond)
