@@ -1,6 +1,7 @@
 package com.djccnt15.spring_board.domain.auth;
 
 import com.djccnt15.spring_board.db.entity.enums.UserRoleEnum;
+import com.djccnt15.spring_board.db.repository.UserRepository;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.user.service.UserService;
 import com.djccnt15.spring_board.enums.UserAuthorityEnum;
@@ -24,11 +25,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuthService implements UserDetailsService {
     
+    private final UserRepository userRepository;
     private final UserService userService;
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var userEntity = userService.getUser(username);
+        var userEntity = userRepository.findFirstByUsername(username)
+            .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
         
         // adding user authorities for hasRole(), hasAuthority()
         List<GrantedAuthority> authorities = new ArrayList<>();
