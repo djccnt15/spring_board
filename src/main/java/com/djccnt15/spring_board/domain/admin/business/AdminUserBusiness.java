@@ -18,7 +18,9 @@ public class AdminUserBusiness {
     private final AdminUserService adminUserService;
     
     public Page<UserResponse> getUserList(int page) {
-        return userService.getList(page);
+        var entityList = userService.getList(page);
+        entityList.map(userService::setState);
+        return entityList.map(userConverter::toResponse);
     }
     
     public void grantAuthority(

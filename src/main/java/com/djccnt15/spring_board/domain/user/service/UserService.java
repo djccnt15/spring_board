@@ -49,10 +49,9 @@ public class UserService {
             .orElseThrow(() -> new DataNotFoundException("User Not Found"));
     }
     
-    public Page<UserResponse> getList(int page) {
+    public Page<UserEntity> getList(int page) {
         var pageable = PageRequest.of(page, 10);
-        var userList = userRepository.findByUsernameIsNotNullOrderById(pageable);
-        return userList.map(userConverter::toResponse);
+        return userRepository.findByUsernameIsNotNullOrderById(pageable);
     }
     
     public void resign(UserEntity user) {
