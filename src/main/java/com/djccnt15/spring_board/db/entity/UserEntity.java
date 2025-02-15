@@ -67,4 +67,16 @@ public class UserEntity extends BaseEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     @ToString.Exclude
     private Set<LoggedInEntity> loggedIn;
+    
+    @Transient  // annotation for not persistent field
+    @Builder.Default
+    private boolean isDisabled = false;
+    
+    @Transient  // annotation for not persistent field
+    @Builder.Default
+    private boolean isLocked = false;
+    
+    @Transient  // annotation for not persistent field
+    @Builder.Default
+    private boolean isBanned = false;
 }

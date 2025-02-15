@@ -23,4 +23,13 @@ public class UserResponse {
     private LocalDateTime createDateTime;
     
     private UserRoleEnum role;
+    
+    @Builder.Default
+    private boolean isDisabled = false;
+    
+    @Builder.Default
+    private boolean isLocked = false;
+    
+    @Builder.Default
+    private boolean isBanned = false;
 }
