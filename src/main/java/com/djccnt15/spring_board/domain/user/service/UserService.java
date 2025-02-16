@@ -1,13 +1,16 @@
 package com.djccnt15.spring_board.domain.user.service;
 
 import com.djccnt15.spring_board.db.entity.UserEntity;
+import com.djccnt15.spring_board.db.entity.UserStateEntity;
 import com.djccnt15.spring_board.db.entity.enums.UserRoleEnum;
 import com.djccnt15.spring_board.db.repository.CommentRepository;
 import com.djccnt15.spring_board.db.repository.PostRepository;
 import com.djccnt15.spring_board.db.repository.UserRepository;
+import com.djccnt15.spring_board.db.repository.UserStateRepository;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.user.converter.UserConverter;
 import com.djccnt15.spring_board.domain.user.model.*;
+import com.djccnt15.spring_board.enums.UserStateEnum;
 import com.djccnt15.spring_board.exception.DataNotFoundException;
 import com.djccnt15.spring_board.exception.FormValidationException;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +32,7 @@ public class UserService {
     private final UserConverter userConverter;
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
+    private final UserStateRepository userStateRepository;
     
     public void createUser(UserCreateForm form) {
         var userEntity = UserEntity.builder()
@@ -41,6 +45,11 @@ public class UserService {
     
     public UserEntity getUser(String username) {
         return userRepository.findFirstByUsername(username)
+            .orElseThrow(() -> new DataNotFoundException("User Not Found"));
+    }
+    
+    public UserEntity getUser(Long id) {
+        return userRepository.findFirstById(id)
             .orElseThrow(() -> new DataNotFoundException("User Not Found"));
     }
     
@@ -152,5 +161,18 @@ public class UserService {
             case USER -> false;
             default -> throw new IllegalStateException("Unexpected value: " + entity.getRole());
         };
+    }
+    
+    public UserEntity setState(UserEntity user) {
+        var userState = userStateRepository.findByUser(user);
+        for (var state : userState) setState(user, state);
+        return user;
+    }
+    
+    private void setState(UserEntity user, UserStateEntity userState) {
+        var stateId = userState.getState().getId();
+        if (stateId.equals(UserStateEnum.DISABLED.getId())) user.setDisabled(true);
+        else if (stateId.equals(UserStateEnum.LOCKED.getId())) user.setLocked(true);
+        else if (stateId.equals(UserStateEnum.BANNED.getId())) user.setBanned(true);
     }
 }

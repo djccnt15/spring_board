@@ -7,10 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Controller
@@ -68,6 +65,23 @@ public class AdminUserController {
         @RequestParam(value = "page", defaultValue = "0") int page
     ) {
         business.revokeAuthority(user, id);
+        return "redirect:/admin/user?page=%s".formatted(page);
+    }
+    
+    /**
+     * unban user
+     * @param user user session
+     * @param id user id
+     * @param page number of page
+     * @return redirect to admin/ user page for refresh
+     */
+    @PutMapping(path = "/{id}/unban")
+    public String unban(
+        @AuthenticationPrincipal UserSession user,
+        @PathVariable(value = "id") Long id,
+        @RequestParam(value = "page", defaultValue = "0") int page
+    ) {
+        business.unbanUser(user, id);
         return "redirect:/admin/user?page=%s".formatted(page);
     }
 }

@@ -16,4 +16,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findFirstByUsernameAndIdNot(String username, Long id);
     
     Optional<UserEntity> findFirstByEmailAndIdNot(String email, Long id);
+    
+    Optional<UserEntity> findFirstById(Long id);
 }
