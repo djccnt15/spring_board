@@ -75,4 +75,29 @@ public class AdminUserBusiness {
         var state = adminUserService.getState(UserStateEnum.BANNED);
         adminUserService.deleteUserState(targetUser, state);
     }
+    
+    public void blockUser(
+        UserSession user,
+        Long id,
+        DetailForm form
+    ) {
+        var entity = userService.getUser(user);
+        var validation = userService.validateManager(entity);
+        if (!validation) throw new RuntimeException("you are not a manager");
+        var targetUser = userService.getUser(id);
+        var state = adminUserService.getState(UserStateEnum.LOCKED);
+        adminUserService.createUserState(form, targetUser, state);
+    }
+    
+    public void unBlockUser(
+        UserSession user,
+        Long id
+    ) {
+        var entity = userService.getUser(user);
+        var validation = userService.validateManager(entity);
+        if (!validation) throw new RuntimeException("you are not a manager");
+        var targetUser = userService.getUser(id);
+        var state = adminUserService.getState(UserStateEnum.LOCKED);
+        adminUserService.deleteUserState(targetUser, state);
+    }
 }

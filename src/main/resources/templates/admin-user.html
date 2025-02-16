@@ -14,6 +14,7 @@
       <th class="text-start" style="width:30%">Email</th>
       <th>가입일</th>
       <th>차단</th>
+      <th>정지</th>
       <th>매니저</th>
     </tr>
     </thead>
@@ -46,6 +47,32 @@
           <button
             class="btn btn-sm btn-outline-secondary"
             th:if="${#strings.toString(user.role)} != 'ADMIN' AND ${user.isBanned == true}"
+          >해제</button>
+        </form>
+      </td>
+      <td>
+        <button
+          class="btn btn-sm btn-outline-secondary"
+          th:if="${#strings.toString(user.role)} == 'ADMIN'" disabled
+        >관리자</button>
+        <button
+          class="btn btn-sm btn-outline-danger"
+          th:if="${#strings.toString(user.role)} != 'ADMIN' AND ${user.isLocked == false}"
+          th:attr="data-user-id=${user.id}, data-username=${user.username}"
+          data-bs-toggle="modal"
+          data-bs-target="#blockUserModal"
+          onclick="openBlockModal(this)"
+        >정지</button>
+        <form
+          th:action="@{|/admin/user/${user.id}/unblock|}"
+          method="POST"
+          onsubmit="return confirm('정지를 해제하시겠습니까?');"
+        >
+          <input type="hidden" name="_method" value="PUT" />
+          <input type="hidden" name="page" th:value="${userList.number}" />
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            th:if="${#strings.toString(user.role)} != 'ADMIN' AND ${user.isLocked == true}"
           >해제</button>
         </form>
       </td>
@@ -134,6 +161,32 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
               <button type="submit" class="btn btn-danger">차단</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- block user form modal -->
+  <div class="modal fade" id="blockUserModal" tabindex="-1" aria-labelledby="banUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="blockUserModalLabel">사용자 정지</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="blockUserForm" method="POST" class="needs-validation" novalidate>
+            <input type="hidden" name="_method" value="PUT">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <div class="mb-3">
+              <label for="blockReason" class="form-label">정지 사유</label>
+              <textarea class="form-control" id="blockReason" name="detail" rows="2" required></textarea>
+              <div class="invalid-feedback">정지 사유는 필수입니다.</div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+              <button type="submit" class="btn btn-danger">정지</button>
             </div>
           </form>
         </div>

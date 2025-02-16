@@ -84,4 +84,21 @@ public class AdminUserController {
         business.unbanUser(user, id);
         return "redirect:/admin/user?page=%s".formatted(page);
     }
+    
+    /**
+     * unblock user
+     * @param user user session
+     * @param id user id
+     * @param page number of page
+     * @return redirect to admin user page for refresh
+     */
+    @PutMapping(path = "/{id}/unblock")
+    public String unblock(
+        @AuthenticationPrincipal UserSession user,
+        @PathVariable(value = "id") Long id,
+        @RequestParam(value = "page", defaultValue = "0") int page
+    ) {
+        business.unBlockUser(user, id);
+        return "redirect:/admin/user?page=%s".formatted(page);
+    }
 }

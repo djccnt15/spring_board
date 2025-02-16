@@ -10,6 +10,18 @@ function openBanModal(button) {
 const banForm = document.getElementById("banUserForm");
 banForm.addEventListener("submit", handleFormSubmit)
 
+function openBlockModal(button) {
+  var username = button.getAttribute("data-username");
+  document.getElementById("blockUserModalLabel").textContent = username + " 정지";
+
+  var form = document.getElementById("blockUserForm");
+  var userId = button.getAttribute("data-user-id");
+  form.action = `/admin/user/${userId}/block`;
+}
+
+const blockForm = document.getElementById("blockUserForm");
+blockForm.addEventListener("submit", handleFormSubmit)
+
 async function handleFormSubmit(event) {
   event.preventDefault();
   try {

@@ -5,9 +5,9 @@ import com.djccnt15.spring_board.db.entity.UserStateEntity;
 import com.djccnt15.spring_board.db.entity.id.UserStateId;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Set;
+import java.util.List;
 
 public interface UserStateRepository extends JpaRepository<UserStateEntity, UserStateId> {
     
-    Set<UserStateEntity> findByUser(UserEntity user);
+    List<UserStateEntity> findByUser(UserEntity user);
 }
