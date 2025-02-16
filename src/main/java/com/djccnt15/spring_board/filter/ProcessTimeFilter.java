@@ -21,8 +21,9 @@ public class ProcessTimeFilter implements Filter {
     
     private final List<String> excludeUriPattern = Arrays.asList(
         "/favicon.ico",
-        "/style.css",
-        "/bootstrap.min"
+        "/bootstrap.min",
+        ".js",
+        ".css"
     );
     
     private boolean checkExclude(String uri) {
