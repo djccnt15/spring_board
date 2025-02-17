@@ -10,17 +10,17 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> 
     
     Optional<CategoryEntity> findFirstByName(String name);
     
-    List<CategoryEntity> findByTierAndIsActiveOrderByName(Integer tier, Boolean isActive);
+    List<CategoryEntity> findByTierAndIsActiveOrderByName(int tier, boolean isActive);
     
-    List<CategoryEntity> findByParentAndIsActiveOrderByName(CategoryEntity category, Boolean isActive);
+    List<CategoryEntity> findByParentAndIsActiveOrderByName(CategoryEntity category, boolean isActive);
     
-    Optional<CategoryEntity> findFirstByIdAndIsActive(Long id, Boolean isActive);
+    Optional<CategoryEntity> findFirstByIdAndIsActive(Long id, boolean isActive);
     
-    Optional<CategoryEntity> findFirstByNameAndIsActive(String categoryName, Boolean isActive);
+    Optional<CategoryEntity> findFirstByNameAndIsActive(String categoryName, boolean isActive);
     
     Optional<CategoryEntity> findFirstByPinOrderIsNotNullOrderByPinOrderDesc();
     
     List<CategoryEntity> findByPinOrderIsNotNullOrderByPinOrder();
     
-    Integer countByPinOrderIsNotNull();
+    int countByPinOrderIsNotNull();
 }

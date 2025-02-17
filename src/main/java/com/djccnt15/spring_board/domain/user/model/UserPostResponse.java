@@ -23,11 +23,11 @@ public class UserPostResponse {
     
     private String content;
     
-    private Integer version;
+    private int version;
     
-    private Integer viewCount;
+    private int viewCount;
     
-    private Integer commentCount;
+    private int commentCount;
     
-    private Integer voteCount;
+    private int voteCount;
 }

@@ -33,7 +33,7 @@ public class CategoryService {
     @Value("${app.category.max-pin}")
     private int categoryMaxPin;
     
-    public List<CategoryEntity> getCategoryByTier(Integer tier) {
+    public List<CategoryEntity> getCategoryByTier(int tier) {
         return categoryRepository.findByTierAndIsActiveOrderByName(tier, true);
     }
     

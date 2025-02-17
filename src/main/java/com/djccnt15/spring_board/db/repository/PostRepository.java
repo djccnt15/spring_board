@@ -82,8 +82,8 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
     )
     List<PostDetailProjection> getPostListByCategory(
         @Param("category_id") Long mainCategoryId,
-        @Param("size") Integer size,
-        @Param("page") Integer page,
+        @Param("size") int size,
+        @Param("page") int page,
         @Param("keyword") String keyword,
         @Param("sub_category_id") Long subCategoryId
     );
@@ -119,7 +119,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
             """,
         nativeQuery = true
     )
-    Integer countPostListByCategory(
+    int countPostListByCategory(
         @Param("category_id") Long categoryId,
         @Param("keyword") String keyword,
         @Param("sub_category_id") Long subCategoryId
@@ -156,7 +156,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
     )
     List<PostMinimalProjection> getMinimalPostListByCategory(
         @Param("category_id") Long categoryId,
-        @Param("size") Integer size
+        @Param("size") int size
     );
     
     @Query(
@@ -287,11 +287,11 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
     )
     List<UserPostProjection> getPostListByUserId(
         @Param("user_id") Long userId,
-        @Param("size") Integer size,
-        @Param("page") Integer page
+        @Param("size") int size,
+        @Param("page") int page
     );
     
-    Integer countByIsActiveAndAuthorId(Boolean isActive, Long userId);
+    int countByIsActiveAndAuthorId(boolean isActive, Long userId);
     
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query(value = """
@@ -304,7 +304,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
         nativeQuery = true
     )
     void updatePostActiveByCategory(
-        @Param("is_active") Boolean isActive,
+        @Param("is_active") boolean isActive,
         @Param("category_id") Long categoryId
     );
 }

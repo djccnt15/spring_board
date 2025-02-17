@@ -35,7 +35,7 @@ public class PostEntity extends BaseEntity {
     @ColumnDefault(value = "0")
     @Builder.Default
     @NotNull
-    private Integer views = 0;
+    private int views = 0;
     
     @JoinColumn(name = "category_id")
     @ManyToOne

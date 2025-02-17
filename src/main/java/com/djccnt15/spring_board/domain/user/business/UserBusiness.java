@@ -67,8 +67,8 @@ public class UserBusiness {
     
     public UserItemListResponse getUserPost(
         UserSession user,
-        Integer size,
-        Integer page
+        int size,
+        int page
     ) {
         var postList = service.getUserPost(user, size, page);
         var postListCount = service.getUserPostListCount(user);
@@ -81,8 +81,8 @@ public class UserBusiness {
     
     public UserItemListResponse getUserComment(
         UserSession user,
-        Integer size,
-        Integer page
+        int size,
+        int page
     ) {
         var commentList = service.getUserComment(user, size, page);
         var commentListCount = service.getUserCommentListCount(user);

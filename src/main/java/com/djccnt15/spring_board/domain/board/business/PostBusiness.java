@@ -52,8 +52,8 @@ public class PostBusiness {
     
     public PostListResponse getPostList(
         String mainCategoryName,
-        Integer size,
-        Integer page,
+        int size,
+        int page,
         String keyword,
         String categoryName
     ) {
@@ -97,8 +97,8 @@ public class PostBusiness {
     @Transactional  // rollback changed view count if reading db record fails
     public PostDetailResponse getPostDetail(
         Long id,
-        Integer size,
-        Integer page
+        int size,
+        int page
     ) {
         postService.updateViewCount(id);
         var post = postService.getPostDetail(id);

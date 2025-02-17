@@ -9,7 +9,7 @@ import java.util.List;
 @Builder
 public class UserItemListResponse {
     
-    private Integer totalPages;
+    private int totalPages;
     
     private List<?> itemList;
 }

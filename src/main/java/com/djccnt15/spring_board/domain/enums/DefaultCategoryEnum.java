@@ -18,7 +18,7 @@ public enum DefaultCategoryEnum {
     ;
     
     private final String value;
-    private final Integer tier;
+    private final int tier;
     
     public static boolean contains(String category) {
         return Arrays.stream(DefaultCategoryEnum.values())

@@ -18,11 +18,11 @@ public interface UserPostProjection {
     
     String getContent();
     
-    Integer getVersion();
+    int getVersion();
     
-    Integer getViewCount();
+    int getViewCount();
     
-    Integer getCommentCount();
+    int getCommentCount();
     
-    Integer getVoteCount();
+    int getVoteCount();
 }

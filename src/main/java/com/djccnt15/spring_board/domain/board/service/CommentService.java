@@ -54,8 +54,8 @@ public class CommentService {
     
     public List<CommentResponse> getCommentList(
         PostDetailResponse post,
-        Integer size,
-        Integer page
+        int size,
+        int page
     ) {
         var commentList = commentRepository.getCommentListByPostId(post.getId(), size, size * page);
         return commentList.stream()

@@ -21,7 +21,7 @@ public class CommentResponse {
     
     private String content;
     
-    private Integer version;
+    private int version;
     
-    private Integer voteCount;
+    private int voteCount;
 }

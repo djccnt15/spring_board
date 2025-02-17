@@ -60,11 +60,11 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
     )
     List<CommentProjection> getCommentListByPostId(
         @Param("post_id") Long postId,
-        @Param("size") Integer size,
-        @Param("page") Integer page
+        @Param("size") int size,
+        @Param("page") int page
     );
     
-    List<CommentEntity> findByPostAndIsActive(PostEntity post, Boolean isActive);
+    List<CommentEntity> findByPostAndIsActive(PostEntity post, boolean isActive);
     
     @Query(value = """
         WITH LatestCommentContent AS (
@@ -121,11 +121,11 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
     )
     List<UserCommentProjection> getCommentListByUserId(
         @Param("user_id") Long userId,
-        @Param("size") Integer size,
-        @Param("page") Integer page
+        @Param("size") int size,
+        @Param("page") int page
     );
     
-    Integer countByIsActiveAndAuthorId(Boolean isActive, Long userId);
+    int countByIsActiveAndAuthorId(boolean isActive, Long userId);
     
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query(value = """
@@ -139,7 +139,7 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
         nativeQuery = true
     )
     void updateCommentActiveByCategory(
-        @Param("is_active") Boolean isActive,
+        @Param("is_active") boolean isActive,
         @Param("category_id") Long categoryId
     );
 }

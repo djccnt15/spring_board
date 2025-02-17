@@ -121,8 +121,8 @@ public class UserService {
     
     public List<UserPostResponse> getUserPost(
         UserSession user,
-        Integer size,
-        Integer page
+        int size,
+        int page
     ) {
         var postList = postRepository.getPostListByUserId(user.getUserId(), size, size * page);
         return postList.stream()
@@ -136,8 +136,8 @@ public class UserService {
     
     public List<UserCommentResponse> getUserComment(
         UserSession user,
-        Integer size,
-        Integer page
+        int size,
+        int page
     ) {
         var commentList = commentRepository.getCommentListByUserId(user.getUserId(), size, size * page);
         return commentList.stream()
@@ -145,7 +145,7 @@ public class UserService {
             .toList();
     }
     
-    public Integer getUserCommentListCount(UserSession user) {
+    public int getUserCommentListCount(UserSession user) {
         return commentRepository.countByIsActiveAndAuthorId(true, user.getUserId());
     }
     

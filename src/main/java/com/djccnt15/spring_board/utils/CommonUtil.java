@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CommonUtil {
     
-    public static Integer getTotalPageCount(Integer total, Integer size) {
+    public static int getTotalPageCount(int total, int size) {
         return (int) Math.ceil((double) total / size);
     }
 }

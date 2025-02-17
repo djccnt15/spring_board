@@ -16,7 +16,7 @@ public interface CommentProjection {
     
     String getContent();
     
-    Integer getVersion();
+    int getVersion();
     
-    Integer getVoteCount();
+    int getVoteCount();
 }

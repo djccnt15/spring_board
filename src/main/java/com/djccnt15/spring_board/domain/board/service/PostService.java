@@ -58,8 +58,8 @@ public class PostService {
     
     public List<PostDetailResponse> getPostList(
         CategoryEntity mainCategory,
-        Integer size,
-        Integer page,
+        int size,
+        int page,
         String keyword,
         Long subCategoryId
     ) {
@@ -71,7 +71,7 @@ public class PostService {
             .toList();
     }
     
-    public Integer getPostListCount(
+    public int getPostListCount(
         CategoryEntity category,
         String keyword,
         Long subCategoryId
@@ -81,7 +81,7 @@ public class PostService {
     
     public List<PostMinimalResponse> getMinimalPostList(
         CategoryEntity category,
-        Integer size
+        int size
     ) {
         var postList = postRepository.getMinimalPostListByCategory(category.getId(), size);
         return postList.stream()

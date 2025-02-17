@@ -26,15 +26,15 @@ public class PostDetailResponse {
     
     private String content;
     
-    private Integer version;
+    private int version;
     
-    private Integer viewCount;
+    private int viewCount;
     
-    private Integer commentCount;
+    private int commentCount;
     
-    private Integer voteCount;
+    private int voteCount;
     
-    private Integer totalCommentPages;
+    private int totalCommentPages;
     
     private List<CommentResponse> commentList;
 }
