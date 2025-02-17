@@ -73,7 +73,7 @@ public class AdminUserController {
      * @param user user session
      * @param id user id
      * @param page number of page
-     * @return redirect to admin/ user page for refresh
+     * @return redirect to admin user page for refresh
      */
     @PutMapping(path = "/{id}/unban")
     public String unban(
@@ -81,7 +81,7 @@ public class AdminUserController {
         @PathVariable(value = "id") Long id,
         @RequestParam(value = "page", defaultValue = "0") int page
     ) {
-        business.unbanUser(user, id);
+        business.unBanUser(user, id);
         return "redirect:/admin/user?page=%s".formatted(page);
     }
     

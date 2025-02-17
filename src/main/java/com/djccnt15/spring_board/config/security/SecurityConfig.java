@@ -46,8 +46,8 @@ public class SecurityConfig {
      */
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(
-            (authorize) -> authorize
+        http
+            .authorizeHttpRequests((authorize) -> authorize
                 // allow to swagger ui. TODO disable permit to swagger ui below for production
                 // SWAGGER.toArray() returns Object[], not String[] and requestMatchers expects String[]
                 // new String[0] ensures that the method dynamically creates a correctly sized array
@@ -94,8 +94,7 @@ public class SecurityConfig {
     }
     
     /**
-     * Bean for Spring Security authentication
-     * <br>
+     * Bean for Spring Security authentication <br>
      * this bean works with implements of UserDetailsService, PasswordEncoder
      */
     @Bean

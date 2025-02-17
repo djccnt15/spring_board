@@ -64,7 +64,7 @@ public class AdminUserBusiness {
         adminUserService.createUserState(form, targetUser, state);
     }
     
-    public void unbanUser(
+    public void unBanUser(
         UserSession user,
         Long id
     ) {

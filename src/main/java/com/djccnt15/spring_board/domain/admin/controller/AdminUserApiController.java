@@ -27,13 +27,13 @@ public class AdminUserApiController {
     private final AdminUserBusiness business;
     
     /**
-     * ban user
+     * api controller for ban user
      * @param user user session
      * @param id user id
      * @param page number of page
      * @param form user ban form for request body
      * @param bindingResult validated result of the form. this must come right after the form
-     * @return redirect to admin/ user page for refresh
+     * @return redirect to admin user page for refresh
      */
     @PutMapping(path = "/{id}/ban")
     public ResponseEntity<?> ban(
