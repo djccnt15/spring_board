@@ -193,7 +193,7 @@
       <li class="page-item" th:classappend="${page == 0} ? 'disabled'">
         <a
           class="page-link"
-          th:href="@{|?page=0&size=${size}|}"
+          th:href="@{|?page=0&size=${size}#comment-list|}"
         >
           <span>처음</span>
         </a>
@@ -201,7 +201,7 @@
       <li class="page-item" th:classappend="${page == 0} ? 'disabled'">
         <a
           class="page-link"
-          th:href="@{|?page=${page - 1}&size=${size}|}"
+          th:href="@{|?page=${page - 1}&size=${size}#comment-list|}"
         >
           <span>이전</span>
         </a>
@@ -215,13 +215,13 @@
         <a
           class="page-link"
           th:text="${commentList}"
-          th:href="@{|?page=${commentList}&size=${size}|}"
+          th:href="@{|?page=${commentList}&size=${size}#comment-list|}"
         ></a>
       </li>
       <li class="page-item" th:classappend="${page + 1 == response.totalCommentPages} ? 'disabled'">
         <a
           class="page-link"
-          th:href="@{|?page=${page + 1}&size=${size}|}"
+          th:href="@{|?page=${page + 1}&size=${size}#comment-list|}"
         >
           <span>다음</span>
         </a>
@@ -229,7 +229,7 @@
       <li class="page-item" th:classappend="${page + 1 == response.totalCommentPages} ? 'disabled'">
         <a
           class="page-link"
-          th:href="@{|?page=${response.totalCommentPages - 1}&size=${size}|}"
+          th:href="@{|?page=${response.totalCommentPages - 1}&size=${size}#comment-list|}"
         >
           <span>끝</span>
         </a>
