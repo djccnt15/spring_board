@@ -60,11 +60,11 @@ public class UserEntity extends BaseEntity {
     @ToString.Exclude
     private Set<CommentVoterEntity> commentVoter;
     
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user")
     @ToString.Exclude
     private Set<UserStateEntity> userState;
     
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user")
     @ToString.Exclude
     private Set<LoggedInEntity> loggedIn;
     
