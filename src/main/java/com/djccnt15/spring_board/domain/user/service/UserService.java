@@ -130,7 +130,7 @@ public class UserService {
             .toList();
     }
     
-    public Integer getUserPostListCount(UserSession user) {
+    public int getUserPostListCount(UserSession user) {
         return postRepository.countByIsActiveAndAuthorId(true, user.getUserId());
     }
     
