@@ -30,7 +30,7 @@
           th:if="${#strings.toString(user.role)} == 'ADMIN'" disabled
         >관리자</button>
         <button
-          class="btn btn-sm btn-outline-danger"
+          class="btn btn-sm btn-outline-warning"
           th:if="${#strings.toString(user.role)} != 'ADMIN' AND ${user.isBanned == false}"
           th:attr="data-user-id=${user.id}, data-username=${user.username}"
           data-bs-toggle="modal"
@@ -101,7 +101,7 @@
           <input type="hidden" name="_method" value="PATCH" />
           <input type="hidden" name="page" th:value="${userList.number}" />
           <button
-            class="btn btn-sm btn-outline-secondary"
+            class="btn btn-sm btn-outline-success"
             th:case="*"
           >부여</button>
         </form>
