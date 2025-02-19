@@ -30,6 +30,10 @@ public class UserResponse {
     @Builder.Default
     private boolean isLocked = false;
     
+    private String lockedReason;
+    
     @Builder.Default
     private boolean isBanned = false;
+    
+    private String bannedReason;
 }
