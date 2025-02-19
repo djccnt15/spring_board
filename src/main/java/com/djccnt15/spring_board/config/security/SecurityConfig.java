@@ -1,5 +1,6 @@
 package com.djccnt15.spring_board.config.security;
 
+import com.djccnt15.spring_board.domain.auth.AuthFailureHandler;
 import com.djccnt15.spring_board.domain.auth.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -68,6 +69,7 @@ public class SecurityConfig {
             .formLogin((formLogin) -> formLogin
                 .loginPage("/user/login")
                 .defaultSuccessUrl("/")
+                .failureHandler(new AuthFailureHandler())
             )
             .sessionManagement(session -> session
                 // .invalidSessionUrl("/login?timeout")  // redirect on timeout
