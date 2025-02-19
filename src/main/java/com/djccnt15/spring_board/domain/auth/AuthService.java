@@ -32,6 +32,7 @@ public class AuthService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         var userEntity = userRepository.findFirstByUsername(username)
             .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+        userService.setState(userEntity);
         
         // adding user authorities for hasRole(), hasAuthority()
         List<GrantedAuthority> authorities = new ArrayList<>();
@@ -47,6 +48,9 @@ public class AuthService implements UserDetailsService {
             .password(userEntity.getPassword())
             .role(userEntity.getRole())
             .authorities(authorities)
+            .isDisabled(userEntity.isDisabled())
+            .isLocked(userEntity.isLocked())
+            .isBanned(userEntity.isBanned())
             .build();
     }
 }

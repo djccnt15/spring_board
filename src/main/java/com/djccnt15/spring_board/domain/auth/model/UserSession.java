@@ -21,4 +21,33 @@ public class UserSession implements UserDetails {
     private UserRoleEnum role;
     
     private Collection<? extends GrantedAuthority> authorities;
+    
+    @Builder.Default
+    private boolean isDisabled = false;
+    
+    @Builder.Default
+    private boolean isLocked = false;
+    
+    @Builder.Default
+    private boolean isBanned = false;
+    
+    @Override
+    public boolean isEnabled() {  // DisabledException
+        return !isDisabled;
+    }
+    
+    @Override
+    public boolean isAccountNonLocked() {  // LockedException
+        return !isLocked;
+    }
+    
+    @Override
+    public boolean isAccountNonExpired() {  // AccountExpiredException
+        return true;
+    }
+    
+    @Override
+    public boolean isCredentialsNonExpired() {  // CredentialsExpiredException
+        return true;
+    }
 }
