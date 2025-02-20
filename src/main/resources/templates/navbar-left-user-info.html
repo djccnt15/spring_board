@@ -1,0 +1,20 @@
+<div
+  th:fragment="userInfoLeftNavFragment"
+  xmlns:th="http://www.w3.org/1999/xhtml"
+  class="d-flex flex-column flex-shrink-0 p-3 h-100 border-end"
+>
+  <ul class="nav nav-pills flex-column mb-auto">
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        th:href="@{|/users/${id}/post-list|}"
+      >작성 글 보기</a>
+    </li>
+    <li>
+      <a
+        class="nav-link"
+        th:href="@{|/users/${id}/comment-list|}"
+      >작성 댓글 보기</a>
+    </li>
+  </ul>
+</div>

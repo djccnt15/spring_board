@@ -29,9 +29,14 @@
     <div class="col-md-2" th:if="${showProfileLeftNav}">
       <div th:replace="~{navbar-left-profile :: profileLeftNavFragment}"></div>
     </div>
+    <!-- User Info Left Navbar -->
+    <div class="col-md-2" th:if="${showUserInfoLeftNav}">
+      <div th:replace="~{navbar-left-user-info :: userInfoLeftNavFragment}"></div>
+    </div>
     <!-- Main Content -->
     <main th:classappend="
       ${
+        (showUserInfoLeftNav ?: false) ||
         (showProfileLeftNav ?: false) ||
         (showAdminLeftNav ?: false) ||
         (showLeftNav ?: false)
