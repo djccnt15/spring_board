@@ -130,8 +130,23 @@ public class UserService {
             .toList();
     }
     
+    public List<UserPostResponse> getUserPost(
+        UserEntity user,
+        int size,
+        int page
+    ) {
+        var postList = postRepository.getPostListByUserId(user.getId(), size, size * page);
+        return postList.stream()
+            .map(userConverter::toResponse)
+            .toList();
+    }
+    
     public int getUserPostListCount(UserSession user) {
         return postRepository.countByIsActiveAndAuthorId(true, user.getUserId());
+    }
+    
+    public int getUserPostListCount(UserEntity user) {
+        return postRepository.countByIsActiveAndAuthorId(true, user.getId());
     }
     
     public List<UserCommentResponse> getUserComment(
@@ -169,10 +184,27 @@ public class UserService {
         return user;
     }
     
+    public void setState(UserResponse user) {
+        var userState = userStateRepository.findByUserId(user.getId());
+        for (var state : userState) setState(user, state);
+    }
+    
     private void setState(UserEntity user, UserStateEntity userState) {
         var stateId = userState.getState().getId();
         if (stateId.equals(UserStateEnum.DISABLED.getId())) user.setDisabled(true);
         else if (stateId.equals(UserStateEnum.LOCKED.getId())) user.setLocked(true);
         else if (stateId.equals(UserStateEnum.BANNED.getId())) user.setBanned(true);
+    }
+    
+    private void setState(UserResponse user, UserStateEntity state) {
+        var stateId = state.getState().getId();
+        if (stateId.equals(UserStateEnum.DISABLED.getId())) user.setDisabled(true);
+        else if (stateId.equals(UserStateEnum.LOCKED.getId())) {
+            user.setLocked(true);
+            user.setLockedReason(state.getDetail());
+        } else if (stateId.equals(UserStateEnum.BANNED.getId())) {
+            user.setBanned(true);
+            user.setBannedReason(state.getDetail());
+        }
     }
 }

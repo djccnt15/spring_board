@@ -10,4 +10,6 @@ import java.util.List;
 public interface UserStateRepository extends JpaRepository<UserStateEntity, UserStateId> {
     
     List<UserStateEntity> findByUser(UserEntity user);
+    
+    List<UserStateEntity> findByUserId(Long id);
 }

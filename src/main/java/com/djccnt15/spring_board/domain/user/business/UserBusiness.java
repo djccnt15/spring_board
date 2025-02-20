@@ -92,4 +92,25 @@ public class UserBusiness {
             .itemList(commentList)
             .build();
     }
+    
+    public UserInfoItemResponse getUserInfoPostLIst(
+        Long id,
+        int size,
+        int page
+    ) {
+        var userEntity = service.getUser(id);
+        var user = converter.toResponse(userEntity);
+        service.setState(user);
+        var postList = service.getUserPost(userEntity, size, page);
+        var postListCount = service.getUserPostListCount(userEntity);
+        var totalPageCount = CommonUtil.getTotalPageCount(postListCount, size);
+        var itemList = UserItemListResponse.builder()
+            .totalPages(totalPageCount)
+            .itemList(postList)
+            .build();
+        return UserInfoItemResponse.builder()
+            .user(user)
+            .items(itemList)
+            .build();
+    }
 }
