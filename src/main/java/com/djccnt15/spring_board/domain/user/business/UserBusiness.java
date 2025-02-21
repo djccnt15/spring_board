@@ -113,4 +113,25 @@ public class UserBusiness {
             .items(itemList)
             .build();
     }
+    
+    public UserInfoItemResponse getUserInfoCommentLIst(
+        Long id,
+        int size,
+        int page
+    ) {
+        var userEntity = service.getUser(id);
+        var user = converter.toResponse(userEntity);
+        service.setState(user);
+        var commentList = service.getUserComment(userEntity, size, page);
+        var commentListCount = service.getUserCommentListCount(userEntity);
+        var totalPageCount = CommonUtil.getTotalPageCount(commentListCount, size);
+        var itemList = UserItemListResponse.builder()
+            .totalPages(totalPageCount)
+            .itemList(commentList)
+            .build();
+        return UserInfoItemResponse.builder()
+            .user(user)
+            .items(itemList)
+            .build();
+    }
 }

@@ -41,4 +41,28 @@ public class UsersController {
         model.addAttribute("page", page);
         return "user-info-post-list";
     }
+    
+    /**
+     * view controller for public user info
+     * @param model inject from spring
+     * @param id user id
+     * @param size size of comment list page
+     * @param page number of comment list page
+     * @return user info and comment list page
+     */
+    @GetMapping(path = "/{id}/comment-list")
+    public String getUserCommentList(
+        Model model,
+        @PathVariable(value = "id") Long id,
+        @RequestParam(value = "size", defaultValue = "10") int size,
+        @RequestParam(value = "page", defaultValue = "0") int page
+    ) {
+        model.addAttribute("showUserInfoLeftNav", true);
+        model.addAttribute("id", id);
+        var userInfo = business.getUserInfoCommentLIst(id, size, page);
+        model.addAttribute("response", userInfo);
+        model.addAttribute("size", size);
+        model.addAttribute("page", page);
+        return "user-info-comment-list";
+    }
 }

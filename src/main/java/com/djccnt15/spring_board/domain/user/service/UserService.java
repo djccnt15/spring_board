@@ -160,8 +160,23 @@ public class UserService {
             .toList();
     }
     
+    public List<UserCommentResponse> getUserComment(
+        UserEntity user,
+        int size,
+        int page
+    ) {
+        var commentList = commentRepository.getCommentListByUserId(user.getId(), size, size * page);
+        return commentList.stream()
+            .map(userConverter::toResponse)
+            .toList();
+    }
+    
     public int getUserCommentListCount(UserSession user) {
         return commentRepository.countByIsActiveAndAuthorId(true, user.getUserId());
+    }
+    
+    public int getUserCommentListCount(UserEntity user) {
+        return commentRepository.countByIsActiveAndAuthorId(true, user.getId());
     }
     
     public boolean validateAdmin(UserSession user) {
