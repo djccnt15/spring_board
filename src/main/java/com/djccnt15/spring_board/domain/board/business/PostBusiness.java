@@ -39,6 +39,7 @@ public class PostBusiness {
         return categoryService.getCategoryByParent(mainCategory);
     }
     
+    @Transactional
     public PostEntity createPost(
         UserSession user,
         PostCreateRequest request
@@ -127,6 +128,7 @@ public class PostBusiness {
             .build();
     }
     
+    @Transactional
     public void updatePost(
         UserSession user,
         Long id,

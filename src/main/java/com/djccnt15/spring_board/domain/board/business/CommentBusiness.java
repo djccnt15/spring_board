@@ -12,6 +12,7 @@ import com.djccnt15.spring_board.domain.user.service.UserService;
 import com.djccnt15.spring_board.utils.model.FileResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class CommentBusiness {
     private final CommentService commentService;
     private final CommentContentConverter commentContentConverter;
     
+    @Transactional
     public void createComment(
         UserSession user,
         CommentCreateRequest request,
@@ -48,6 +50,7 @@ public class CommentBusiness {
             .build();
     }
     
+    @Transactional
     public void updateComment(
         UserSession user,
         Long commentId,
