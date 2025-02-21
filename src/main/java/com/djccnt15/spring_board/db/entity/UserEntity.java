@@ -23,6 +23,7 @@ public class UserEntity extends BaseEntity {
     @Column(unique = true, length = 25)
     private String username;
     
+    @Column
     private String password;
     
     @Column(unique = true)

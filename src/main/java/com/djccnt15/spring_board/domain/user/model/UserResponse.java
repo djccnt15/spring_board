@@ -1,16 +1,12 @@
 package com.djccnt15.spring_board.domain.user.model;
 
 import com.djccnt15.spring_board.db.entity.enums.UserRoleEnum;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class UserResponse {
     

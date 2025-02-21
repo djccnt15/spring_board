@@ -204,10 +204,9 @@ public class UserService {
         for (var state : userState) setState(user, state);
     }
     
-    private void setState(UserEntity user, UserStateEntity userState) {
-        var stateId = userState.getState().getId();
-        if (stateId.equals(UserStateEnum.DISABLED.getId())) user.setDisabled(true);
-        else if (stateId.equals(UserStateEnum.LOCKED.getId())) user.setLocked(true);
+    private void setState(UserEntity user, UserStateEntity state) {
+        var stateId = state.getState().getId();
+        if (stateId.equals(UserStateEnum.LOCKED.getId())) user.setLocked(true);
         else if (stateId.equals(UserStateEnum.BANNED.getId())) user.setBanned(true);
     }
     
