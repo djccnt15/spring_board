@@ -9,7 +9,7 @@ import com.djccnt15.spring_board.domain.category.model.CategoryCreateRequest;
 import com.djccnt15.spring_board.domain.category.model.CategoryOrderUpdateRequest;
 import com.djccnt15.spring_board.domain.category.model.CategoryResponse;
 import com.djccnt15.spring_board.domain.category.model.enums.CategoryStatusEnum;
-import com.djccnt15.spring_board.domain.enums.DefaultCategoryEnum;
+import com.djccnt15.spring_board.domain.category.enums.DefaultCategoryEnum;
 import com.djccnt15.spring_board.exception.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

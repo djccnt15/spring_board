@@ -1,4 +1,4 @@
-package com.djccnt15.spring_board.domain.enums;
+package com.djccnt15.spring_board.domain.category.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
