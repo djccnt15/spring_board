@@ -27,7 +27,7 @@ import java.time.LocalDateTime;
 @DynamicInsert  // annotation for using db default value for null field when insert
 public class CommentContentEntity extends BaseEntity {
     
-    @Column
+    @Column(nullable = false)
     @ColumnDefault(value = "1")  // annotation for ddl-auto
     @Builder.Default  // annotation for lombok default
     @NotNull

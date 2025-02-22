@@ -31,13 +31,13 @@ public class PostEntity extends BaseEntity {
     @CreationTimestamp
     private LocalDateTime createdDatetime;
     
-    @Column(name = "is_active")
+    @Column(name = "is_active", nullable = false)
     @ColumnDefault(value = "true")  // annotation for ddl-auto
     @Builder.Default  // annotation for lombok default
     @NotNull
     private boolean isActive = true;
     
-    @Column(name = "view_count")
+    @Column(name = "view_count", nullable = false)
     @ColumnDefault(value = "0")
     @Builder.Default
     @NotNull

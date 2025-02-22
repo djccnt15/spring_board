@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
 @DynamicInsert  // annotation for using db default value for null field when insert
 public class PostContentEntity extends BaseEntity {
     
-    @Column
+    @Column(nullable = false)
     @ColumnDefault(value = "1")  // annotation for ddl-auto
     @Builder.Default  // annotation for lombok builder default
     @NotNull
@@ -39,7 +39,7 @@ public class PostContentEntity extends BaseEntity {
     @CreationTimestamp
     private LocalDateTime createdDatetime;
     
-    @Column(length = 200)
+    @Column(nullable = false, length = 200)
     @NotBlank
     private String title;
     

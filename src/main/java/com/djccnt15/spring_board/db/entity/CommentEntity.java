@@ -32,17 +32,18 @@ public class CommentEntity extends BaseEntity {
     @CreationTimestamp
     private LocalDateTime createdDatetime;
     
-    @Column(name = "is_active")
+    @Column(name = "is_active", nullable = false)
     @ColumnDefault(value = "true")  // annotation for ddl-auto
     @Builder.Default  // annotation for lombok default
     @NotNull
     private boolean isActive = true;
     
-    @JoinColumn(name = "author_id")
+    @JoinColumn(name = "author_id", nullable = false)
     @ManyToOne
+    @NotNull
     private UserEntity author;
     
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "post_id", nullable = false)
     @ManyToOne
     @NotNull
     private PostEntity post;

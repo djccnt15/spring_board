@@ -17,7 +17,7 @@ import java.util.Set;
 @SuperBuilder
 public class StateEntity extends BaseEntity {
     
-    @Column
+    @Column(nullable = false)
     @NotBlank
     private String name;
     

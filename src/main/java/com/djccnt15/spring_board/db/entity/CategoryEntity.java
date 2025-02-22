@@ -25,15 +25,15 @@ import java.util.List;
 @SuperBuilder
 public class CategoryEntity extends BaseEntity {
     
-    @Column
+    @Column(nullable = false)
     @NotNull
     private Integer tier;
     
-    @Column(unique = true, length = 50)
+    @Column(nullable = false, unique = true, length = 50)
     @NotBlank
     private String name;
     
-    @Column(name = "is_active")
+    @Column(name = "is_active", nullable = false)
     @ColumnDefault(value = "true")  // annotation for ddl-auto
     @Builder.Default  // annotation for lombok default
     @NotNull
