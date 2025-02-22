@@ -14,7 +14,13 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "post")
+@Table(
+    name = "post",
+    indexes = {
+        @Index(columnList = "is_active"),
+        @Index(columnList = "author_id")
+    }
+)
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor

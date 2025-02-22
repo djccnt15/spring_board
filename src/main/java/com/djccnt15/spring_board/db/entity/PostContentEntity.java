@@ -15,7 +15,12 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "post_content")
+@Table(
+    name = "post_content",
+    indexes = {
+        @Index(columnList = "post_id")
+    }
+)
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor

@@ -12,7 +12,13 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "category")
+@Table(
+    name = "category",
+    indexes = {
+        @Index(columnList = "is_active"),
+        @Index(columnList = "pin_order")
+    }
+)
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor

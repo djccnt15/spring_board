@@ -14,7 +14,12 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "comment_content")
+@Table(
+    name = "comment_content",
+    indexes = {
+        @Index(columnList = "comment_id")
+    }
+)
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor

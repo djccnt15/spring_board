@@ -14,7 +14,14 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "comment")
+@Table(
+    name = "comment",
+    indexes = {
+        @Index(columnList = "is_active"),
+        @Index(columnList = "post_id"),
+        @Index(columnList = "author_id")
+    }
+)
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor

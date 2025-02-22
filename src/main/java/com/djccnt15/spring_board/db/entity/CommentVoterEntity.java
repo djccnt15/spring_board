@@ -12,7 +12,12 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "comment_voter")
+@Table(
+    name = "comment_voter",
+    indexes = {
+        @Index(columnList = "comment_id")
+    }
+)
 @IdClass(CommentVoterId.class)  // annotation for composite PK
 @NoArgsConstructor
 @AllArgsConstructor
