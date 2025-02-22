@@ -26,7 +26,9 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
                     t1.post_id
                 FROM post_content AS t1
                 INNER JOIN (
-                    SELECT post_id, MAX(version) AS max_version
+                    SELECT
+                        post_id,
+                        MAX(version) AS max_version
                     FROM post_content
                     GROUP BY post_id
                 ) AS t2 ON t1.post_id = t2.post_id AND t1.version = t2.max_version
@@ -65,8 +67,8 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
             JOIN LatestPostContent AS pc ON p.id = pc.post_id
             LEFT JOIN CommentCounts AS comment ON p.id = comment.post_id
             LEFT JOIN VoteCounts AS vote ON p.id = vote.post_id
-            WHERE
-                p.is_active = TRUE
+            WHERE 1=1
+                AND p.is_active = TRUE
                 AND c.parent_id = :category_id
                 AND (:sub_category_id IS NULL OR c.id = :sub_category_id)
                 AND (
@@ -97,7 +99,9 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
                     t1.content
                 FROM post_content AS t1
                 INNER JOIN (
-                    SELECT post_id, MAX(version) AS max_version
+                    SELECT
+                        post_id,
+                        MAX(version) AS max_version
                     FROM post_content
                     GROUP BY post_id
                 ) AS t2 ON t1.post_id = t2.post_id AND t1.version = t2.max_version
@@ -107,8 +111,8 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
             JOIN category AS c ON p.category_id = c.id
             JOIN user_info u ON p.author_id = u.id
             JOIN LatestPostContent AS pc ON p.id = pc.post_id
-            WHERE
-                p.is_active = TRUE
+            WHERE 1=1
+                AND p.is_active = TRUE
                 AND c.parent_id = :category_id
                 AND (:sub_category_id IS NULL OR c.id = :sub_category_id)
                 AND (
@@ -134,7 +138,9 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
                     t1.title
                 FROM post_content AS t1
                 INNER JOIN (
-                    SELECT post_id, MAX(version) AS max_version
+                    SELECT
+                        post_id,
+                        MAX(version) AS max_version
                     FROM post_content
                     GROUP BY post_id
                 ) AS t2 ON t1.post_id = t2.post_id AND t1.version = t2.max_version
@@ -146,8 +152,8 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
             FROM post AS p
             JOIN category AS c ON p.category_id = c.id
             JOIN LatestPostContent AS pc ON p.id = pc.post_id
-            WHERE
-                p.is_active = TRUE
+            WHERE 1=1
+                AND p.is_active = TRUE
                 AND c.parent_id = :category_id
             ORDER BY p.id DESC
             FETCH FIRST :size ROWS ONLY
@@ -210,9 +216,9 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
             JOIN category c ON p.category_id = c.id
             LEFT JOIN CommentCounts AS comment ON p.id = comment.post_id
             LEFT JOIN VoteCounts AS vote ON p.id = vote.post_id
-            WHERE
-                p.is_active = TRUE
-                AND p.ID = :post_id
+            WHERE 1=1
+                AND p.is_active = TRUE
+                AND p.id = :post_id
             """,
         nativeQuery = true
     )
@@ -230,7 +236,9 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
                     t1.post_id
                 FROM post_content AS t1
                 INNER JOIN (
-                    SELECT post_id, MAX(version) AS max_version
+                    SELECT
+                        post_id,
+                        MAX(version) AS max_version
                     FROM post_content
                     GROUP BY post_id
                 ) AS t2 ON t1.post_id = t2.post_id AND t1.version = t2.max_version
@@ -276,8 +284,8 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
             JOIN LatestPostContent AS pc ON p.id = pc.post_id
             LEFT JOIN CommentCounts AS comment ON p.id = comment.post_id
             LEFT JOIN VoteCounts AS vote ON p.id = vote.post_id
-            WHERE
-                p.is_active = TRUE
+            WHERE 1=1
+                AND p.is_active = TRUE
                 AND u.id = :user_id
             ORDER BY p.id DESC
             OFFSET :page ROWS
@@ -298,7 +306,8 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
         UPDATE post p
         SET is_active = :is_active
         FROM category c
-        WHERE p.category_id = c.id
+        WHERE
+            p.category_id = c.id
             AND c.parent_id = :category_id
         """,
         nativeQuery = true

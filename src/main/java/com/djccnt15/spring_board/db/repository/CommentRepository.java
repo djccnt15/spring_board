@@ -24,7 +24,9 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
                     t1.comment_id
                 FROM comment_content AS t1
                 INNER JOIN (
-                    SELECT comment_id, MAX(version) AS max_version
+                    SELECT
+                        comment_id,
+                        MAX(version) AS max_version
                     FROM comment_content
                     GROUP BY comment_id
                 ) AS t2 ON t1.comment_id = t2.comment_id AND t1.version = t2.max_version
@@ -49,8 +51,8 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
             JOIN LatestCommentContent AS cc ON c.id = cc.comment_id
             JOIN user_info AS u ON c.author_id = u.id
             LEFT JOIN VoteCounts AS vote ON c.id = vote.comment_id
-            WHERE
-                c.is_active = TRUE
+            WHERE 1=1
+                AND c.is_active = TRUE
                 AND c.post_id = :post_id
             ORDER BY c.id DESC
             OFFSET :page ROWS
@@ -76,7 +78,9 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
                 t1.comment_id
             FROM comment_content AS t1
             INNER JOIN (
-                SELECT comment_id, MAX(version) AS max_version
+                SELECT
+                    comment_id,
+                    MAX(version) AS max_version
                 FROM comment_content
                 GROUP BY comment_id
             ) AS t2 ON t1.comment_id = t2.comment_id AND t1.version = t2.max_version
@@ -110,8 +114,8 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
         JOIN LatestCommentContent AS cc ON c.id = cc.comment_id
         JOIN user_info AS u ON c.author_id = u.id
         LEFT JOIN VoteCounts AS vote ON c.id = vote.comment_id
-        WHERE
-            c.is_active = TRUE
+        WHERE 1=1
+            AND c.is_active = TRUE
             AND u.id = :user_id
         ORDER BY c.id DESC
         OFFSET :page ROWS
@@ -133,8 +137,9 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
         SET is_active = :is_active
         FROM post p
         JOIN category c ON p.category_id = c.id
-        WHERE comment.post_id = p.id
-        AND c.parent_id = :category_id
+        WHERE
+            comment.post_id = p.id
+            AND c.parent_id = :category_id
         """,
         nativeQuery = true
     )
