@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisKeyValueAdapter;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
@@ -23,7 +24,10 @@ import java.time.Duration;
 
 @Configuration
 @EnableCaching
-@EnableRedisRepositories(basePackages = {"com.djccnt15.spring_board.cache.repository"})
+@EnableRedisRepositories(
+    basePackages = {"com.djccnt15.spring_board.cache.repository"},
+    enableKeyspaceEvents = RedisKeyValueAdapter.EnableKeyspaceEvents.ON_STARTUP  // set TTL to secondary index field
+)
 public class RedisConfig {
     
     @Value("${spring.redis.time-to-live}")
