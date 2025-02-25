@@ -85,11 +85,12 @@
         </span>
       </td>
       <td>
-        <span
+        <a
           class="text-truncate"
           th:if="${post.author != null}"
           th:text="${post.author}"
-        ></span>
+          th:href="@{|/users/${post.authorId}|}"
+        ></a>
       </td>
       <td th:text="${#temporals.format(post.createdDateTime, 'yyyy-MM-dd HH:mm')}"></td>
       <td th:text="${post.viewCount}"></td>

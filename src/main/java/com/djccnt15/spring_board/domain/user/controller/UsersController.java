@@ -19,6 +19,16 @@ public class UsersController {
     private final UserBusiness business;
     
     /**
+     * redirect controller for public user info
+     * @param id user id
+     * @return redirect to user post list page
+     */
+    @GetMapping(path = "/{id}")
+    public String getUserInfo(@PathVariable(value = "id") Long id) {
+        return "redirect:/users/%s/post-list".formatted(id);
+    }
+    
+    /**
      * view controller for public user info
      * @param model inject from spring
      * @param id user id

@@ -67,7 +67,11 @@
         </div>
         <div class="badge bg-light text-dark p-2 text-start">
           <div class="mb-2">작성자</div>
-          <span th:if="${response.author != null}" th:text="${response.author}"></span>
+          <a
+            th:if="${response.author != null}"
+            th:text="${response.author}"
+            th:href="@{|/users/${response.authorId}|}"
+          ></a>
         </div>
         <div class="badge bg-light text-dark p-2 text-start ms-2">
           <div class="mb-2">작성일</div>
@@ -170,7 +174,11 @@
         </div>
         <div class="badge bg-light text-dark p-2 text-start">
           <div class="mb-2">작성자</div>
-          <div th:if="${comment.author != null}" th:text="${comment.author}"></div>
+          <a
+            th:if="${comment.author != null}"
+            th:text="${comment.author}"
+            th:href="@{|/users/${comment.authorId}|}"
+          ></a>
         </div>
         <div class="badge bg-light text-dark p-2 text-start ms-2">
           <div class="mb-2">작성일</div>
