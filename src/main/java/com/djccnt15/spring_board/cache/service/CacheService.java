@@ -1,4 +1,4 @@
-package com.djccnt15.spring_board.domain.cache.service;
+package com.djccnt15.spring_board.cache.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
