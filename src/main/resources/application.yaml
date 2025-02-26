@@ -9,6 +9,8 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+  session:
+    store-type: redis
   jpa:
     show-sql: true  # simple stdout sql in console
     properties:
