@@ -25,13 +25,13 @@ import java.time.LocalDateTime;
 public class PostVoterEntity {
     
     @Id
-    @ManyToOne
     @JoinColumn(name = "post_id")
+    @ManyToOne
     private PostEntity post;
     
     @Id
-    @ManyToOne
     @JoinColumn(name = "user_id")
+    @ManyToOne
     private UserEntity user;
     
     @Column(updatable = false)

@@ -42,8 +42,8 @@ public class CategoryEntity extends BaseEntity {
     @Column(name = "pin_order")
     private Integer pinOrder;
     
-    @ManyToOne
     @JoinColumn(name = "parent_id")
+    @ManyToOne
     private CategoryEntity parent;
     
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)

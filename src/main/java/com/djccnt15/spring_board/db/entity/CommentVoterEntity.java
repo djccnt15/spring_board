@@ -25,13 +25,13 @@ import java.time.LocalDateTime;
 public class CommentVoterEntity {
     
     @Id
-    @ManyToOne
     @JoinColumn(name = "comment_id", nullable = false)
+    @ManyToOne
     private CommentEntity comment;
     
     @Id
-    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne
     private UserEntity user;
     
     @Column(updatable = false)

@@ -23,13 +23,13 @@ public class UserStateEntity {
     private UserStateId userStateId;
     
     @MapsId(value = "stateId")  // annotation for composite PK
-    @ManyToOne
     @JoinColumn(name = "state_id", nullable = false)
+    @ManyToOne
     private StateEntity state;
     
     @MapsId(value = "userId")  // annotation for composite PK
-    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne
     private UserEntity user;
     
     @Column(updatable = false)
