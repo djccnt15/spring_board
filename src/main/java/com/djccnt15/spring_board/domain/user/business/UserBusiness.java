@@ -55,7 +55,7 @@ public class UserBusiness {
         if (!validation) {
             throw new FormValidationException("incorrect user information");
         }
-        var mailingTemplate = templateReader.getMailingTemplate();
+        var mailingTemplate = templateReader.getRecoverMailTemplate();
         var password = StringUtil.generateRandomString(12);
         service.recoverUser(user, password);
         emailService.sendEmail(
