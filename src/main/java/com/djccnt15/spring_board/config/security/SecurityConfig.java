@@ -1,9 +1,9 @@
 package com.djccnt15.spring_board.config.security;
 
+import com.djccnt15.spring_board.config.properties.SessionProperties;
 import com.djccnt15.spring_board.domain.auth.AuthFailureHandler;
 import com.djccnt15.spring_board.domain.auth.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,14 +30,9 @@ public class SecurityConfig {
         "/v3/api-docs/**"
     );
     
-    @Value("${app.session.remember.token-valid-sec}")
-    private int tokenValidSecond;
-    
-    @Value("${app.session.remember.key}")
-    private String tokenKey;
-    
     private final PasswordEncoder encoder;
     private final AuthService authService;
+    private final SessionProperties sessionProperties;
     
     /**
      * Configuration for Spring Security
@@ -77,9 +72,9 @@ public class SecurityConfig {
                 .maximumSessions(1)
                 .expiredUrl("/session-expired")  // redirect when session expires
             )
-            .rememberMe(remember -> remember
-                .key(tokenKey)
-                .tokenValiditySeconds(tokenValidSecond)
+            .rememberMe((remember) -> remember
+                .key(sessionProperties.getKey())
+                .tokenValiditySeconds(sessionProperties.getTokenValidSec())
                 .alwaysRemember(true)
             )
             .logout((logout) -> logout
