@@ -69,6 +69,26 @@ logging:
     name: D:\log\spring\logFile.log
   pattern:
     dateformat: yyyy-MM-dd HH:mm:ss.SSS,Asia/Seoul
+management:  # actuator settings
+  health:
+    redis:
+      enabled: true  # make redis does/not affect app status
+  info:
+    env:
+      enabled: true
+  endpoint:
+    health:
+      show-details: when-authorized
+      roles: ADMIN
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+info:
+  app:
+    name: SpringBoard
+    version: 0.0.1
+    description: This is a sample Spring Boot application
 app:
   session:
     remember:
