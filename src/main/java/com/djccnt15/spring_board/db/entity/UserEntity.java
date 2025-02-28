@@ -3,8 +3,10 @@ package com.djccnt15.spring_board.db.entity;
 import com.djccnt15.spring_board.db.entity.enums.UserRoleEnum;
 import com.djccnt15.spring_board.db.entity.id.BaseEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -42,6 +44,12 @@ public class UserEntity extends BaseEntity {
     // @Enumerated(EnumType.STRING)  // easy to use but lowers DB performance, use enum converter
     private UserRoleEnum role;
     
+    @Column(name = "is_verified", nullable = false)
+    @ColumnDefault(value = "false")  // annotation for ddl-auto
+    @Builder.Default  // annotation for lombok default
+    @NotNull
+    private boolean isVerified = false;
+    
     @OneToMany(mappedBy = "author")
     @ToString.Exclude
     private List<QuestionEntity> question;
@@ -73,10 +81,6 @@ public class UserEntity extends BaseEntity {
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
     private Set<LoggedInEntity> loggedIn;
-    
-    @Transient  // annotation for not persistent field
-    @Builder.Default
-    private boolean isDisabled = false;
     
     @Transient  // annotation for not persistent field
     @Builder.Default

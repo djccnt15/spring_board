@@ -48,7 +48,7 @@ public class AuthService implements UserDetailsService {
             .password(userEntity.getPassword())
             .role(userEntity.getRole())
             .authorities(authorities)
-            .isDisabled(userEntity.isDisabled())
+            .isEnabled(userEntity.isVerified())
             .isLocked(userEntity.isLocked())
             .isBanned(userEntity.isBanned())
             .build();

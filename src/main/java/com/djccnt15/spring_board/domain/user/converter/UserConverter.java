@@ -18,7 +18,7 @@ public class UserConverter {
             .email(entity.getEmail())
             .createDateTime(entity.getCreatedDatetime())
             .role(entity.getRole())
-            .isDisabled(entity.isDisabled())
+            .isVerified(entity.isVerified())
             .isBanned(entity.isBanned())
             .isLocked(entity.isLocked())
             .build();

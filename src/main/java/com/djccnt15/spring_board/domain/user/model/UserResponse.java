@@ -21,7 +21,7 @@ public class UserResponse {
     private UserRoleEnum role;
     
     @Builder.Default
-    private boolean isDisabled = false;
+    private boolean isVerified = false;
     
     @Builder.Default
     private boolean isLocked = false;

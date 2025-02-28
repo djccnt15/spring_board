@@ -23,7 +23,7 @@ public class UserSession implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
     
     @Builder.Default
-    private boolean isDisabled = false;
+    private boolean isEnabled = false;
     
     @Builder.Default
     private boolean isLocked = false;
@@ -33,7 +33,7 @@ public class UserSession implements UserDetails {
     
     @Override
     public boolean isEnabled() {  // DisabledException
-        return !isDisabled;
+        return isEnabled;
     }
     
     @Override
