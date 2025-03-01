@@ -20,17 +20,24 @@ public class AdminUserController {
     /**
      * user admin page controller
      * @param model inject from spring
+     * @param size size of user list
      * @param page selected page from client
+     * @param keyword search keyword
      * @return user admin page view
      */
     @GetMapping
     public String manageUser(
         Model model,
-        @RequestParam(value = "page", defaultValue = "0") int page
+        @RequestParam(value = "size", defaultValue = "10") int size,
+        @RequestParam(value = "page", defaultValue = "0") int page,
+        @RequestParam(value = "kw", defaultValue = "") String keyword
     ) {
         model.addAttribute("showAdminLeftNav", true);
-        var userList = business.getUserList(page);
+        var userList = business.getUserList(size, page, keyword);
         model.addAttribute("userList", userList);
+        model.addAttribute("size", size);
+        model.addAttribute("page", page);
+        model.addAttribute("kw", keyword);
         return "admin-user";
     }
     
@@ -38,67 +45,83 @@ public class AdminUserController {
      * grant manager role of user
      * @param user user session
      * @param id user id
+     * @param size size of user list
      * @param page number of page
+     * @param keyword search keyword
      * @return redirect to admin/user page for refresh
      */
     @PatchMapping(path = "/{id}/role/grant")
     public String grantAuthority(
         @AuthenticationPrincipal UserSession user,
         @PathVariable(value = "id") Long id,
-        @RequestParam(value = "page", defaultValue = "0") int page
+        @RequestParam(value = "size", defaultValue = "10") int size,
+        @RequestParam(value = "page", defaultValue = "0") int page,
+        @RequestParam(value = "kw", defaultValue = "") String keyword
     ) {
         business.grantAuthority(user, id);
-        return "redirect:/admin/user?page=%s".formatted(page);
+        return "redirect:/admin/user?page=%s&size=%s&kw=%s".formatted(page, size, keyword);
     }
     
     /**
      * revoke manager role of user
      * @param user user session
      * @param id user id
+     * @param size size of user list
      * @param page number of page
+     * @param keyword search keyword
      * @return redirect to admin/user page for refresh
      */
     @PatchMapping(path = "/{id}/role/revoke")
     public String revokeAuthority(
         @AuthenticationPrincipal UserSession user,
         @PathVariable(value = "id") Long id,
-        @RequestParam(value = "page", defaultValue = "0") int page
+        @RequestParam(value = "size", defaultValue = "10") int size,
+        @RequestParam(value = "page", defaultValue = "0") int page,
+        @RequestParam(value = "kw", defaultValue = "") String keyword
     ) {
         business.revokeAuthority(user, id);
-        return "redirect:/admin/user?page=%s".formatted(page);
+        return "redirect:/admin/user?page=%s&size=%s&kw=%s".formatted(page, size, keyword);
     }
     
     /**
      * unban user
      * @param user user session
      * @param id user id
+     * @param size size of user list
      * @param page number of page
+     * @param keyword search keyword
      * @return redirect to admin user page for refresh
      */
     @PutMapping(path = "/{id}/unban")
     public String unban(
         @AuthenticationPrincipal UserSession user,
         @PathVariable(value = "id") Long id,
-        @RequestParam(value = "page", defaultValue = "0") int page
+        @RequestParam(value = "size", defaultValue = "10") int size,
+        @RequestParam(value = "page", defaultValue = "0") int page,
+        @RequestParam(value = "kw", defaultValue = "") String keyword
     ) {
         business.unBanUser(user, id);
-        return "redirect:/admin/user?page=%s".formatted(page);
+        return "redirect:/admin/user?page=%s&size=%s&kw=%s".formatted(page, size, keyword);
     }
     
     /**
      * unblock user
      * @param user user session
      * @param id user id
+     * @param size size of user list
      * @param page number of page
+     * @param keyword search keyword
      * @return redirect to admin user page for refresh
      */
     @PutMapping(path = "/{id}/unblock")
     public String unblock(
         @AuthenticationPrincipal UserSession user,
         @PathVariable(value = "id") Long id,
-        @RequestParam(value = "page", defaultValue = "0") int page
+        @RequestParam(value = "size", defaultValue = "10") int size,
+        @RequestParam(value = "page", defaultValue = "0") int page,
+        @RequestParam(value = "kw", defaultValue = "") String keyword
     ) {
         business.unBlockUser(user, id);
-        return "redirect:/admin/user?page=%s".formatted(page);
+        return "redirect:/admin/user?page=%s&size=%s&kw=%s".formatted(page, size, keyword);
     }
 }

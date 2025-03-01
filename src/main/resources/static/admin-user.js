@@ -1,22 +1,45 @@
+const btn_search = document.getElementById("btn-search");
+const search_kw = document.getElementById("search-kw");
+
+function performSearch() {
+  document.getElementById("kw").value = search_kw.value;
+  document.getElementById("size").value = document.getElementById("list-size").value;
+  document.getElementById("page").value = 0; // 검색 시 0 페이지부터 조회
+  document.getElementById("searchForm").submit();
+}
+
+btn_search.addEventListener("click", performSearch);
+search_kw.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") performSearch();
+});
+
 function openBanModal(button) {
-  var username = button.getAttribute("data-username");
+  const userId = button.getAttribute("data-user-id");
+  const username = button.getAttribute("data-username");
   document.getElementById("banUserModalLabel").textContent = username + " 차단";
 
-  var form = document.getElementById("banUserForm");
-  var userId = button.getAttribute("data-user-id");
-  form.action = `/admin/user/${userId}/ban`;
+  const form = document.getElementById("banUserForm");
+  const page = form.getAttribute("data-page");
+  const size = form.getAttribute("data-size");
+  let kw = form.getAttribute("data-keyword") || "";
+  const actionUrl = `/admin/user/${userId}/ban?page=${page}&size=${size}&kw=${kw}`;
+  form.action = actionUrl;
 }
 
 const banForm = document.getElementById("banUserForm");
 banForm.addEventListener("submit", handleFormSubmit)
 
 function openBlockModal(button) {
-  var username = button.getAttribute("data-username");
+  const userId = button.getAttribute("data-user-id");
+  const username = button.getAttribute("data-username");
   document.getElementById("blockUserModalLabel").textContent = username + " 정지";
 
-  var form = document.getElementById("blockUserForm");
-  var userId = button.getAttribute("data-user-id");
-  form.action = `/admin/user/${userId}/block`;
+  const form = document.getElementById("blockUserForm");
+  const page = form.getAttribute("data-page");
+  const size = form.getAttribute("data-size");
+  let kw = form.getAttribute("data-keyword") || "";
+  const actionUrl = `/admin/user/${userId}/block?page=${page}&size=${size}&kw=${kw}`;
+  form.action = actionUrl;
 }
 
 const blockForm = document.getElementById("blockUserForm");
@@ -50,15 +73,6 @@ async function handleFormSubmit(event) {
   } catch (error) {
     console.error("Error occurred:", error);
   }
-}
-
-async function submitForm(url, data, method) {
-  const response = await fetch(url, { method, body: data });
-  redirectUrl = response.headers.get("redirectUrl")
-  if (redirectUrl) {
-    return redirectUrl;
-  }
-  throw await response.json();
 }
 
 (() => {

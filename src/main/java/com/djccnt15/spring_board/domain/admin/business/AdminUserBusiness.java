@@ -21,8 +21,13 @@ public class AdminUserBusiness {
     private final UserConverter userConverter;
     private final AdminUserService adminUserService;
     
-    public Page<UserResponse> getUserList(int page) {
-        var entityList = userService.getList(page);
+    public Page<UserResponse> getUserList(
+        int size,
+        int page,
+        String keyword
+    ) {
+        var kw = "%%%s%%".formatted(keyword);
+        var entityList = userService.getList(size, page, kw);
         entityList.map(userService::setState);
         return entityList.map(userConverter::toResponse);
     }

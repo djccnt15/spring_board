@@ -5,7 +5,27 @@
   xmlns:th="http://www.w3.org/1999/xhtml"
 >
 <div layout:fragment="content" class="container my-3">
-  <h5 class="my-3 border-bottom pb-2">유저 관리</h5>
+  <div class="row my-3 pb-2 align-items-center border-bottom">
+    <h5 class="col-6 my-0">유저 관리</h5>
+    <div class="col-2">
+      <div class="input-group">
+        <label class="input-group-text" for="list-size">개수</label>
+        <select class="form-select" id="list-size">
+          <option value="10" th:selected="${size == 10}">10</option>
+          <option value="20" th:selected="${size == 20}">20</option>
+          <option value="50" th:selected="${size == 50}">50</option>
+          <option value="100" th:selected="${size == 100}">100</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="input-group">
+        <label for="search-kw" class="d-none"></label>
+        <input type="text" id="search-kw" class="form-control" th:value="${kw}">
+        <button class="btn btn-outline-secondary" type="button" id="btn-search">찾기</button>
+      </div>
+    </div>
+  </div>
   <table class="table">
     <thead class="table-secondary">
     <tr class="text-center">
@@ -38,7 +58,7 @@
           onclick="openBanModal(this)"
         >차단</button>
         <form
-          th:action="@{|/admin/user/${user.id}/unban|}"
+          th:action="@{|/admin/user/${user.id}/unban?page=${page}&size=${size}&kw=${kw}|}"
           method="POST"
           onsubmit="return confirm('차단을 해제하시겠습니까?');"
         >
@@ -64,7 +84,7 @@
           onclick="openBlockModal(this)"
         >정지</button>
         <form
-          th:action="@{|/admin/user/${user.id}/unblock|}"
+          th:action="@{|/admin/user/${user.id}/unblock?page=${page}&size=${size}&kw=${kw}|}"
           method="POST"
           onsubmit="return confirm('정지를 해제하시겠습니까?');"
         >
@@ -82,7 +102,7 @@
           th:case="'ADMIN'" disabled
         >관리자</button>
         <form
-          th:action="@{|/admin/user/${user.id}/role/revoke|}"
+          th:action="@{|/admin/user/${user.id}/role/revoke?page=${page}&size=${size}&kw=${kw}|}"
           method="POST"
           onsubmit="return confirm('권한을 회수하시겠습니까?');"
         >
@@ -94,7 +114,7 @@
           >회수</button>
         </form>
         <form
-          th:action="@{|/admin/user/${user.id}/role/grant|}"
+          th:action="@{|/admin/user/${user.id}/role/grant?page=${page}&size=${size}&kw=${kw}|}"
           method="POST"
           onsubmit="return confirm('권한을 부여하시겠습니까?');"
         >
@@ -109,15 +129,16 @@
     </tr>
     </tbody>
   </table>
+  <!-- 페이징 처리 -->
   <div th:if="${!userList.isEmpty()}">
     <ul class="pagination justify-content-center">
       <li class="page-item" th:classappend="${userList.isFirst} ? 'disabled'">
-        <a class="page-link" th:href="@{|?page=0|}">
+        <a class="page-link" th:href="@{|?page=0&size=${size}&kw=${kw}|}">
           <span>처음</span>
         </a>
       </li>
       <li class="page-item" th:classappend="${userList.isFirst} ? 'disabled'">
-        <a class="page-link" th:href="@{|?page=${userList.number - 1}|}">
+        <a class="page-link" th:href="@{|?page=${userList.number - 1}&size=${size}&kw=${kw}|}">
           <span>이전</span>
         </a>
       </li>
@@ -127,20 +148,26 @@
         th:classappend="${page == userList.number} ? 'active'"
         class="page-item"
       >
-        <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+        <a th:text="${page}" class="page-link" th:href="@{|?page=${page}&size=${size}&kw=${kw}|}"></a>
       </li>
       <li class="page-item" th:classappend="${userList.isLast} ? 'disabled'">
-        <a class="page-link" th:href="@{|?page=${userList.number + 1}|}">
+        <a class="page-link" th:href="@{|?page=${userList.number + 1}&size=${size}&kw=${kw}|}">
           <span>다음</span>
         </a>
       </li>
       <li class="page-item" th:classappend="${userList.isLast} ? 'disabled'">
-        <a class="page-link" th:href="@{|?page=${userList.getTotalPages - 1}|}">
+        <a class="page-link" th:href="@{|?page=${userList.getTotalPages - 1}&size=${size}&kw=${kw}|}">
           <span>끝</span>
         </a>
       </li>
     </ul>
   </div>
+  <!-- 페이징 처리 끝 -->
+  <form th:action="@{/admin/user}" method="get" id="searchForm">
+    <input type="hidden" id="kw" name="kw" th:value="${kw}">
+    <input type="hidden" id="size" name="size" th:value="${size}">
+    <input type="hidden" id="page" name="page" th:value="${page}">
+  </form>
   <!-- ban user form modal -->
   <div class="modal fade" id="banUserModal" tabindex="-1" aria-labelledby="banUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -150,7 +177,10 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form id="banUserForm" method="POST" class="needs-validation" novalidate>
+          <form
+            id="banUserForm" method="POST" class="needs-validation" novalidate
+            th:attr="data-page=${page}, data-size=${size}, data-keyword=${kw}"
+          >
             <input type="hidden" name="_method" value="PUT">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             <div class="mb-3">
@@ -176,7 +206,10 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form id="blockUserForm" method="POST" class="needs-validation" novalidate>
+          <form
+            id="blockUserForm" method="POST" class="needs-validation" novalidate
+            th:attr="data-page=${page}, data-size=${size}, data-keyword=${kw}"
+          >
             <input type="hidden" name="_method" value="PUT">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             <div class="mb-3">

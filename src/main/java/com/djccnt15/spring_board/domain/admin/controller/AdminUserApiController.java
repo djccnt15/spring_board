@@ -39,7 +39,9 @@ public class AdminUserApiController {
     public ResponseEntity<?> ban(
         @AuthenticationPrincipal UserSession user,
         @PathVariable(value = "id") Long id,
+        @RequestParam(value = "size", defaultValue = "10") int size,
         @RequestParam(value = "page", defaultValue = "0") int page,
+        @RequestParam(value = "kw", defaultValue = "") String keyword,
         @Valid DetailForm form,
         BindingResult bindingResult
     ) {
@@ -57,7 +59,7 @@ public class AdminUserApiController {
         }
         business.banUser(user, id, form);
         return ResponseEntity
-            .created(URI.create("/admin/user?page=%s".formatted(page)))
+            .created(URI.create("/admin/user?page=%s&size=%s&kw=%s".formatted(page, size, keyword)))
             .body(ResponseMessageEnum.CREATE);
     }
     
@@ -74,7 +76,9 @@ public class AdminUserApiController {
     public ResponseEntity<?> block(
         @AuthenticationPrincipal UserSession user,
         @PathVariable(value = "id") Long id,
+        @RequestParam(value = "size", defaultValue = "10") int size,
         @RequestParam(value = "page", defaultValue = "0") int page,
+        @RequestParam(value = "kw", defaultValue = "") String keyword,
         @Valid DetailForm form,
         BindingResult bindingResult
     ) {
@@ -92,7 +96,7 @@ public class AdminUserApiController {
         }
         business.blockUser(user, id, form);
         return ResponseEntity
-            .created(URI.create("/admin/user?page=%s".formatted(page)))
+            .created(URI.create("/admin/user?page=%s&size=%s&kw=%s".formatted(page, size, keyword)))
             .body(ResponseMessageEnum.CREATE);
     }
 }
