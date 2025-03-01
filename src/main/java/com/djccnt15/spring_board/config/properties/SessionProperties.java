@@ -1,17 +1,14 @@
 package com.djccnt15.spring_board.config.properties;
 
-import com.djccnt15.spring_board.annotations.Property;
-import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@Property
 @Getter
-@Setter(value = AccessLevel.PACKAGE)  // disallow user to use setter of fields
+@AllArgsConstructor
 @ConfigurationProperties(prefix = "app.session.remember")
 public class SessionProperties {
     
-    private int tokenValidSec;
-    private String key;
+    private final int tokenValidSec;
+    private final String key;
 }
