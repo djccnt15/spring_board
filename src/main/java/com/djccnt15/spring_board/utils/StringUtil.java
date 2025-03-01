@@ -24,16 +24,6 @@ public class StringUtil {
         return sb.toString();
     }
     
-    public static String renderMarkdown(String markdown) {
-        if (markdown == null) {
-            return "";
-        }
-        var parser = Parser.builder().build();
-        var document = parser.parse(markdown);
-        var renderer = HtmlRenderer.builder().build();
-        return renderer.render(document);
-    }
-    
     public static String datetimeFormatter(LocalDateTime dateTime, String format) {
         var formatter = DateTimeFormatter.ofPattern(format);
         return dateTime.format(formatter);
