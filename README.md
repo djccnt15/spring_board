@@ -27,7 +27,8 @@ erDiagram
         string      password                "null"
         string      email               UK  "null"
         datetime    created_datetime
-        enum      role                      "null"
+        enum        role                    "null"
+        bool        is_verified             "default=False"
     }
 
     STATE ||..o{ USER_STATE : ""
@@ -51,6 +52,8 @@ erDiagram
         bigint      id          PK
         int         tier
         string      name
+        bool        is_active       "default=True"
+        int         pin_order
         bigint      parent_id   FK  "null"
     }
 
@@ -62,6 +65,7 @@ erDiagram
         bigint      category_id         FK
         datetime    created_datetime
         bool        is_active               "default=True"
+        int         view_count              "default=0"
     }
 
     POST ||..|{ POST_CONTENT : meta-data
@@ -92,11 +96,11 @@ erDiagram
 
     COMMENT ||..|{ COMMENT_CONTENT : meta-data
     COMMENT_CONTENT {
-        bigint id PK
-        int version "default=0"
-        datetime created_datetime
-        text content
-        bigint comment_id FK
+        bigint      id                  PK
+        int         version                 "default=0"
+        datetime    created_datetime
+        text        content
+        bigint      comment_id          FK
     }
 
     USER_INFO ||..o{ VOTER_COMMENT : vote
