@@ -4,13 +4,13 @@ import com.djccnt15.spring_board.annotations.TableHeader;
 import com.djccnt15.spring_board.exception.ApiInternalServerException;
 import com.djccnt15.spring_board.utils.model.ExcelCoverData;
 import com.djccnt15.spring_board.utils.model.ExcelTableSheetData;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @Slf4j
-@Service
-public class DownloadFileGenerator {
+@UtilityClass
+public final class DownloadFileGenerator {
     
     public static <T> byte[] generateCsv(List<T> records, Class<T> type) {
         var out = new ByteArrayOutputStream();
