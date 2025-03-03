@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Spring Board User Verify</title>
+</head>
+<body style="font-family: Arial, sans-serif;">
+  <div style="
+    background-color: #f8f9fa;
+    padding: 100px;
+    "
+  >
+    <div style="
+      width: 80%%;
+      background-color: white;
+      padding: 20px;
+      text-align: center;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin: auto;
+      "
+    >
+      <h5 style="margin: 0; font-size: 20px;">Spring Board</h5>
+      <p style="font-size: 16px; color: #333;">이메일 인증을 진행해 주세요</p>
+      <form
+        action="%s"
+        method="POST"
+      >
+        <input type="hidden" name="key" value="%s">
+        <button
+          type="submit"
+          style="
+            display: inline-block;
+            position: relative;
+            font-size: 1.25rem;
+            margin: 20px;
+            padding: 15px 25px;
+            border: 1px solid #ccc;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+            "
+        >이메일 인증하기</button>
+      </form>
+      <a
+        href="mailto:comjdh15@gmail.com"
+        style="
+          display: block;
+          margin-top: 15px;
+          text-decoration: none;
+          color: #007bff;
+          font-size: 16px;
+          "
+      >Contact to Admin</a>
+    </div>
+  </div>
+</body>
+</html>

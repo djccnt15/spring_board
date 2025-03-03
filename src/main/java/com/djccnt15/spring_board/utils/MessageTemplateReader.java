@@ -19,10 +19,12 @@ public class MessageTemplateReader {
     private final ResourceLoader resourceLoader;
     
     private String recoverMailTemplate;
+    private String verifyMailTemplate;
     
     @PostConstruct
     public void init() throws IOException {
         recoverMailTemplate = getMailTemplate("user-recover-mail");
+        verifyMailTemplate = getMailTemplate("user-verify-mail");
     }
     
     private String getMailTemplate(String fileName) throws IOException {
