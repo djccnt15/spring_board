@@ -70,7 +70,7 @@ public class SecurityConfig {
                 // .invalidSessionUrl("/login?timeout")  // redirect on timeout
                 .sessionFixation().migrateSession()
                 .maximumSessions(1)
-                .expiredUrl("/session-expired")  // redirect when session expires
+                .expiredUrl("/user/session-expired")  // redirect when session expires
             )
             .rememberMe((remember) -> remember
                 .key(sessionProperties.getKey())
