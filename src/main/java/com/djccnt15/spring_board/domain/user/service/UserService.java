@@ -1,5 +1,7 @@
 package com.djccnt15.spring_board.domain.user.service;
 
+import com.djccnt15.spring_board.cache.entity.UserVerifyKeyCache;
+import com.djccnt15.spring_board.cache.repository.UserVerifyKeyRepository;
 import com.djccnt15.spring_board.db.entity.UserEntity;
 import com.djccnt15.spring_board.db.entity.UserStateEntity;
 import com.djccnt15.spring_board.db.entity.enums.UserRoleEnum;
@@ -33,14 +35,15 @@ public class UserService {
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
     private final UserStateRepository userStateRepository;
+    private final UserVerifyKeyRepository userVerifyKeyRepository;
     
-    public void createUser(UserCreateForm form) {
+    public UserEntity createUser(UserCreateForm form) {
         var userEntity = UserEntity.builder()
             .username(form.getUsername())
             .password(encoder.encode(form.getPassword1()))
             .email(form.getEmail())
             .build();
-        userRepository.save(userEntity);
+        return userRepository.save(userEntity);
     }
     
     public UserEntity getUser(String username) {
@@ -223,5 +226,9 @@ public class UserService {
             user.setBanned(true);
             user.setBannedReason(state.getDetail());
         }
+    }
+    
+    public void saveUserVerifyKey(UserVerifyKeyCache key) {
+        userVerifyKeyRepository.save(key);
     }
 }

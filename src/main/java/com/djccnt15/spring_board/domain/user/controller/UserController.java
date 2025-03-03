@@ -5,6 +5,7 @@ import com.djccnt15.spring_board.domain.user.model.UserCreateForm;
 import com.djccnt15.spring_board.domain.user.model.UserRecoveryForm;
 import com.djccnt15.spring_board.exception.DataNotFoundException;
 import com.djccnt15.spring_board.exception.FormValidationException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,12 +38,14 @@ public class UserController {
     
     /**
      * view controller for User signup
+     * @param request HttpServletRequest to get url data
      * @param form user create form data
      * @param bindingResult validated result of form data
-     * @return redirect to main page
+     * @return user verify page
      */
     @PostMapping(path = "/signup")
     public String signup(
+        HttpServletRequest request,
         @Valid UserCreateForm form,
         BindingResult bindingResult
     ) {
@@ -59,7 +62,7 @@ public class UserController {
         }
         
         try {
-            business.createUser(form);
+            business.createUser(form, request);
         } catch (DataIntegrityViolationException e) {
             bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");
             return "signup_form";
@@ -69,7 +72,7 @@ public class UserController {
             return "signup_form";
         }
         
-        return "redirect:/";
+        return "user-verify";
     }
     
     /**

@@ -4,12 +4,15 @@ import com.djccnt15.spring_board.annotations.Business;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.mailing.service.EmailService;
 import com.djccnt15.spring_board.domain.user.converter.UserConverter;
+import com.djccnt15.spring_board.domain.user.converter.UserVerifyKeyConverter;
 import com.djccnt15.spring_board.domain.user.model.*;
 import com.djccnt15.spring_board.domain.user.service.UserService;
 import com.djccnt15.spring_board.exception.FormValidationException;
 import com.djccnt15.spring_board.utils.CommonUtil;
 import com.djccnt15.spring_board.utils.MessageTemplateReader;
 import com.djccnt15.spring_board.utils.StringUtil;
+import com.djccnt15.spring_board.utils.UriUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,9 +24,31 @@ public class UserBusiness {
     private final UserConverter converter;
     private final EmailService emailService;
     private final MessageTemplateReader templateReader;
+    private final UserVerifyKeyConverter userVerifyKeyConverter;
     
-    public void createUser(UserCreateForm form) {
-        service.createUser(form);
+    @Transactional  // rollback user create if fail to process user verifying steps
+    public void createUser(
+        UserCreateForm form,
+        HttpServletRequest request
+    ) {
+        var user = service.createUser(form);
+        var key = StringUtil.generateRandomString(12);
+        var userKey = UserVerifyKey.builder()
+            .ttl(60L * 10)
+            .id(user.getId())
+            .key(key)
+            .build();
+        var userKeyCache = userVerifyKeyConverter.toCache(userKey);
+        service.saveUserVerifyKey(userKeyCache);
+        
+        var baseUrl = UriUtil.getBaseUrl(request);
+        var verifyUrl = baseUrl + "/user/verify/%s".formatted(user.getId());
+        var mailingTemplate = templateReader.getVerifyMailTemplate();
+        emailService.sendEmail(
+            user.getEmail(),
+            "Spring Board 인증 메일",
+            mailingTemplate.formatted(verifyUrl, key)
+        );
     }
     
     public void resign(UserSession user) {
