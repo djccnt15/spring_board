@@ -52,14 +52,6 @@ public class UserEntity extends BaseEntity {
     
     @OneToMany(mappedBy = "author")
     @ToString.Exclude
-    private List<QuestionEntity> question;
-    
-    @OneToMany(mappedBy = "author")
-    @ToString.Exclude
-    private List<AnswerEntity> answer;
-    
-    @OneToMany(mappedBy = "author")
-    @ToString.Exclude
     private List<PostEntity> post;
     
     @OneToMany(mappedBy = "author")
