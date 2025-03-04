@@ -21,6 +21,7 @@ import com.djccnt15.spring_board.utils.model.ExcelTableSheetData;
 import com.djccnt15.spring_board.utils.model.FileResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -89,6 +90,7 @@ public class PostService {
             .toList();
     }
     
+    @Cacheable(value = "post", key = "#id")  // enable Cache aside Pattern
     public PostDetailResponse getPostDetail(Long id) {
         var projection = postRepository.getPostDetailById(id)
             .orElseThrow(() -> new DataNotFoundException("can't find data"));

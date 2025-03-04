@@ -16,6 +16,7 @@ import com.djccnt15.spring_board.utils.CommonUtil;
 import com.djccnt15.spring_board.utils.model.FileResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -128,6 +129,7 @@ public class PostBusiness {
             .build();
     }
     
+    @CacheEvict(value = "post", key = "#id")
     @Transactional
     public void updatePost(
         UserSession user,
@@ -142,6 +144,7 @@ public class PostBusiness {
         postService.updatePostContent(post, postContent, request);
     }
     
+    @CacheEvict(value = "post", key = "#id")
     public void deletePost(
         UserSession user,
         Long id
