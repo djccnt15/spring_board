@@ -8,6 +8,7 @@ import com.djccnt15.spring_board.domain.user.converter.UserVerifyKeyConverter;
 import com.djccnt15.spring_board.domain.user.model.*;
 import com.djccnt15.spring_board.domain.user.service.UserService;
 import com.djccnt15.spring_board.exception.FormValidationException;
+import com.djccnt15.spring_board.exception.UserVerifyException;
 import com.djccnt15.spring_board.utils.CommonUtil;
 import com.djccnt15.spring_board.utils.MessageTemplateReader;
 import com.djccnt15.spring_board.utils.StringUtil;
@@ -158,5 +159,16 @@ public class UserBusiness {
             .user(user)
             .items(itemList)
             .build();
+    }
+    
+    public void verifyUser(
+        Long id,
+        String key
+    ) {
+        var cache = service.getUserVerifyKey(id);
+        if (!key.equals(cache.getKey())) throw new UserVerifyException("invalidated key error");
+        var user = service.getUser(id);
+        service.verifyUser(user);
+        service.deleteUserVerifyKey(id);
     }
 }

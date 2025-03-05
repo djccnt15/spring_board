@@ -15,6 +15,7 @@ import com.djccnt15.spring_board.domain.user.model.*;
 import com.djccnt15.spring_board.enums.UserStateEnum;
 import com.djccnt15.spring_board.exception.DataNotFoundException;
 import com.djccnt15.spring_board.exception.FormValidationException;
+import com.djccnt15.spring_board.exception.UserVerifyException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -230,5 +231,19 @@ public class UserService {
     
     public void saveUserVerifyKey(UserVerifyKeyCache key) {
         userVerifyKeyRepository.save(key);
+    }
+    
+    public UserVerifyKeyCache getUserVerifyKey(Long id) {
+        return userVerifyKeyRepository.findById(id)
+            .orElseThrow(() -> new UserVerifyException("verify token is expired"));
+    }
+    
+    public void verifyUser(UserEntity user) {
+        user.setVerified(true);
+        userRepository.save(user);
+    }
+    
+    public void deleteUserVerifyKey(Long id) {
+        userVerifyKeyRepository.deleteById(id);
     }
 }

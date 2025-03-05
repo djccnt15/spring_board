@@ -43,6 +43,10 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+            .csrf((csrf) -> csrf
+                // disable CSRF for user email verification page
+                .ignoringRequestMatchers("/user/verify/**")
+            )
             .authorizeHttpRequests((authorize) -> authorize
                 // allow to swagger ui. TODO disable permit to swagger ui below for production
                 // SWAGGER.toArray() returns Object[], not String[] and requestMatchers expects String[]

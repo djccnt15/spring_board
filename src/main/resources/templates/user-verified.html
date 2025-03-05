@@ -1,0 +1,26 @@
+<html
+  lang="ko"
+  layout:decorate="~{layout}"
+  xmlns:layout="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+>
+<div layout:fragment="content" class="container">
+  <div th:if="${param.error}">
+    <h5 class="my-3 border-bottom pb-2">사용자 인증 실패</h5>
+    <div class="alert alert-danger" th:text="${param.error}"></div>
+  </div>
+  <div th:unless="${param.error}">
+    <h5 class="my-3 border-bottom pb-2">사용자 인증 완료</h5>
+    <div class="card my-3">
+      <div class="card-body">
+        <div>
+          <div class="card-text">
+            사용자 인증이 완료되었습니다.
+            <a th:href="@{/user/login}">로그인 하러 가기</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</html>

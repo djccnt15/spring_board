@@ -5,6 +5,7 @@ import com.djccnt15.spring_board.domain.user.model.UserCreateForm;
 import com.djccnt15.spring_board.domain.user.model.UserRecoveryForm;
 import com.djccnt15.spring_board.exception.DataNotFoundException;
 import com.djccnt15.spring_board.exception.FormValidationException;
+import com.djccnt15.spring_board.exception.UserVerifyException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +14,10 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Slf4j
 @Controller
@@ -128,5 +129,41 @@ public class UserController {
     @GetMapping(path = "/session-expired")
     public String sessionExpired() {
         return "session-expired";
+    }
+    
+    /**
+     * view controller for user verification
+     * @param id user id
+     * @param key user secret key
+     * @return user verified page
+     */
+    @PostMapping(path = "/verify/{id}")
+    public String verifyUser(
+        @PathVariable(value = "id") Long id,
+        @RequestParam(value = "key") String key
+    ) {
+        try {
+            business.verifyUser(id, key);
+        } catch (UserVerifyException e) {
+            return "redirect:/user/verify/%s?error=%s".formatted(
+                id, URLEncoder.encode(e.getMessage(), StandardCharsets.UTF_8)
+            );
+        }
+        return "user-verified";
+    }
+    
+    /**
+     * view controller for user verification
+     * @param model inject from spring
+     * @param id user id
+     * @return user verified page
+     */
+    @GetMapping(path = "/verify/{id}")
+    public String verifyUser(
+        Model model,
+        @PathVariable(value = "id") Long id
+    ) {
+        model.addAttribute("id", id);
+        return "user-verified";
     }
 }
