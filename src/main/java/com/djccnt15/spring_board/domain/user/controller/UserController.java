@@ -166,4 +166,19 @@ public class UserController {
         model.addAttribute("id", id);
         return "user-verified";
     }
+    
+    /**
+     * view controller for retrying user verify
+     * @param request HttpServletRequest to get
+     * @param id user id
+     * @return user verify page
+     */
+    @GetMapping(path = "/verify/{id}/retry")
+    public String retryVerify(
+        HttpServletRequest request,
+        @PathVariable(value = "id") Long id
+    ) {
+        business.retryVerify(id, request);
+        return "user-verify";
+    }
 }

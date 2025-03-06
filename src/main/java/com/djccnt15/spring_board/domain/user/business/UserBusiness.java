@@ -171,4 +171,28 @@ public class UserBusiness {
         service.verifyUser(user);
         service.deleteUserVerifyKey(id);
     }
+    
+    public void retryVerify(
+        Long id,
+        HttpServletRequest request
+    ) {
+        var user = service.getUser(id);
+        var key = StringUtil.generateRandomString(12);
+        var userKey = UserVerifyKey.builder()
+            .ttl(60L * 10)
+            .id(user.getId())
+            .key(key)
+            .build();
+        var userKeyCache = userVerifyKeyConverter.toCache(userKey);
+        service.saveUserVerifyKey(userKeyCache);
+        
+        var baseUrl = UriUtil.getBaseUrl(request);
+        var verifyUrl = baseUrl + "/user/verify/%s".formatted(user.getId());
+        var mailingTemplate = templateReader.getVerifyMailTemplate();
+        emailService.sendEmail(
+            user.getEmail(),
+            "Spring Board 인증 메일",
+            mailingTemplate.formatted(verifyUrl, key)
+        );
+    }
 }

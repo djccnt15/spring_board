@@ -8,6 +8,9 @@
   <div th:if="${param.error}">
     <h5 class="my-3 border-bottom pb-2">사용자 인증 실패</h5>
     <div class="alert alert-danger" th:text="${param.error}"></div>
+    <form th:action="@{|/user/verify/${id}/retry|}">
+      <input type="submit" value="E-mail 인증 재요청하기" class="btn btn-primary my-2">
+    </form>
   </div>
   <div th:unless="${param.error}">
     <h5 class="my-3 border-bottom pb-2">사용자 인증 완료</h5>
