@@ -7,7 +7,7 @@
 <div layout:fragment="content" class="container">
   <h5 class="my-3 border-bottom pb-2">비밀번호 찾기</h5>
   <form th:action="@{/user/recovery}" th:object="${form}" method="POST">
-    <div th:replace="~{form_errors :: formErrorsFragment}"></div>
+    <div th:replace="~{form-errors :: formErrorsFragment}"></div>
     <div class="mb-3">
       <label for="username" class="form-label">사용자ID</label>
       <input id="username" type="text" class="form-control" th:field="*{username}">

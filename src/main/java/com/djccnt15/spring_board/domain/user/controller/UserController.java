@@ -34,7 +34,7 @@ public class UserController {
      */
     @GetMapping(path = "/signup")
     public String signup(UserCreateForm userCreateForm) {
-        return "signup_form";
+        return "signup-form";
     }
     
     /**
@@ -51,7 +51,7 @@ public class UserController {
         BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {
-            return "signup_form";
+            return "signup-form";
         }
         if (!form.getPassword1().equals(form.getPassword2())) {
             bindingResult.rejectValue(
@@ -59,18 +59,18 @@ public class UserController {
                 "passwordInCorrect",
                 "2개의 패스워드가 일치하지 않습니다."
             );
-            return "signup_form";
+            return "signup-form";
         }
         
         try {
             business.createUser(form, request);
         } catch (DataIntegrityViolationException e) {
             bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");
-            return "signup_form";
+            return "signup-form";
         } catch (Exception e) {
             log.error("", e);  // must input throwable as a second argument for stack tracing
             bindingResult.reject("signupFailed", e.getMessage());
-            return "signup_form";
+            return "signup-form";
         }
         
         return "user-verify";
@@ -82,7 +82,7 @@ public class UserController {
      */
     @GetMapping(path = "/login")
     public String login() {
-        return "login_form";
+        return "login-form";
     }
     
     /**

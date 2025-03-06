@@ -9,7 +9,7 @@
   <form th:object="${form}" method="POST">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <!--csrf token won't be created automatically if not use `th:action` attribute-->
-    <div th:replace="~{form_errors :: formErrorsFragment}"></div>
+    <div th:replace="~{form-errors :: formErrorsFragment}"></div>
     <label th:for="category" class="form-label">카테고리</label>
     <select id="category" name="category" class="form-select mb-3">
       <option selected disabled>카테고리를 선택해 주세요</option>
