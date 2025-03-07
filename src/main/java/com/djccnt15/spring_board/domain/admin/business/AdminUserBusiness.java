@@ -38,9 +38,7 @@ public class AdminUserBusiness {
     ) {
         var entity = userService.getUser(user);
         var validation = userService.validateManager(entity);
-        if (!validation) {
-            throw new RuntimeException("you are not manager");
-        }
+        if (!validation) throw new RuntimeException("you are not manager");
         adminUserService.grantManager(id);
     }
     
@@ -50,9 +48,7 @@ public class AdminUserBusiness {
     ) {
         var entity = userService.getUser(user);
         var validation = userService.validateManager(entity);
-        if (!validation) {
-            throw new RuntimeException("you are not manager");
-        }
+        if (!validation) throw new RuntimeException("you are not manager");
         adminUserService.revokeManager(id);
     }
     

@@ -78,9 +78,7 @@ public class UserBusiness {
     public void recoverUser(UserRecoveryForm form) {
         var user = service.getUser(form.getUsername());
         var validation = service.validateRecoverEmail(form, user);
-        if (!validation) {
-            throw new FormValidationException("incorrect user information");
-        }
+        if (!validation) throw new FormValidationException("incorrect user information");
         var mailingTemplate = templateReader.getRecoverMailTemplate();
         var password = StringUtil.generateRandomString(12);
         service.recoverUser(user, password);

@@ -19,11 +19,11 @@ public class MarkdownUtil {
         this.renderer = HtmlRenderer.builder().build();
     }
     
-    public String renderMarkdown(String markdown) {
-        if (markdown == null) {
+    public String renderMarkdown(String content) {
+        if (content == null) {
             return "";
         }
-        var document = parser.parse(markdown);
+        var document = parser.parse(content);
         return renderer.render(document);
     }
 }

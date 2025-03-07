@@ -33,6 +33,8 @@ public class AuthFailureHandler implements AuthenticationFailureHandler {
         }
         
         // Redirect to login page with an error parameter
-        response.sendRedirect("/user/login?error=" + URLEncoder.encode(errorMessage, StandardCharsets.UTF_8));
+        response.sendRedirect("/user/login?error=%s".formatted(
+            URLEncoder.encode(errorMessage, StandardCharsets.UTF_8)
+        ));
     }
 }

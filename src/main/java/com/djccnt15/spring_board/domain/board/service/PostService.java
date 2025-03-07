@@ -9,10 +9,13 @@ import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.board.converter.PostContentConverter;
 import com.djccnt15.spring_board.domain.board.converter.PostConverter;
 import com.djccnt15.spring_board.domain.board.converter.PostVoterConverter;
-import com.djccnt15.spring_board.domain.board.model.*;
+import com.djccnt15.spring_board.domain.board.model.PostContentHistory;
+import com.djccnt15.spring_board.domain.board.model.PostCreateRequest;
+import com.djccnt15.spring_board.domain.board.model.PostDetailResponse;
+import com.djccnt15.spring_board.domain.board.model.PostMinimalResponse;
+import com.djccnt15.spring_board.exception.ApiForbiddenException;
 import com.djccnt15.spring_board.exception.ApiInvalidAuthorException;
 import com.djccnt15.spring_board.exception.DataNotFoundException;
-import com.djccnt15.spring_board.exception.ApiForbiddenException;
 import com.djccnt15.spring_board.exception.InvalidAuthorException;
 import com.djccnt15.spring_board.utils.DownloadFileGenerator;
 import com.djccnt15.spring_board.utils.StringUtil;
@@ -149,9 +152,7 @@ public class PostService {
     
     public void validateComment(PostEntity post) {
         var commentList = commentRepository.findByPostAndIsActive(post, true);
-        if (!commentList.isEmpty()) {
-            throw new ApiForbiddenException("you can't delete commented post");
-        }
+        if (!commentList.isEmpty()) throw new ApiForbiddenException("you can't delete commented post");
     }
     
     public Optional<PostVoterEntity> getVoted(
