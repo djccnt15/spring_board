@@ -12,6 +12,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -33,6 +34,7 @@ public class SecurityConfig {
     private final PasswordEncoder encoder;
     private final AuthService authService;
     private final SessionProperties sessionProperties;
+    private final SessionRegistry sessionRegistry;
     
     /**
      * Configuration for Spring Security
@@ -74,6 +76,7 @@ public class SecurityConfig {
                 // .invalidSessionUrl("/login?timeout")  // redirect on timeout
                 .sessionFixation().migrateSession()
                 .maximumSessions(1)
+                .sessionRegistry(sessionRegistry)
                 .expiredUrl("/user/session-expired")  // redirect when session expires
             )
             .rememberMe((remember) -> remember
