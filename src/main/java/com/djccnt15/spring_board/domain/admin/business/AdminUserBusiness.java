@@ -2,6 +2,7 @@ package com.djccnt15.spring_board.domain.admin.business;
 
 import com.djccnt15.spring_board.annotations.Business;
 import com.djccnt15.spring_board.domain.admin.service.AdminUserService;
+import com.djccnt15.spring_board.domain.auth.SessionService;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.user.converter.UserConverter;
 import com.djccnt15.spring_board.domain.user.model.DetailForm;
@@ -20,6 +21,7 @@ public class AdminUserBusiness {
     private final UserService userService;
     private final UserConverter userConverter;
     private final AdminUserService adminUserService;
+    private final SessionService sessionService;
     
     public Page<UserResponse> getUserList(
         int size,
@@ -63,6 +65,7 @@ public class AdminUserBusiness {
         var targetUser = userService.getUser(id);
         var state = adminUserService.getState(UserStateEnum.BANNED);
         adminUserService.createUserState(form, targetUser, state);
+        sessionService.forceLogout(targetUser.getId());
     }
     
     public void unBanUser(
@@ -88,6 +91,7 @@ public class AdminUserBusiness {
         var targetUser = userService.getUser(id);
         var state = adminUserService.getState(UserStateEnum.LOCKED);
         adminUserService.createUserState(form, targetUser, state);
+        sessionService.forceLogout(targetUser.getId());
     }
     
     public void unBlockUser(
