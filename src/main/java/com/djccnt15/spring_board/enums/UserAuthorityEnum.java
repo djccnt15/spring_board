@@ -14,6 +14,8 @@ public enum UserAuthorityEnum {
     ADMIN("ROLE_ADMIN"),
     MANAGER("ROLE_MANAGER"),
     USER("ROLE_USER"),
+    WRITER("ROLE_WRITER"),
+    READER("ROLE_READER"),
     ;
     
     private final String role;
