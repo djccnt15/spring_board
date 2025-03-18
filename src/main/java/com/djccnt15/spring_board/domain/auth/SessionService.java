@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class SessionService {
-    // TODO update to force logout of shared stored session
+    // TODO: update to force logout of shared stored session
     
     private final SessionRegistry sessionRegistry;
     

@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-// TODO disable this filter if the app is for public service
+// TODO: disable this filter if the app is for public service
 @Slf4j
 @Component
 @Order(value = Integer.MIN_VALUE)

@@ -50,7 +50,7 @@ public class SecurityConfig {
                 .ignoringRequestMatchers("/user/verify/**")
             )
             .authorizeHttpRequests((authorize) -> authorize
-                // allow to swagger ui. TODO disable permit to swagger ui below for production
+                // allow to swagger ui. TODO: disable permit to swagger ui below for production
                 // SWAGGER.toArray() returns Object[], not String[] and requestMatchers expects String[]
                 // new String[0] ensures that the method dynamically creates a correctly sized array
                 .requestMatchers(SWAGGER.toArray(new String[0])).permitAll()
