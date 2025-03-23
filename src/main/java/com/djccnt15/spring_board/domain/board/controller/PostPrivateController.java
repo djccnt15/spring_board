@@ -29,6 +29,7 @@ public class PostPrivateController {
      * @return post create page
      */
     @GetMapping(path = "/{mainCategory}/form")
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'WRITER')")
     public String getCreateForm(
         Model model,
         @PathVariable(value = "mainCategory") String mainCategory
@@ -49,6 +50,7 @@ public class PostPrivateController {
      * @return redirect to created post
      */
     @PostMapping(path = "/{mainCategory}/form")
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'WRITER')")
     public String createPost(
         Model model,
         @AuthenticationPrincipal UserSession user,
