@@ -54,11 +54,27 @@
             sec:authorize="isAuthenticated()"
             th:if="${response.authorId != null and #authentication.getPrincipal().getUserId() == response.authorId}"
           >수정</a>
+          <a
+            th:href="@{|/board/${mainCategory}/${response.id}/form|}"
+            class="btn btn-sm btn-outline-secondary"
+            sec:authorize="hasAnyRole('ADMIN')"
+            th:if="${response.authorId != null and #authentication.getPrincipal().getUserId() != response.authorId}"
+          >수정</a>
           <form
             th:action="@{|/board/${mainCategory}/${response.id}|}"
             method="POST"
             sec:authorize="isAuthenticated()"
             th:if="${response.authorId != null and #authentication.getPrincipal().getUserId() == response.authorId}"
+            class="delete d-inline-block"
+          >
+            <input type="hidden" name="_method" value="DELETE" />
+            <button type="submit" class="btn btn-sm btn-outline-secondary">삭제</button>
+          </form>
+          <form
+            th:action="@{|/board/${mainCategory}/${response.id}|}"
+            method="POST"
+            sec:authorize="hasAnyRole('ADMIN')"
+            th:if="${response.authorId != null and #authentication.getPrincipal().getUserId() != response.authorId}"
             class="delete d-inline-block"
           >
             <input type="hidden" name="_method" value="DELETE" />
@@ -161,11 +177,27 @@
             sec:authorize="isAuthenticated()"
             th:if="${comment.authorId != null and #authentication.getPrincipal().getUserId() == comment.authorId}"
           >수정</a>
+          <a
+            th:href="@{|/board/${mainCategory}/${response.id}/comment/${comment.id}/form?page=${page}&size=${size}|}"
+            class="btn btn-sm btn-outline-secondary"
+            sec:authorize="hasAnyRole('ADMIN')"
+            th:if="${comment.authorId != null and #authentication.getPrincipal().getUserId() != comment.authorId}"
+          >수정</a>
           <form
             th:action="@{|/board/${mainCategory}/${response.id}/comment/${comment.id}|}"
             method="POST"
             sec:authorize="isAuthenticated()"
             th:if="${comment.authorId != null and #authentication.getPrincipal().getUserId() == comment.authorId}"
+            class="d-inline-block"
+          >
+            <input type="hidden" name="_method" value="DELETE" />
+            <button type="submit" class="btn btn-sm btn-outline-secondary">삭제</button>
+          </form>
+          <form
+            th:action="@{|/board/${mainCategory}/${response.id}/comment/${comment.id}|}"
+            method="POST"
+            sec:authorize="hasAnyRole('ADMIN')"
+            th:if="${comment.authorId != null and #authentication.getPrincipal().getUserId() != comment.authorId}"
             class="d-inline-block"
           >
             <input type="hidden" name="_method" value="DELETE" />

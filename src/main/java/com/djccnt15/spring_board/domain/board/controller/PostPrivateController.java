@@ -76,6 +76,7 @@ public class PostPrivateController {
      * @return post update view
      */
     @GetMapping(path = "/{mainCategory}/{id}/form")
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'WRITER')")
     public String getUpdateForm(
         Model model,
         @AuthenticationPrincipal UserSession user,
@@ -101,6 +102,7 @@ public class PostPrivateController {
      * @return redirect to post detail page
      */
     @PutMapping(path = "/{mainCategory}/{id}/form")
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'WRITER')")
     public String updatePost(
         Model model,
         @AuthenticationPrincipal UserSession user,

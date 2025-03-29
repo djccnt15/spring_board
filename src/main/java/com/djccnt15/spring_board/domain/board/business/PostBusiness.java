@@ -3,6 +3,7 @@ package com.djccnt15.spring_board.domain.board.business;
 import com.djccnt15.spring_board.annotations.Business;
 import com.djccnt15.spring_board.db.entity.CategoryEntity;
 import com.djccnt15.spring_board.db.entity.PostEntity;
+import com.djccnt15.spring_board.db.entity.enums.UserRoleEnum;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.board.converter.PostContentConverter;
 import com.djccnt15.spring_board.domain.board.model.*;
@@ -117,7 +118,7 @@ public class PostBusiness {
         Long id
     ) {
         var post = postService.getPost(id);
-        postService.validateAuthor(user, post);
+        if (!(user.getRole() == UserRoleEnum.ADMIN)) postService.validateAuthor(user, post);
         var mainCategory = categoryService.getCategory(mainCategoryName);
         var categoryList = categoryService.getCategoryByParent(mainCategory);
         var postContent = postService.getLastPostContent(post);
@@ -137,7 +138,7 @@ public class PostBusiness {
         PostCreateRequest request
     ) {
         var post = postService.getPost(id);
-        postService.validateAuthor(user, post);
+        if (!(user.getRole() == UserRoleEnum.ADMIN)) postService.validateAuthor(user, post);
         var category = categoryService.getCategory(request.getCategory());
         var postContent = postService.getLastPostContent(post);
         postService.updatePost(post, category);
@@ -150,7 +151,7 @@ public class PostBusiness {
         Long id
     ) {
         var post = postService.getPost(id);
-        postService.apiValidateAuthor(user, post);
+        if (!(user.getRole() == UserRoleEnum.ADMIN)) postService.apiValidateAuthor(user, post);
         postService.validateComment(post);
         postService.deletePost(post);
     }

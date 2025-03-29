@@ -1,6 +1,7 @@
 package com.djccnt15.spring_board.domain.board.business;
 
 import com.djccnt15.spring_board.annotations.Business;
+import com.djccnt15.spring_board.db.entity.enums.UserRoleEnum;
 import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.board.converter.CommentContentConverter;
 import com.djccnt15.spring_board.domain.board.model.CommentContentResponse;
@@ -43,7 +44,7 @@ public class CommentBusiness {
         Long commentId
     ) {
         var comment = commentService.getComment(commentId);
-        commentService.validateAuthor(user, comment);
+        if (!(user.getRole() == UserRoleEnum.ADMIN)) commentService.validateAuthor(user, comment);
         var commentContent = commentService.getLastCommentContent(comment);
         return CommentResponse.builder()
             .content(commentContent.getContent())
@@ -57,7 +58,7 @@ public class CommentBusiness {
         CommentCreateRequest request
     ) {
         var comment = commentService.getComment(commentId);
-        commentService.validateAuthor(user, comment);
+        if (!(user.getRole() == UserRoleEnum.ADMIN)) commentService.validateAuthor(user, comment);
         var commentContent = commentService.getLastCommentContent(comment);
         commentService.updateCommentContent(comment, commentContent, request);
     }
@@ -67,7 +68,7 @@ public class CommentBusiness {
         Long commentId
     ) {
         var comment = commentService.getComment(commentId);
-        commentService.validateAuthor(user, comment);
+        if (!(user.getRole() == UserRoleEnum.ADMIN)) commentService.validateAuthor(user, comment);
         commentService.deleteComment(comment);
     }
     

@@ -30,6 +30,7 @@ public class PostPrivateApiController {
      * @return redirect url after delete post
      */
     @DeleteMapping(path = "/{mainCategory}/{id}")
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'WRITER')")
     public ResponseEntity<?> deletePost(
         @AuthenticationPrincipal UserSession user,
         @PathVariable(value = "mainCategory") String mainCategory,

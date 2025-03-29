@@ -37,6 +37,7 @@ public class CommentPrivateController {
      * @return redirect to anchor in post page
      */
     @PostMapping(path = "/{mainCategory}/{id}/comment/form")
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'WRITER')")
     public String createComment(
         Model model,
         @AuthenticationPrincipal UserSession user,
@@ -71,6 +72,7 @@ public class CommentPrivateController {
      * @return comment update view
      */
     @GetMapping(path = "/{mainCategory}/{postId}/comment/{commentId}/form")
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'WRITER')")
     public String getUpdateForm(
         Model model,
         @AuthenticationPrincipal UserSession user,
@@ -101,6 +103,7 @@ public class CommentPrivateController {
      * @return redirect to anchor in post detail page
      */
     @PutMapping(path = "/{mainCategory}/{postId}/comment/{commentId}/form")
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'WRITER')")
     public String updateComment(
         Model model,
         @AuthenticationPrincipal UserSession user,
@@ -132,6 +135,7 @@ public class CommentPrivateController {
      * @return redirect to anchor in post detail page
      */
     @DeleteMapping(path = "/{mainCategory}/{postId}/comment/{commentId}")
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'WRITER')")
     public String deleteComment(
         @AuthenticationPrincipal UserSession user,
         @PathVariable(value = "mainCategory") String mainCategory,
