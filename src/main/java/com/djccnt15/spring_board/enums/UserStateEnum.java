@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum UserStateEnum {
     
-    DISABLED(1, "DISABLED"),  // need to verify email to unlock account
+    // DISABLED(1, "DISABLED"),  // need to verify email to unlock account, not used
     LOCKED(2, "LOCKED"),  // can't login
     BANNED(3, "BANNED"),  // can't write/update post/comment
     ;

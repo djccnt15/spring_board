@@ -8,6 +8,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+/**
+ * user session class for custom principal <br>
+ * use this class with <strong>@AuthenticationPrincipal</strong> annotation
+ */
 @Data
 @Builder
 public class UserSession implements UserDetails {

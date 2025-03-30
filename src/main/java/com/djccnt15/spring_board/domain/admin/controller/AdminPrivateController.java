@@ -28,7 +28,7 @@ public class AdminPrivateController {
         @AuthenticationPrincipal UserSession user
     ) {
         model.addAttribute("showAdminLeftNav", true);
-        if (user.getRole().equals(UserRoleEnum.ADMIN)) {
+        if (user.getRole() == UserRoleEnum.ADMIN) {
             return "redirect:/admin/category";
         }
         return "redirect:/admin/user";

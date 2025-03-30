@@ -21,6 +21,7 @@ spring:
         jdbc:
           time_zone: Asia/Seoul
     hibernate:
+#      TODO: change ddl-auto option to validate for production level
 #      ddl-auto: create-drop
       ddl-auto: update
 #      ddl-auto: validate

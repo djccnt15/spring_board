@@ -22,7 +22,7 @@ public class MessageTemplateReader {
     private String verifyMailTemplate;
     
     @PostConstruct
-    public void init() throws IOException {
+    private void init() throws IOException {
         recoverMailTemplate = getMailTemplate("user-recover-mail");
         verifyMailTemplate = getMailTemplate("user-verify-mail");
     }
