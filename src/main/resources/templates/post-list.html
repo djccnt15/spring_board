@@ -19,11 +19,11 @@
       <a
         th:href="@{|/board/${mainCategory}/form|}"
         class="btn btn-primary"
-        sec:authorize="isAuthenticated() and !hasAnyRole('ADMIN', 'WRITER')" disabled
+        sec:authorize="hasAnyRole('ADMIN', 'WRITER')"
       >작성</a>
       <a
         class="btn btn-secondary"
-        sec:authorize="hasAnyRole('ADMIN', 'WRITER')"
+        sec:authorize="isAuthenticated() and !hasAnyRole('ADMIN', 'WRITER')" disabled
       >작성</a>
       <a
         class="btn btn-secondary"
