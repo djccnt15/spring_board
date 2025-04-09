@@ -24,7 +24,7 @@ public class DateTimeEntity extends BaseEntity {
     @CreationTimestamp
     private LocalDateTime createDateTime;
     
-    @Column(insertable = false)
+    @Column
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
 }
