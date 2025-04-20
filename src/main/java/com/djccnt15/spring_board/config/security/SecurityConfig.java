@@ -55,6 +55,10 @@ public class SecurityConfig {
                 // new String[0] ensures that the method dynamically creates a correctly sized array
                 .requestMatchers(SWAGGER.toArray(new String[0])).permitAll()
                 
+                // TODO: disable permit to public for production
+                // open prometheus metrics
+                .requestMatchers("/actuator/prometheus").permitAll()
+                
                 // only admin can manage category
                 .requestMatchers("/admin/category/**").hasAnyRole("ADMIN")
                 
