@@ -1,7 +1,6 @@
 package com.djccnt15.spring_board.config.security;
 
 import com.djccnt15.spring_board.config.properties.SessionProperties;
-import com.djccnt15.spring_board.domain.auth.AuthFailureHandler;
 import com.djccnt15.spring_board.domain.auth.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -35,6 +34,8 @@ public class SecurityConfig {
     private final AuthService authService;
     private final SessionProperties sessionProperties;
     private final SessionRegistry sessionRegistry;
+    private final AuthSuccessHandler authSuccessHandler;
+    private final AuthFailureHandler authFailureHandler;
     
     /**
      * Configuration for Spring Security
@@ -73,8 +74,9 @@ public class SecurityConfig {
             )
             .formLogin((formLogin) -> formLogin
                 .loginPage("/user/login")
-                .defaultSuccessUrl("/")
-                .failureHandler(new AuthFailureHandler())
+                // .defaultSuccessUrl("/")  // success url is handled in AuthSuccessHandler
+                .successHandler(authSuccessHandler)
+                .failureHandler(authFailureHandler)
             )
             .sessionManagement(session -> session
                 // .invalidSessionUrl("/login?timeout")  // redirect on timeout

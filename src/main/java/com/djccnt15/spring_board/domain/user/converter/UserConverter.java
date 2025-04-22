@@ -4,6 +4,7 @@ import com.djccnt15.spring_board.annotations.Converter;
 import com.djccnt15.spring_board.db.dto.UserCommentProjection;
 import com.djccnt15.spring_board.db.dto.UserPostProjection;
 import com.djccnt15.spring_board.db.entity.UserEntity;
+import com.djccnt15.spring_board.domain.auth.model.UserSession;
 import com.djccnt15.spring_board.domain.user.model.UserCommentResponse;
 import com.djccnt15.spring_board.domain.user.model.UserPostResponse;
 import com.djccnt15.spring_board.domain.user.model.UserResponse;
@@ -50,6 +51,15 @@ public class UserConverter {
             .version(comment.getVersion())
             .voteCount(comment.getVoteCount())
             .postId(comment.getPostId())
+            .build();
+    }
+    
+    public UserEntity toEntity(UserSession user) {
+        return UserEntity.builder()
+            .id(user.getUserId())
+            .username(user.getUsername())
+            .password(user.getPassword())
+            .role(user.getRole())
             .build();
     }
 }
