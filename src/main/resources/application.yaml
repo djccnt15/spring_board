@@ -1,4 +1,5 @@
 server:
+  output.ansi.enabled: always
   servlet:
     session:
       timeout: ${SESSION_TIMEOUT}
