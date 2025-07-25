@@ -1,9 +1,9 @@
 server:
-  output.ansi.enabled: always
   servlet:
     session:
       timeout: ${SESSION_TIMEOUT}
 spring:
+  output.ansi.enabled: always
   application:
     name: spring_board
   mvc:
