@@ -47,6 +47,31 @@ erDiagram
         datetime    created_datetime
     }
 
+    USER_INFO ||..o{ VOTER_COMMENT : vote
+    COMMENT ||..o{ VOTER_COMMENT : voted
+    VOTER_COMMENT {
+        bigint user_id      PK, FK
+        bigint comment_id   PK, FK
+    }
+
+    USER_INFO ||..o{ COMMENT : create
+    COMMENT {
+        bigint      id                  PK
+        bigint      author_id           FK
+        bigint      post_id             FK
+        datetime    created_datetime
+        bool        is_active               "default=True"
+    }
+
+    COMMENT ||..|{ COMMENT_CONTENT : meta-data
+    COMMENT_CONTENT {
+        bigint      id                  PK
+        int         version                 "default=0"
+        datetime    created_datetime
+        text        content
+        bigint      comment_id          FK
+    }
+
     CATEGORY |o..o{ CATEGORY : child
     CATEGORY {
         bigint      id          PK
@@ -68,6 +93,13 @@ erDiagram
         int         view_count              "default=0"
     }
 
+    USER_INFO ||..o{ VOTER_POST : vote
+    POST ||..o{ VOTER_POST : voted
+    VOTER_POST {
+        bigint user_id PK, FK
+        bigint post_id PK, FK
+    }
+
     POST ||..|{ POST_CONTENT : meta-data
     POST_CONTENT {
         bigint      id                  PK
@@ -76,37 +108,5 @@ erDiagram
         string      title
         text        content
         bigint      post_id             FK
-    }
-
-    USER_INFO ||..o{ VOTER_POST : vote
-    POST ||..o{ VOTER_POST : voted
-    VOTER_POST {
-        bigint user_id PK, FK
-        bigint post_id PK, FK
-    }
-
-    USER_INFO ||..o{ COMMENT : create
-    COMMENT {
-        bigint      id                  PK
-        bigint      author_id           FK
-        bigint      post_id             FK
-        datetime    created_datetime
-        bool        is_active               "default=True"
-    }
-
-    COMMENT ||..|{ COMMENT_CONTENT : meta-data
-    COMMENT_CONTENT {
-        bigint      id                  PK
-        int         version                 "default=0"
-        datetime    created_datetime
-        text        content
-        bigint      comment_id          FK
-    }
-
-    USER_INFO ||..o{ VOTER_COMMENT : vote
-    COMMENT ||..o{ VOTER_COMMENT : voted
-    VOTER_COMMENT {
-        bigint user_id      PK, FK
-        bigint comment_id   PK, FK
     }
 ```
