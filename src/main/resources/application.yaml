@@ -1,37 +1,28 @@
 server:
-  servlet:
-    session:
-      timeout: ${SESSION_TIMEOUT}
+  servlet.session.timeout: ${SESSION_TIMEOUT}
 spring:
+  application.name: spring_board
   output.ansi.enabled: always
-  application:
-    name: spring_board
-  mvc:
-    hiddenmethod:
-      filter:
-        enabled: true
-  session:
-    store-type: redis
+  mvc.hiddenmethod.filter.enabled: true
+  session.store-type: redis
   jpa:
     show-sql: true  # simple stdout sql in console
-    properties:
-      hibernate:
-        format_sql: true
-        highlight_sql: true
-        use_sql_comment: true
-        jdbc:
-          time_zone: Asia/Seoul
+    properties.hibernate:
+      format_sql: true
+      highlight_sql: true
+      use_sql_comment: true
+      jdbc.time_zone: Asia/Seoul
     hibernate:
-#      TODO: change ddl-auto option to validate for production level
-#      ddl-auto: create-drop
+     # TODO: change ddl-auto option to validate for production level
+     # ddl-auto: create-drop
       ddl-auto: update
-#      ddl-auto: validate
+     # ddl-auto: validate
   datasource:
     # test
-#    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1
-#    driver-class-name: org.h2.Driver
-#    username: sa
-#    password:
+    # url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1
+    # driver-class-name: org.h2.Driver
+    # username: sa
+    # password:
     # dev
     url: jdbc:postgresql://localhost:5432/spring_board
     driver-class-name: org.postgresql.Driver
@@ -42,63 +33,44 @@ spring:
     port: 587
     username: ${EMAIL_USERNAME}
     password: ${EMAIL_PASSWORD}
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+    # username: j64770446@gmail.com  # 1q2w3e!@
+    # password: hxia hppu sqnf ebtu
+    properties.mail.smtp:
+      auth: true
+      starttls.enable: true
   redis:
     host: ${REDIS_HOST}
     port: ${REDIS_PORT}
     password: ${REDIS_PASSWORD}
     time-to-live: 600000  # default TTL in milliseconds (600 seconds / 10 min)
     timeout: 5000ms
-    lettuce:
-      pool:
-        max-active: 8
-        max-idle: 8
-        min-idle: 2
-        max-wait: 2000ms
+    lettuce.pool:
+      max-active: 8
+      max-idle: 8
+      min-idle: 2
+      max-wait: 2000ms
 logging:
-  logback:
-    rollingpolicy:
-      max-history: 30
-      max-file-size: 100MB
-      total-size-cap: 300MB
-      file-name-pattern: ${LOG_FILE}.%d{yyyy-MM-dd}-%i.log
-  file:
-    name: D:\log\spring\logFile.log
-  pattern:
-    dateformat: yyyy-MM-dd HH:mm:ss.SSS,Asia/Seoul
+  logback.rollingpolicy:
+    max-history: 30
+    max-file-size: 100MB
+    total-size-cap: 300MB
+    file-name-pattern: ${LOG_FILE}.%d{yyyy-MM-dd}-%i.log
+  file.name: D:\log\spring\logFile.log
+  pattern.dateformat: yyyy-MM-dd HH:mm:ss.SSS,Asia/Seoul
 management:  # actuator settings
-  health:
-    redis:
-      enabled: true  # make redis does/not affect app status
-  info:
-    env:
-      enabled: true
-  endpoint:
-    health:
-      show-details: when-authorized
-      roles: ADMIN
-  endpoints:
-    web:
-      exposure:
-        include: health, info, prometheus
-  metrics:
-    export:
-      prometheus:
-        enabled: true
-info:
-  app:
-    name: SpringBoard
-    version: 0.0.1
-    description: This is a sample Spring Boot application
+  health.redis.enabled: true  # make redis does/not affect app status
+  info.env.enabled: true
+  endpoint.health:
+    show-details: when-authorized
+    roles: ADMIN
+  endpoints.web.exposure.include: health, info, prometheus
+  metrics.export.prometheus.enabled: true
+info.app:
+  name: SpringBoard
+  version: 0.0.1
+  description: This is a sample Spring Boot application
 app:
-  session:
-    remember:
-      token-valid-sec: 1209600  # 2 weeks in seconds
-      key: ${REMEMBER_TOKEN_KEY}
-  category:
-    max-pin: 6
+  session.remember:
+    token-valid-sec: 1209600  # 2 weeks in seconds
+    key: ${REMEMBER_TOKEN_KEY}
+  category.max-pin: 6
