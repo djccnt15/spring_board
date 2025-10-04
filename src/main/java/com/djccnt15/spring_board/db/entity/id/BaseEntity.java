@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Data
-@MappedSuperclass  // annotation for super type modeling
+@MappedSuperclass  // annotation for abstract table class
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class BaseEntity {
+public abstract class BaseEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

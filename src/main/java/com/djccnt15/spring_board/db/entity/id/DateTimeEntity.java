@@ -13,12 +13,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @Data
-@MappedSuperclass  // annotation for super type modeling
+@MappedSuperclass  // annotation for abstract table class
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class DateTimeEntity extends BaseEntity {
+public abstract class DateTimeEntity extends BaseEntity {
     
     @Column(updatable = false)
     @CreationTimestamp
