@@ -106,8 +106,8 @@ public class UserPrivateController {
     public String getPostList(
         Model model,
         @AuthenticationPrincipal UserSession user,
-        @RequestParam(value = "size", defaultValue = "10") int size,
-        @RequestParam(value = "page", defaultValue = "0") int page
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "0") int page
     ) {
         model.addAttribute("showProfileLeftNav", true);
         var response = business.getUserPost(user, size, page);
@@ -129,8 +129,8 @@ public class UserPrivateController {
     public String getCommentList(
         Model model,
         @AuthenticationPrincipal UserSession user,
-        @RequestParam(value = "size", defaultValue = "10") int size,
-        @RequestParam(value = "page", defaultValue = "0") int page
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "0") int page
     ) {
         model.addAttribute("showProfileLeftNav", true);
         var response = business.getUserComment(user, size, page);

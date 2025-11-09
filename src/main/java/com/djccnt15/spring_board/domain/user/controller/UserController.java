@@ -139,8 +139,8 @@ public class UserController {
      */
     @PostMapping(path = "/verify/{id}")
     public String verifyUser(
-        @PathVariable(value = "id") Long id,
-        @RequestParam(value = "key") String key
+        @PathVariable Long id,
+        @RequestParam String key,
     ) {
         try {
             business.verifyUser(id, key);
@@ -161,7 +161,7 @@ public class UserController {
     @GetMapping(path = "/verify/{id}")
     public String verifyUser(
         Model model,
-        @PathVariable(value = "id") Long id
+        @PathVariable Long id
     ) {
         model.addAttribute("id", id);
         return "user-verified";
@@ -176,7 +176,7 @@ public class UserController {
     @GetMapping(path = "/verify/{id}/retry")
     public String retryVerify(
         HttpServletRequest request,
-        @PathVariable(value = "id") Long id
+        @PathVariable Long id
     ) {
         business.retryVerify(id, request);
         return "user-verify";

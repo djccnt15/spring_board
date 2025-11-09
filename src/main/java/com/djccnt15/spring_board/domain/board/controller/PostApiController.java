@@ -24,15 +24,13 @@ public class PostApiController {
     
     /**
      * rest controller for download post history as csv file
-     * @param mainCategory name of the category
      * @param id post id
      * @return post history csv file
      */
     @GetMapping(path = "{mainCategory}/{id}/history/csvDownload")
     @PreAuthorize(value = "hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<?> downloadPostHistoryCsv(
-        @PathVariable(value = "mainCategory") String mainCategory,
-        @PathVariable(value = "id") Long id
+        @PathVariable Long id
     ) {
         var response = business.createHistoryCsv(id);
         return ResponseEntity.ok()
@@ -47,7 +45,6 @@ public class PostApiController {
     /**
      * rest controller for download post history as Excel file
      * @param user user session
-     * @param mainCategory name of the category
      * @param id post id
      * @return post history Excel file
      */
@@ -55,8 +52,7 @@ public class PostApiController {
     @PreAuthorize(value = "hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<?> downloadPostHistoryExcel(
         @AuthenticationPrincipal UserSession user,
-        @PathVariable(value = "mainCategory") String mainCategory,
-        @PathVariable(value = "id") Long id
+        @PathVariable Long id
     ) {
         var response = business.createHistoryExcel(user, id);
         return ResponseEntity.ok()

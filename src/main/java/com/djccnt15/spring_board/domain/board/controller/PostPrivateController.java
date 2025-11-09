@@ -32,7 +32,7 @@ public class PostPrivateController {
     @PreAuthorize(value = "hasAnyRole('ADMIN', 'WRITER')")
     public String getCreateForm(
         Model model,
-        @PathVariable(value = "mainCategory") String mainCategory
+        @PathVariable String mainCategory
     ) {
         var categoryList = business.getCategoryList(mainCategory);
         model.addAttribute(mainCategory);
@@ -54,7 +54,7 @@ public class PostPrivateController {
     public String createPost(
         Model model,
         @AuthenticationPrincipal UserSession user,
-        @PathVariable(value = "mainCategory") String mainCategory,
+        @PathVariable String mainCategory,
         @Valid @ModelAttribute(name = "form") PostCreateRequest request,
         BindingResult bindingResult
     ) {
@@ -80,8 +80,8 @@ public class PostPrivateController {
     public String getUpdateForm(
         Model model,
         @AuthenticationPrincipal UserSession user,
-        @PathVariable(value = "mainCategory") String mainCategory,
-        @PathVariable(value = "id") Long id
+        @PathVariable String mainCategory,
+        @PathVariable Long id
     ) {
         var placeholder = business.getPostUpdatePlaceholder(user, mainCategory, id);
         model.addAttribute("placeholder", placeholder);
@@ -106,8 +106,8 @@ public class PostPrivateController {
     public String updatePost(
         Model model,
         @AuthenticationPrincipal UserSession user,
-        @PathVariable(value = "mainCategory") String mainCategory,
-        @PathVariable(value = "id") Long id,
+        @PathVariable String mainCategory,
+        @PathVariable Long id,
         @Valid @ModelAttribute(name = "form") PostCreateRequest request,
         BindingResult bindingResult
     ) {
@@ -131,8 +131,7 @@ public class PostPrivateController {
     @GetMapping(path = "/{mainCategory}/{id}/vote")
     public String votePost(
         @AuthenticationPrincipal UserSession user,
-        @PathVariable(value = "mainCategory") String mainCategory,
-        @PathVariable(value = "id") Long id
+        @PathVariable Long id
     ) {
         business.votePost(user, id);
         return "redirect:/board/%s/%s".formatted(mainCategory, id);

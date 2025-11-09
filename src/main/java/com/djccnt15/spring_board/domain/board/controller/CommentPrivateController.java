@@ -36,15 +36,15 @@ public class CommentPrivateController {
      * @param bindingResult validated result. this must come right after the form
      * @return redirect to anchor in post page
      */
-    @PostMapping(path = "/{mainCategory}/{id}/comment/form")
+    @PostMapping(path = "/{mainCategory}/{postId}/comment/form")
     @PreAuthorize(value = "hasAnyRole('ADMIN', 'WRITER')")
     public String createComment(
         Model model,
         @AuthenticationPrincipal UserSession user,
-        @PathVariable(value = "mainCategory") String mainCategory,
-        @PathVariable(value = "id") Long postId,
-        @RequestParam(value = "size", defaultValue = "10") int size,
-        @RequestParam(value = "page", defaultValue = "0") int page,
+        @PathVariable String mainCategory,
+        @PathVariable Long postId,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "0") int page,
         @Valid @ModelAttribute(name = "commentForm") CommentCreateRequest request,
         BindingResult bindingResult
     ) {
@@ -57,18 +57,14 @@ public class CommentPrivateController {
             return "post-detail";
         }
         commentBusiness.createComment(user, request, postId);
-        return "redirect:/board/%s/%s#comment-list".formatted(mainCategory, postId);
+        return "redirect:/board/{mainCategory}/{postId}#comment-list";
     }
     
     /**
      * view controller for comment update
      * @param model inject from spring
      * @param user user session
-     * @param mainCategory name of the main category
-     * @param postId post id
      * @param commentId comment id
-     * @param size size of comment list
-     * @param page number of page
      * @return comment update view
      */
     @GetMapping(path = "/{mainCategory}/{postId}/comment/{commentId}/form")
@@ -76,11 +72,7 @@ public class CommentPrivateController {
     public String getUpdateForm(
         Model model,
         @AuthenticationPrincipal UserSession user,
-        @PathVariable(value = "mainCategory") String mainCategory,
-        @PathVariable(value = "postId") Long postId,
-        @PathVariable(value = "commentId") Long commentId,
-        @RequestParam(value = "size", defaultValue = "10") int size,
-        @RequestParam(value = "page", defaultValue = "0") int page
+        @PathVariable Long commentId
     ) {
         model.addAttribute("id", commentId);
         model.addAttribute("form", new CommentCreateRequest());
@@ -107,11 +99,11 @@ public class CommentPrivateController {
     public String updateComment(
         Model model,
         @AuthenticationPrincipal UserSession user,
-        @PathVariable(value = "mainCategory") String mainCategory,
-        @PathVariable(value = "postId") Long postId,
-        @PathVariable(value = "commentId") Long commentId,
-        @RequestParam(value = "size", defaultValue = "10") int size,
-        @RequestParam(value = "page", defaultValue = "0") int page,
+        @PathVariable String mainCategory,
+        @PathVariable Long postId,
+        @PathVariable Long commentId,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "0") int page,
         @Valid @ModelAttribute(name = "form") CommentCreateRequest request,
         BindingResult bindingResult
     ) {
@@ -138,11 +130,11 @@ public class CommentPrivateController {
     @PreAuthorize(value = "hasAnyRole('ADMIN', 'WRITER')")
     public String deleteComment(
         @AuthenticationPrincipal UserSession user,
-        @PathVariable(value = "mainCategory") String mainCategory,
-        @PathVariable(value = "postId") Long postId,
-        @PathVariable(value = "commentId") Long commentId,
-        @RequestParam(value = "size", defaultValue = "10") int size,
-        @RequestParam(value = "page", defaultValue = "0") int page
+        @PathVariable String mainCategory,
+        @PathVariable Long postId,
+        @PathVariable Long commentId,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "0") int page,
     ) {
         commentBusiness.deleteComment(user, commentId);
         return "redirect:/board/%s/%s?page=%s&size=%s#comment-list".formatted(mainCategory, postId, page, size);
@@ -166,6 +158,11 @@ public class CommentPrivateController {
         @PathVariable(value = "commentId") Long commentId,
         @RequestParam(value = "size", defaultValue = "10") int size,
         @RequestParam(value = "page", defaultValue = "0") int page
+        @PathVariable String mainCategory,
+        @PathVariable Long postId,
+        @PathVariable Long commentId,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "0") int page,
     ) {
         commentBusiness.voteComment(user, commentId);
         return "redirect:/board/%s/%s?page=%s&size=%s#comment-%s".formatted(mainCategory, postId, page, size, commentId);

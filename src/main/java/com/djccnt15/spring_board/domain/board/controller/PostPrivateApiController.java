@@ -33,8 +33,8 @@ public class PostPrivateApiController {
     @PreAuthorize(value = "hasAnyRole('ADMIN', 'WRITER')")
     public ResponseEntity<?> deletePost(
         @AuthenticationPrincipal UserSession user,
-        @PathVariable(value = "mainCategory") String mainCategory,
-        @PathVariable(value = "id") Long id
+        @PathVariable String mainCategory,
+        @PathVariable Long id
     ) {
         business.deletePost(user, id);
         return ResponseEntity

@@ -25,25 +25,25 @@ public class PostController {
      * @param mainCategory name of board - main category
      * @param size size of post list
      * @param page number of page
-     * @param keyword search keyword
+     * @param kw search keyword
      * @param category name of category - sub category
      * @return post list view
      */
     @GetMapping(path = "/{mainCategory}")
     public String getPostList(
         Model model,
-        @PathVariable(value = "mainCategory") String mainCategory,
-        @RequestParam(value = "size", defaultValue = "10") int size,
-        @RequestParam(value = "page", defaultValue = "0") int page,
-        @RequestParam(value = "kw", defaultValue = "") String keyword,
-        @RequestParam(value = "category", defaultValue = "") String category
+        @PathVariable String mainCategory,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "") String kw,
+        @RequestParam(defaultValue = "") String category
     ) {
-        var response = business.getPostList(mainCategory, size, page, keyword, category);
+        var response = business.getPostList(mainCategory, size, page, kw, category);
         model.addAttribute("response", response);
         model.addAttribute(mainCategory);
         model.addAttribute("size", size);
         model.addAttribute("page", page);
-        model.addAttribute("kw", keyword);
+        model.addAttribute("kw", kw);
         model.addAttribute(category);
         return "post-list";
     }
@@ -73,10 +73,10 @@ public class PostController {
     @GetMapping(path = "/{mainCategory}/{id}")
     public String getPostDetail(
         Model model,
-        @PathVariable(value = "mainCategory") String mainCategory,
-        @PathVariable(value = "id") Long id,
-        @RequestParam(value = "size", defaultValue = "10") int size,
-        @RequestParam(value = "page", defaultValue = "0") int page
+        @PathVariable String mainCategory,
+        @PathVariable Long id,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "0") int page
     ) {
         var response = business.getPostDetail(id, size, page);
         model.addAttribute(mainCategory);
@@ -97,8 +97,8 @@ public class PostController {
     @GetMapping(path = "{mainCategory}/{id}/history")
     public String getPostHistory(
         Model model,
-        @PathVariable(value = "mainCategory") String mainCategory,
-        @PathVariable(value = "id") Long id
+        @PathVariable String mainCategory,
+        @PathVariable Long id
     ) {
         var response = business.getHistory(id);
         model.addAttribute("response", response);

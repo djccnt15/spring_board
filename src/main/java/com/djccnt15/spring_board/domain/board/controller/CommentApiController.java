@@ -24,17 +24,13 @@ public class CommentApiController {
     
     /**
      * rest controller for download comment history as csv file
-     * @param mainCategory name of the category
-     * @param postId post id
      * @param commentId comment id
      * @return comment history csv file
      */
     @GetMapping(path = "{mainCategory}/{postId}/comment/{commentId}/history/csvDownload")
     @PreAuthorize(value = "hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<?> downloadCommentHistoryCsv(
-        @PathVariable(value = "mainCategory") String mainCategory,
-        @PathVariable(value = "postId") Long postId,
-        @PathVariable(value = "commentId") Long commentId
+        @PathVariable Long commentId
     ) {
         var response = business.createHistoryCsv(commentId);
         return ResponseEntity.ok()
@@ -49,8 +45,6 @@ public class CommentApiController {
     /**
      * rest controller for download comment history as Excel file
      * @param user user session
-     * @param mainCategory name of the category
-     * @param postId post id
      * @param commentId comment id
      * @return comment history Excel file
      */
@@ -58,9 +52,7 @@ public class CommentApiController {
     @PreAuthorize(value = "hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<?> downloadCommentHistoryExcel(
         @AuthenticationPrincipal UserSession user,
-        @PathVariable(value = "mainCategory") String mainCategory,
-        @PathVariable(value = "postId") Long postId,
-        @PathVariable(value = "commentId") Long commentId
+        @PathVariable Long commentId
     ) {
         var response = business.createHistoryExcel(user, commentId);
         return ResponseEntity.ok()

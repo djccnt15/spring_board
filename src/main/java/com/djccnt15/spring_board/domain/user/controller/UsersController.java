@@ -39,9 +39,9 @@ public class UsersController {
     @GetMapping(path = "/{id}/post-list")
     public String getUserPostList(
         Model model,
-        @PathVariable(value = "id") Long id,
-        @RequestParam(value = "size", defaultValue = "10") int size,
-        @RequestParam(value = "page", defaultValue = "0") int page
+        @PathVariable Long id,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "0") int page
     ) {
         model.addAttribute("showUserInfoLeftNav", true);
         model.addAttribute("id", id);
@@ -63,9 +63,9 @@ public class UsersController {
     @GetMapping(path = "/{id}/comment-list")
     public String getUserCommentList(
         Model model,
-        @PathVariable(value = "id") Long id,
-        @RequestParam(value = "size", defaultValue = "10") int size,
-        @RequestParam(value = "page", defaultValue = "0") int page
+        @PathVariable Long id,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "0") int page
     ) {
         model.addAttribute("showUserInfoLeftNav", true);
         model.addAttribute("id", id);

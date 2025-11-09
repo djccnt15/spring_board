@@ -20,17 +20,13 @@ public class CommentController {
     /**
      * view controller for comment history
      * @param model inject from spring
-     * @param mainCategory name of the category
-     * @param postId post id
      * @param commentId comment id
      * @return comment history view
      */
     @GetMapping(path = "{mainCategory}/{postId}/comment/{commentId}/history")
     public String getCommentHistory(
         Model model,
-        @PathVariable(value = "mainCategory") String mainCategory,
-        @PathVariable(value = "postId") Long postId,
-        @PathVariable(value = "commentId") Long commentId
+        @PathVariable Long commentId
     ) {
         var response = business.getCommentHistory(commentId);
         model.addAttribute("response", response);

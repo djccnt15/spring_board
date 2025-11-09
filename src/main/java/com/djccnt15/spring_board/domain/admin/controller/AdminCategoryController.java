@@ -49,7 +49,7 @@ public class AdminCategoryController {
     @GetMapping(path = "/main/form/{id}")
     public String updateMainCategoryForm(
         Model model,
-        @PathVariable(value = "id") Long id
+        @PathVariable Long id
     ) {
         model.addAttribute("showAdminLeftNav", true);
         var updateForm = business.getMainCategoryUpdatePlaceholder(id);
@@ -67,7 +67,7 @@ public class AdminCategoryController {
     @GetMapping(path = "/sub/form/{id}")
     public String updateSubCategoryForm(
         Model model,
-        @PathVariable(value = "id") Long id
+        @PathVariable Long id
     ) {
         model.addAttribute("showAdminLeftNav", true);
         var placeholder = business.getSubCategoryUpdatePlaceholder(id);

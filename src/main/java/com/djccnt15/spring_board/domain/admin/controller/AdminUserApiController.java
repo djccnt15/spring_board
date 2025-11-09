@@ -30,7 +30,9 @@ public class AdminUserApiController {
      * api controller for ban user
      * @param user user session
      * @param id user id
+     * @param size size of user list
      * @param page number of page
+     * @param kw search keyword
      * @param form user ban form for request body
      * @param bindingResult validated result of the form. this must come right after the form
      * @return redirect to admin user page for refresh
@@ -38,10 +40,10 @@ public class AdminUserApiController {
     @PutMapping(path = "/{id}/ban")
     public ResponseEntity<?> ban(
         @AuthenticationPrincipal UserSession user,
-        @PathVariable(value = "id") Long id,
-        @RequestParam(value = "size", defaultValue = "10") int size,
-        @RequestParam(value = "page", defaultValue = "0") int page,
-        @RequestParam(value = "kw", defaultValue = "") String keyword,
+        @PathVariable Long id,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "") String kw,
         @Valid DetailForm form,
         BindingResult bindingResult
     ) {
@@ -59,7 +61,7 @@ public class AdminUserApiController {
         }
         business.banUser(user, id, form);
         return ResponseEntity
-            .created(URI.create("/admin/user?page=%s&size=%s&kw=%s".formatted(page, size, keyword)))
+            .created(URI.create("/admin/user?page=%s&size=%s&kw=%s".formatted(page, size, kw)))
             .body(ResponseMessageEnum.CREATE);
     }
     
@@ -75,10 +77,10 @@ public class AdminUserApiController {
     @PutMapping(path = "/{id}/block")
     public ResponseEntity<?> block(
         @AuthenticationPrincipal UserSession user,
-        @PathVariable(value = "id") Long id,
-        @RequestParam(value = "size", defaultValue = "10") int size,
-        @RequestParam(value = "page", defaultValue = "0") int page,
-        @RequestParam(value = "kw", defaultValue = "") String keyword,
+        @PathVariable Long id,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "") String keyword,
         @Valid DetailForm form,
         BindingResult bindingResult
     ) {

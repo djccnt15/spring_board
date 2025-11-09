@@ -63,7 +63,7 @@ public class AdminCategoryApiController {
      */
     @PatchMapping(path = "/main/form/{id}")
     public ResponseEntity<?> updateMainCategory(
-        @PathVariable(value = "id") Long id,
+        @PathVariable Long id,
         @Valid @ModelAttribute(name = "form") CategoryCreateRequest form,
         BindingResult bindingResult
     ) {
@@ -121,7 +121,7 @@ public class AdminCategoryApiController {
      */
     @PatchMapping(path = "/sub/form/{id}")
     public ResponseEntity<?> updateSubCategory(
-        @PathVariable(value = "id") Long id,
+        @PathVariable Long id,
         @Valid @ModelAttribute(name = "form") CategoryCreateRequest form,
         BindingResult bindingResult
     ) {
@@ -147,7 +147,7 @@ public class AdminCategoryApiController {
      * @return ResponseEntity
      */
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<?> deleteCategory(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
         business.deleteCategory(id);
         return ResponseEntity.ok(ResponseMessageEnum.DELETE);
     }
@@ -158,7 +158,7 @@ public class AdminCategoryApiController {
      * @return ResponseEntity
      */
     @PatchMapping(path = "/{id}/pin")
-    public ResponseEntity<?> pinCategory(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<?> pinCategory(@PathVariable Long id) {
         business.pinCategory(id);
         return ResponseEntity.ok(ResponseMessageEnum.UPDATE);
     }
@@ -171,7 +171,7 @@ public class AdminCategoryApiController {
      */
     @PatchMapping(path = "/order/{id}")
     public ResponseEntity<?> changeOrder(
-        @PathVariable(value = "id") Long id,
+        @PathVariable Long id,
         CategoryOrderUpdateRequest form
     ) {
         business.changeOrder(id, form);
