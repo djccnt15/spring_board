@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -141,13 +142,14 @@ public class UserController {
     public String verifyUser(
         @PathVariable Long id,
         @RequestParam String key,
+        RedirectAttributes redirectAttributes
     ) {
         try {
             business.verifyUser(id, key);
         } catch (UserVerifyException e) {
-            return "redirect:/user/verify/%s?error=%s".formatted(
-                id, URLEncoder.encode(e.getMessage(), StandardCharsets.UTF_8)
-            );
+            var errorMsg = URLEncoder.encode(e.getMessage(), StandardCharsets.UTF_8);
+            redirectAttributes.addAttribute("error", errorMsg);
+            return "redirect:/user/verify/{id}";
         }
         return "user-verified";
     }

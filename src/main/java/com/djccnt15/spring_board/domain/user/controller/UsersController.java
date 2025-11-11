@@ -20,12 +20,11 @@ public class UsersController {
     
     /**
      * redirect controller for public user info
-     * @param id user id
      * @return redirect to user post list page
      */
     @GetMapping(path = "/{id}")
-    public String getUserInfo(@PathVariable(value = "id") Long id) {
-        return "redirect:/users/%s/post-list".formatted(id);
+    public String getUserInfo() {
+        return "redirect:/users/{id}/post-list";
     }
     
     /**

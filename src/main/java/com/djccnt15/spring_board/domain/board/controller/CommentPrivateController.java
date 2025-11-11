@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Controller
@@ -85,8 +86,6 @@ public class CommentPrivateController {
      * controller for comment update
      * @param model inject from spring
      * @param user user session
-     * @param mainCategory name of the main category
-     * @param postId post id
      * @param commentId comment id
      * @param size size of comment list
      * @param page number of page
@@ -99,13 +98,12 @@ public class CommentPrivateController {
     public String updateComment(
         Model model,
         @AuthenticationPrincipal UserSession user,
-        @PathVariable String mainCategory,
-        @PathVariable Long postId,
         @PathVariable Long commentId,
         @RequestParam(defaultValue = "10") int size,
         @RequestParam(defaultValue = "0") int page,
         @Valid @ModelAttribute(name = "form") CommentCreateRequest request,
-        BindingResult bindingResult
+        BindingResult bindingResult,
+        RedirectAttributes redirectAttributes
     ) {
         if (bindingResult.hasErrors()) {
             var placeholder = commentBusiness.getCommentUpdatePlaceholder(user, commentId);
@@ -113,14 +111,14 @@ public class CommentPrivateController {
             return "comment-update-form";
         }
         commentBusiness.updateComment(user, commentId, request);
-        return "redirect:/board/%s/%s?page=%s&size=%s#comment-%s".formatted(mainCategory, postId, page, size, commentId);
+        redirectAttributes.addAttribute("page", page);
+        redirectAttributes.addAttribute("size", size);
+        return "redirect:/board/{mainCategory}/{postId}#comment-{commentId}";
     }
     
     /**
      * rest controller for comment delete
      * @param user user session
-     * @param mainCategory name of the main category
-     * @param postId post id
      * @param commentId comment id
      * @param size size of comment list
      * @param page number of page
@@ -130,21 +128,20 @@ public class CommentPrivateController {
     @PreAuthorize(value = "hasAnyRole('ADMIN', 'WRITER')")
     public String deleteComment(
         @AuthenticationPrincipal UserSession user,
-        @PathVariable String mainCategory,
-        @PathVariable Long postId,
         @PathVariable Long commentId,
         @RequestParam(defaultValue = "10") int size,
         @RequestParam(defaultValue = "0") int page,
+        RedirectAttributes redirectAttributes
     ) {
         commentBusiness.deleteComment(user, commentId);
-        return "redirect:/board/%s/%s?page=%s&size=%s#comment-list".formatted(mainCategory, postId, page, size);
+        redirectAttributes.addAttribute("page", page);
+        redirectAttributes.addAttribute("size", size);
+        return "redirect:/board/{mainCategory}/{postId}#comment-list";
     }
     
     /**
      * controller for vote comment
      * @param user user session
-     * @param mainCategory name of the main category
-     * @param postId post id
      * @param commentId comment id
      * @param size size of comment list
      * @param page number of page
@@ -153,18 +150,14 @@ public class CommentPrivateController {
     @GetMapping(path = "/{mainCategory}/{postId}/comment/{commentId}/vote")
     public String voteComment(
         @AuthenticationPrincipal UserSession user,
-        @PathVariable(value = "mainCategory") String mainCategory,
-        @PathVariable(value = "postId") Long postId,
-        @PathVariable(value = "commentId") Long commentId,
-        @RequestParam(value = "size", defaultValue = "10") int size,
-        @RequestParam(value = "page", defaultValue = "0") int page
-        @PathVariable String mainCategory,
-        @PathVariable Long postId,
         @PathVariable Long commentId,
         @RequestParam(defaultValue = "10") int size,
         @RequestParam(defaultValue = "0") int page,
+        RedirectAttributes redirectAttributes
     ) {
         commentBusiness.voteComment(user, commentId);
-        return "redirect:/board/%s/%s?page=%s&size=%s#comment-%s".formatted(mainCategory, postId, page, size, commentId);
+        redirectAttributes.addAttribute("page", page);
+        redirectAttributes.addAttribute("size", size);
+        return "redirect:/board/{mainCategory}/{postId}#comment-{commentId}";
     }
 }

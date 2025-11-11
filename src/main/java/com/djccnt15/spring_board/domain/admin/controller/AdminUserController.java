@@ -8,6 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Controller
@@ -57,9 +58,13 @@ public class AdminUserController {
         @RequestParam(defaultValue = "10") int size,
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "") String kw,
+        RedirectAttributes redirectAttributes
     ) {
         business.grantAuthority(user, id);
-        return "redirect:/admin/user?page=%s&size=%s&kw=%s".formatted(page, size, keyword);
+        redirectAttributes.addAttribute("page", page);
+        redirectAttributes.addAttribute("size", size);
+        redirectAttributes.addAttribute("kw", kw);
+        return "redirect:/admin/user";
     }
     
     /**
@@ -74,15 +79,17 @@ public class AdminUserController {
     @PatchMapping(path = "/{id}/role/revoke")
     public String revokeAuthority(
         @AuthenticationPrincipal UserSession user,
-        @RequestParam(value = "page", defaultValue = "0") int page,
-        @RequestParam(value = "kw", defaultValue = "") String keyword
         @PathVariable Long id,
         @RequestParam(defaultValue = "10") int size,
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "") String kw,
+        RedirectAttributes redirectAttributes
     ) {
         business.revokeAuthority(user, id);
-        return "redirect:/admin/user?page=%s&size=%s&kw=%s".formatted(page, size, keyword);
+        redirectAttributes.addAttribute("page", page);
+        redirectAttributes.addAttribute("size", size);
+        redirectAttributes.addAttribute("kw", kw);
+        return "redirect:/admin/user";
     }
     
     /**
@@ -101,9 +108,13 @@ public class AdminUserController {
         @RequestParam(defaultValue = "10") int size,
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "") String kw,
+        RedirectAttributes redirectAttributes
     ) {
         business.unBanUser(user, id);
-        return "redirect:/admin/user?page=%s&size=%s&kw=%s".formatted(page, size, keyword);
+        redirectAttributes.addAttribute("size", size);
+        redirectAttributes.addAttribute("page", page);
+        redirectAttributes.addAttribute("kw", kw);
+        return "redirect:/admin/user";
     }
     
     /**
@@ -122,8 +133,12 @@ public class AdminUserController {
         @RequestParam(defaultValue = "10") int size,
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "") String kw,
+        RedirectAttributes redirectAttributes
     ) {
         business.unBlockUser(user, id);
-        return "redirect:/admin/user?page=%s&size=%s&kw=%s".formatted(page, size, keyword);
+        redirectAttributes.addAttribute("size", size);
+        redirectAttributes.addAttribute("page", page);
+        redirectAttributes.addAttribute("kw", kw);
+        return "redirect:/admin/user";
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Controller
@@ -56,7 +57,8 @@ public class PostPrivateController {
         @AuthenticationPrincipal UserSession user,
         @PathVariable String mainCategory,
         @Valid @ModelAttribute(name = "form") PostCreateRequest request,
-        BindingResult bindingResult
+        BindingResult bindingResult,
+        RedirectAttributes redirectAttributes
     ) {
         if (bindingResult.hasErrors()) {
             var categoryList = business.getCategoryList(mainCategory);
@@ -65,7 +67,8 @@ public class PostPrivateController {
             return "post-form";
         }
         var post = business.createPost(user, request);
-        return "redirect:/board/%s/%s".formatted(post.getCategory().getParent().getName(), post.getId());
+        redirectAttributes.addAttribute("postId", post.getId());
+        return "redirect:/board/{mainCategory}/{postId}";
     }
     
     /**
@@ -118,13 +121,12 @@ public class PostPrivateController {
             return "post-update-form";
         }
         business.updatePost(user, id, request);
-        return "redirect:/board/%s/%s".formatted(mainCategory, id);
+        return "redirect:/board/{mainCategory}/{id}";
     }
     
     /**
      * controller for vote post
      * @param user user session
-     * @param mainCategory name of the main category
      * @param id post id
      * @return redirect to post page
      */
@@ -134,6 +136,6 @@ public class PostPrivateController {
         @PathVariable Long id
     ) {
         business.votePost(user, id);
-        return "redirect:/board/%s/%s".formatted(mainCategory, id);
+        return "redirect:/board/{mainCategory}/{id}";
     }
 }
