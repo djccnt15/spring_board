@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.util.PatternMatchUtils;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
@@ -19,21 +20,9 @@ import java.util.List;
 @Order(value = Integer.MIN_VALUE)
 public class ProcessTimeFilter implements Filter {
     
-    private final List<String> excludeUriPattern = Arrays.asList(
-        "/favicon.ico",
-        "/bootstrap.min",
-        ".js",
-        ".css"
-    );
-    
-    private boolean checkExclude(String uri) {
-        for (String pattern : excludeUriPattern) {
-            if (uri.contains(pattern)) {
-                return true;
-            }
-        }
-        return false;
-    }
+    private static final String[] excludeList = {
+        "/favicon.ico", "/bootstrap.min", "*.js", "*.css"
+    };
     
     @Override
     public void doFilter(
@@ -43,31 +32,32 @@ public class ProcessTimeFilter implements Filter {
     ) throws IOException, ServletException {
         
         // cashing wrapper for request/response which will be consumed
-        var requestWrapper = new ContentCachingRequestWrapper((HttpServletRequest) request);
-        var responseWrapper = new ContentCachingResponseWrapper((HttpServletResponse) response);
+        var req = new ContentCachingRequestWrapper((HttpServletRequest) request);
+        var res = new ContentCachingResponseWrapper((HttpServletResponse) response);
         
         var startTime = System.currentTimeMillis();
         
         try {
-            chain.doFilter(requestWrapper, responseWrapper);
+            chain.doFilter(req, res);
         } finally {
-            var isExcludeUri = checkExclude(requestWrapper.getRequestURI());
+            var isExcludeUri = PatternMatchUtils.simpleMatch(
+                excludeList,
+                req.getRequestURI().toLowerCase()
+            );
             if (!isExcludeUri) {
                 var processTime = (System.currentTimeMillis() - startTime) + "ms";
-                var hiddenMethod = requestWrapper.getParameter("_method");
-                var actualMethod = (hiddenMethod != null) ? hiddenMethod : requestWrapper.getMethod();
+                var hiddenMethod = req.getParameter("_method");
+                var actualMethod = (hiddenMethod != null) ? hiddenMethod : req.getMethod();
                 
                 log.info(
                     "X-Process-Time: {}, uri: {}, method: {}",
                     processTime,
-                    requestWrapper.getRequestURI(),
+                    req.getRequestURI(),
                     actualMethod
                 );
-                
-                responseWrapper.addHeader("X-Process-Time", processTime);  // add process time to response header
+                res.addHeader("X-Process-Time", processTime);  // add process time to response header
             }
-            
-            responseWrapper.copyBodyToResponse();  // restore consumed response
+            res.copyBodyToResponse();  // restore consumed response
         }
     }
 }
