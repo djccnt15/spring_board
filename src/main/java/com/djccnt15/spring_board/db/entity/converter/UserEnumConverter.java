@@ -10,10 +10,7 @@ import java.util.stream.Stream;
 public class UserEnumConverter implements AttributeConverter<UserRoleEnum, String> {
     @Override
     public String convertToDatabaseColumn(UserRoleEnum role) {
-        if (role == null) {
-            return null;
-        }
-        return role.getRole();
+        return (role == null) ? null : role.getRole();
     }
     
     @Override
