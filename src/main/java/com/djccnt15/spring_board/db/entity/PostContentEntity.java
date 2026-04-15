@@ -47,6 +47,6 @@ public class PostContentEntity extends BaseEntity {
     private String content;
     
     @JoinColumn(name = "post_id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private PostEntity post;
 }

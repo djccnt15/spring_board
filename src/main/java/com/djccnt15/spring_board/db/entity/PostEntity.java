@@ -44,11 +44,11 @@ public class PostEntity extends BaseEntity {
     private int views = 0;
     
     @JoinColumn(name = "category_id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private CategoryEntity category;
     
     @JoinColumn(name = "author_id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private UserEntity author;
     
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)

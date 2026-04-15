@@ -42,6 +42,6 @@ public class CommentContentEntity extends BaseEntity {
     private String content;
     
     @JoinColumn(name = "comment_id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private CommentEntity comment;
 }

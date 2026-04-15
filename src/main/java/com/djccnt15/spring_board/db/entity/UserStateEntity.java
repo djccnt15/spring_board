@@ -24,12 +24,12 @@ public class UserStateEntity {
     
     @MapsId(value = "stateId")  // annotation for composite PK
     @JoinColumn(name = "state_id", nullable = false)
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private StateEntity state;
     
     @MapsId(value = "userId")  // annotation for composite PK
     @JoinColumn(name = "user_id", nullable = false)
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private UserEntity user;
     
     @Column(updatable = false)

@@ -25,6 +25,6 @@ public class LoggedInEntity extends BaseEntity {
     private LocalDateTime createdDatetime;
     
     @JoinColumn(name = "user_id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private UserEntity user;
 }

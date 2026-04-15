@@ -39,12 +39,12 @@ public class CommentEntity extends BaseEntity {
     private boolean isActive = true;
     
     @JoinColumn(name = "author_id", nullable = false)
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
     private UserEntity author;
     
     @JoinColumn(name = "post_id", nullable = false)
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
     private PostEntity post;
     

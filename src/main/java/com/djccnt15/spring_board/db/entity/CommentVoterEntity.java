@@ -26,12 +26,12 @@ public class CommentVoterEntity {
     
     @Id
     @JoinColumn(name = "comment_id", nullable = false)
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private CommentEntity comment;
     
     @Id
     @JoinColumn(name = "user_id", nullable = false)
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private UserEntity user;
     
     @Column(updatable = false)

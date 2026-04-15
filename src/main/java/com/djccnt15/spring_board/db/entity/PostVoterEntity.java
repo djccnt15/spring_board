@@ -26,12 +26,12 @@ public class PostVoterEntity {
     
     @Id
     @JoinColumn(name = "post_id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private PostEntity post;
     
     @Id
     @JoinColumn(name = "user_id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private UserEntity user;
     
     @Column(updatable = false)
